@@ -1,2 +1,2 @@
-module prova_james {
+module ancyb_diagnostictool {
 }
