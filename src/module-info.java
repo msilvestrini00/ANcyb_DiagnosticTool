@@ -1,0 +1,2 @@
+module ancyb_diagnostictool {
+}
