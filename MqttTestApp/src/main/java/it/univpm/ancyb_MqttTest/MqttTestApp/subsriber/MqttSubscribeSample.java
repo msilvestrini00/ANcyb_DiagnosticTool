@@ -48,7 +48,7 @@ public class MqttSubscribeSample implements MqttCallback {
 		System.out.println("| Topic:" + arg0);
 		System.out.println("| Message: " + new String(arg1.getPayload()));
 		System.out.println("-------------------------------------------------");
-
+		//mqttClient.disconnect();
 	}
 
 	/**
@@ -82,6 +82,7 @@ public class MqttSubscribeSample implements MqttCallback {
 		// Connect to Broker
 		try {
 			mqttClient = new MqttClient(BROKER_URL, clientID);
+			//rendi il client asincrono
 			mqttClient.setCallback(MqttSubscribeSample.this);
 			mqttClient.connect(connOpt);
 
@@ -100,7 +101,7 @@ public class MqttSubscribeSample implements MqttCallback {
 		// subscribe to topic if subscriber
 		if (subscriber) {
 			try {
-				int subQoS = 0;
+				int subQoS = 1;
 				mqttClient.subscribe(topic.getName(), subQoS);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -111,7 +112,7 @@ public class MqttSubscribeSample implements MqttCallback {
 		if (publisher) {
 			for (int i = 1; i <= 10; i++) {
 				String pubMsg = "{\"pubmsg\":" + i + "}";
-				int pubQoS = 0;
+				int pubQoS = 1;
 				MqttMessage message = new MqttMessage(pubMsg.getBytes());
 				message.setQos(pubQoS);
 				message.setRetained(false);
