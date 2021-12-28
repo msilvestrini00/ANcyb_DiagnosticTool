@@ -11,6 +11,8 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import it.univpm.ancyb_MqttTest.MqttTestApp.dataLogger.DataLogger;
+import it.univpm.ancyb_MqttTest.MqttTestApp.model.DataReceived;
+import it.univpm.ancyb_MqttTest.MqttTestApp.utilities.MqttStringOperator;
 
 /*
 A simple Subscriber class which would subscribe to a simple messages on a MqTT server 
@@ -28,12 +30,12 @@ public class Subscriber implements MqttCallback{
     
 	MqttClient subscriber;
 	private DataLogger dataLog;
-	public static ArrayList<String> m5data;
+	public static ArrayList<DataReceived> m5data;
 	
     public Subscriber (String url, String topic, int qos, String clientID){
         
     	//TODO qui devo creare un Array List dove memorizzare tutti i subscribe e devo creare il file di log
-    	m5data = new ArrayList<String>();
+    	m5data = new ArrayList<DataReceived>();
     	
         try {
             subscriber = new MqttClient(url, clientID);
@@ -60,9 +62,11 @@ public class Subscriber implements MqttCallback{
         System.out.println("message arrived to subscriber from M5: "+new String(mm.getPayload()));
 		//aggiungo il messaggio all'arrayList
         String str = new String(mm.getPayload());
-        m5data.add(str);
+        String[] strArr = MqttStringOperator.split(str);
+        DataReceived data = new DataReceived(strArr);
+        m5data.add(data);
         //scrivo l'arraylist sul file corrispondente
-        this.dataLog.write(str);
+        this.dataLog.write(data);
         //subscriber.disconnect();
 	}
 

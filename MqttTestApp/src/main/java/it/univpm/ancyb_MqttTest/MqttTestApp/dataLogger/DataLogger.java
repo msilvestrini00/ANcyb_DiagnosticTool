@@ -6,7 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;    
+import java.time.format.DateTimeFormatter;
+
+import it.univpm.ancyb_MqttTest.MqttTestApp.model.DataReceived;    
 
 //TODO creare superclasse da cui eredita.
 
@@ -72,6 +74,31 @@ public class DataLogger {
         					new FileWriter (this.fileName, true)));
         	// scrive i valori usando println
         	file_output.println(str);
+        	// chiude lo stream di output
+        	file_output.close ();
+        	}
+        	catch (IOException e) { // in caso di errori ...
+        	System.out.println(" ERRORE metodo DataLogger.write");
+        	System.out.println(e);
+        	}
+		
+	}
+	
+	public void write(DataReceived data) {
+		
+		//inserisco una nuova registrazione
+		
+		try {
+        	// crea lo stream ( formattato ) di output
+        	PrintWriter file_output =
+        			new PrintWriter(new BufferedWriter (
+        					new FileWriter (this.fileName, true)));
+        	// scrive i valori usando println
+        	file_output.print(data.getMac() + " ");
+        	file_output.print(data.getDate() + " ");
+        	file_output.print(data.getLatitude() + " ");
+        	file_output.print(data.getLongitude() + " ");
+        	file_output.println(data.getQualPos());
         	// chiude lo stream di output
         	file_output.close ();
         	}
