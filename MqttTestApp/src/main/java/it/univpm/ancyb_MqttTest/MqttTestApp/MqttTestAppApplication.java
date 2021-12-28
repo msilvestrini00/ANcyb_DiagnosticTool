@@ -12,8 +12,10 @@ public class MqttTestAppApplication {
 		SpringApplication.run(MqttTestAppApplication.class, args);
 		
 		//La parte di subscriber fa riferimento unicamente alla classe Subscriber
-		System.out.println("Programma di test subscriber");
-        Subscriber subscriber = new Subscriber ("tcp://public.mqtthq.com:1883", "SendTime", 1, "subscriber");
+		System.out.println("Programma di test della Spring Boot App");
+        
+		@SuppressWarnings("unused")
+		Subscriber subscriber = new Subscriber ("tcp://public.mqtthq.com:1883", "SendTime", 1, "subscriber");
     
 	}
 

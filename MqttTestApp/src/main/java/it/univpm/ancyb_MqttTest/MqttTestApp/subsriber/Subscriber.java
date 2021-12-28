@@ -3,11 +3,14 @@ package it.univpm.ancyb_MqttTest.MqttTestApp.subsriber;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import it.univpm.ancyb_MqttTest.MqttTestApp.dataLogger.DataLogger;
 
 /*
 A simple Subscriber class which would subscribe to a simple messages on a MqTT server 
@@ -24,6 +27,7 @@ public class Subscriber implements MqttCallback{
     */
     
 	MqttClient subscriber;
+	private DataLogger dataLog;
 	public static ArrayList<String> m5data;
 	
     public Subscriber (String url, String topic, int qos, String clientID){
@@ -40,6 +44,9 @@ public class Subscriber implements MqttCallback{
         } catch (MqttException ex) {
             Logger.getLogger(Subscriber.class.getName()).log(Level.SEVERE, "subscriber could not be created", ex);
         }
+        
+        //creo il datalogger 
+        dataLog = new DataLogger();
     }
 
     @Override
@@ -51,7 +58,11 @@ public class Subscriber implements MqttCallback{
     @Override
     public void messageArrived(String string, MqttMessage mm) throws Exception { 
         System.out.println("message arrived to subscriber from M5: "+new String(mm.getPayload()));
-		m5data.add(new String(mm.getPayload()));
+		//aggiungo il messaggio all'arrayList
+        String str = new String(mm.getPayload());
+        m5data.add(str);
+        //scrivo l'arraylist sul file corrispondente
+        this.dataLog.write(str);
         //subscriber.disconnect();
 	}
 

@@ -28,6 +28,6 @@ public class SimpleRestController {
 		String str = String.valueOf(Subscriber.m5data.size());
 		System.out.println(str);
 		//TODO invece di param1 o di str printa l'ultimo valore aggiunto.
-		return new HelloWorldClass( str, "param1");
+		return new HelloWorldClass( str, Subscriber.m5data.get(Subscriber.m5data.size()-1));
 	}
 }
