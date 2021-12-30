@@ -20,11 +20,18 @@ public class DataReceived {
 	
 	public DataReceived(String[] str) {
 		
-		this.mac = str[0];
-		this.date = str[1];
-		this.latitude = str[2];
-		this.longitude = str[3];
-		this.qualPos = str[4];
+		try {
+			this.mac = str[0];
+			this.date = str[1];
+			this.latitude = str[2];
+			this.longitude = str[3];
+			this.qualPos = str[4];
+		}
+		//TODO gestisci meglio questa eccezione
+		catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println("ERRRRRROOOOOOOOOOOORE!!");
+			e.printStackTrace();
+		}
 		
 	}
 	
