@@ -20,10 +20,13 @@ public class ANcybRestController {
 	String macAddress = "a4:cf:12:76:76:95";
 	double lat = 43.574998;
 	double lng = 13.492686;
+	String time = "2022-01-05T00:00:00+00:00";	//TODO fai una stringa di conversione del tempo tra me e jack? (in caso da mettere in "utils")
 	
 
-	@RequestMapping(value = "/{macAddr}/device", method = RequestMethod.GET)
-	public ResponseEntity<Object>
+	@RequestMapping(value = "/{macAddr}/forecast")
+	public ResponseEntity<Object> getJSONData() {	// da cambiare con "getJSONForecast" per dargli l'oggetto forecastobject
+		return new ResponseEntity<>("Operazione andata a buon fine", HttpStatus.OK);
+	}
 	
 
 
@@ -34,7 +37,7 @@ public class ANcybRestController {
 
 
 
-
+/*
 
 public class ProductController {
 	
@@ -64,3 +67,4 @@ public class ProductController {
 		return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
 	}
 }
+*/
