@@ -6,25 +6,34 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
+
+import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 
 @Service
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
 	private String apiKey = "4380b6f80amshdae4ed371f74652p1857c6jsn3c4a8bf96244";
 	private String uri = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
-	private String JSONData;
+	private String jsonData;
 	
+
 	@Override
-	public void receiveJSONData() {
+	public String receiveJSONData(double lat, double lng) {
+
+		String jsonData = null;
 
 		try {
-			URLConnection urlConn = new URL(uri + apiKey).openConnection();
-			InputStream in = urlConn.getInputStream();
+			URLConnection openConnection = new URL(uri + apiKey + "&lat=" + lat + "&lng=" + lng).openConnection();
+			InputStream in = openConnection.getInputStream();
 			
 			String data = "";
 			String line = "";
@@ -32,10 +41,8 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 				InputStreamReader inR = new InputStreamReader(in);
 				BufferedReader buf = new BufferedReader(inR);
 			
-				String i;
-				while ((i = buf.readLine()) != null){
+				while ((line = buf.readLine()) != null){	//TODO vedi se farlo meglio (in teoria è ricevuta una sola riga)
 					
-					//if(line.contains)	// TODO fai controllo per eliminare il testo da ,"meta" incluso, in modo da avere solo l'array
 					data += line;
 				}
 		}	
@@ -43,9 +50,9 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 			in.close();
 		}
 		// TODO PARTE DI ELABORAZIONE E STOCCAGGIO DATI
-			
-		JSONData = data;
+		
 
+			jsonData = createForecastList(data);
 			
 		}
 		catch(IOException e) {
@@ -54,19 +61,45 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return jsonData;
 	}
 
 	
 	
+	
+	/*CONTROLLA*/
+
 	@Override
-	public String getJSONData() {
+	public String createForecastList(String s) {
 
-		return JSONData;
+		String outputData = null;
+		
+		try{
+					
+			JSONParser parser = new JSONParser();
+			JSONObject jsonObject = (JSONObject) parser.parse(s);
+        
+		   // loop array
+			JSONArray hoursArray = (JSONArray) jsonObject.get("hours");
+			Iterator<?> iterator = hoursArray.iterator();
+			
+			String all = " ";
+			String next = " ";
+			while (iterator.hasNext()) {
+				
+				next = (String) iterator.next();
+				all += next;
+        }
+			
+			outputData = all;
+			
+		} catch (org.json.simple.parser.ParseException e) {
+            e.printStackTrace();
+		}
+		
+		return outputData;
 	}
-	
-	
-	
-	
+
 	
 }
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
+import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl;	// da controllare che non sia illecito
 
 @RestController
 public class ANcybRestController {
@@ -22,11 +23,16 @@ public class ANcybRestController {
 	double lng = 13.492686;
 	String time = "2022-01-05T00:00:00+00:00";	//TODO fai una stringa di conversione del tempo tra me e jack? (in caso da mettere in "utils")
 	
+	
 
-	@RequestMapping(value = "/{macAddr}/forecast")
-	public ResponseEntity<Object> receiveJSONData() {	// da cambiare
-		return new ResponseEntity<>(getJSONData(), HttpStatus.OK);
-		//TODO fai nin modo che su postman ricevu una stringa con tutti i dati 
+	
+	/* ROTTE DI TEST */
+	
+	@RequestMapping(value = "/test/receiveJSONData")
+	public /*ArrayList<ForecastObject>*/ String getForecast() {	// da cambiare
+		AncybDiagnosticToolServiceImpl a = new AncybDiagnosticToolServiceImpl();
+		return a.receiveJSONData(lat, lng);
+		//new ResponseEntity<>(productService.getProducts(), HttpStatus.OK);
 	}
  
 
