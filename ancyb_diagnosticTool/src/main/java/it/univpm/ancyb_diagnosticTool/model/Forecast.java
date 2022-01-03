@@ -6,6 +6,7 @@ public class Forecast {
 
 	ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
 	
+	
 	public Forecast(ArrayList<ForecastObject> forecastList) {
 		
 		this.forecastList = forecastList;
