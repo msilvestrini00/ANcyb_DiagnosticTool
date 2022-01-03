@@ -7,7 +7,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,17 +17,16 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 
 	private String apiKey = "4380b6f80amshdae4ed371f74652p1857c6jsn3c4a8bf96244";
 	private String uri = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
+	private String JSONData;
 	
 	@Override
-	public JSONObject getJSONForecast(String time, float lat, float lng) {
-		//JSONObject forecast = null;
-		
-			
+	public void receiveJSONData() {
+
 		try {
 			URLConnection urlConn = new URL(uri + apiKey).openConnection();
 			InputStream in = urlConn.getInputStream();
 			
-			String JSONData = "";
+			String data = "";
 			String line = "";
 			try {
 				InputStreamReader inR = new InputStreamReader(in);
@@ -35,7 +36,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 				while ((i = buf.readLine()) != null){
 					
 					//if(line.contains)	// TODO fai controllo per eliminare il testo da ,"meta" incluso, in modo da avere solo l'array
-					JSONData += line;
+					data += line;
 				}
 		}	
 		finally {
@@ -43,10 +44,8 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		}
 		// TODO PARTE DI ELABORAZIONE E STOCCAGGIO DATI
 			
-		//	JSONArray = mJsonArray = new JSONArray(JSONData)
-			
-		
-		System.out.println(JSONData);
+		JSONData = data;
+
 			
 		}
 		catch(IOException e) {
@@ -55,9 +54,20 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		return null;
 	}
+
+	
+	
+	@Override
+	public String getJSONData() {
+
+		return JSONData;
+	}
+	
+	
+	
+	
+	
 }
 
 

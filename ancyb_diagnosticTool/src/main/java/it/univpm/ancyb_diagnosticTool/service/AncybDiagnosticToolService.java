@@ -4,8 +4,10 @@ import org.json.simple.JSONObject;
 
 public interface AncybDiagnosticToolService {
 
-	public abstract JSONObject getJSONForecast(String time, float lat, float lng);
-	
+	public abstract void receiveJSONData();
+	public abstract String getJSONData();
+	//public abstract String getForecast(String time, float lat, float lng);
+
 	
 }
 

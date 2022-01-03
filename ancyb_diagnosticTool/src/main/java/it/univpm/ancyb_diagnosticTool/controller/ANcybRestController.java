@@ -24,9 +24,12 @@ public class ANcybRestController {
 	
 
 	@RequestMapping(value = "/{macAddr}/forecast")
-	public ResponseEntity<Object> getJSONData() {	// da cambiare con "getJSONForecast" per dargli l'oggetto forecastobject
-		return new ResponseEntity<>("Operazione andata a buon fine", HttpStatus.OK);
+	public ResponseEntity<Object> receiveJSONData() {	// da cambiare
+		return new ResponseEntity<>(getJSONData(), HttpStatus.OK);
+		//TODO fai nin modo che su postman ricevu una stringa con tutti i dati 
 	}
+ 
+
 	
 
 
