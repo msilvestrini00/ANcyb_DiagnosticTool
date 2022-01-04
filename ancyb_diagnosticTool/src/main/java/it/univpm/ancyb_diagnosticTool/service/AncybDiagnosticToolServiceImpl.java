@@ -16,64 +16,30 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 
+import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
+import it.univpm.ancyb_diagnosticTool.datasim.DataSim;
+import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolDataManager;
+
 
 @Service
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
-	private String apiKey = "4380b6f80amshdae4ed371f74652p1857c6jsn3c4a8bf96244";
-	private String uri = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
-	private String jsonData;
-	
 
-	@Override
-	public String receiveJSONData(double lat, double lng) {
-
-		String jsonData = null;
-
-		try {
-			URLConnection openConnection = new URL(uri + apiKey + "&lat=" + lat + "&lng=" + lng).openConnection();
-			InputStream in = openConnection.getInputStream();
-			
-			String data = "";
-			String line = "";
-			try {
-				InputStreamReader inR = new InputStreamReader(in);
-				BufferedReader buf = new BufferedReader(inR);
-			
-				while ((line = buf.readLine()) != null){	//TODO vedi se farlo meglio (in teoria è ricevuta una sola riga)
-					
-					data += line;
-				}
-		}	
-		finally {
-			in.close();
-		}
-		// TODO PARTE DI ELABORAZIONE E STOCCAGGIO DATI
+	public ForecastObject getRealTimeForecast() {
 		
+		AncybDiagnosticToolDataManager dataManager = new AncybDiagnosticToolDataManager();
+		DataSim dataSim = new DataSim();
 
-			jsonData = data;
-			
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return jsonData;
+		String url = dataManager.buildURL(dataSim.getLat(), dataSim.getLng());
+		String data = dataManager.downloadJSONData(url);
+		Forecast f = dataManager.buildForecast(data);
+		
+		// TODO CAPIRE SE C'E' UN MDO PIU' CONVENIENTE PER FARLO
 	}
+	
+	
 
-	
-	
-	
-	/*CONTROLLA*/
-	/*
-	public String createForecastList(String s) {
-
-		return null;
-	}
-	*/	
 }
 
 

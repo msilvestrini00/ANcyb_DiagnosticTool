@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.univpm.ancyb_diagnosticTool.datasim.DataSim;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl;	// da controllare che non sia illecito
 
@@ -17,13 +18,7 @@ public class ANcybRestController {
 	@Autowired
 	AncybDiagnosticToolService ancybdiagnostictoolservice;
 
-	/* VARIABILI DI PROVA, questi dati verranno sostituiti con gli appositi getter */
-	String macAddress = "a4:cf:12:76:76:95";
-	double lat = 43.574998;
-	double lng = 13.492686;
-	String time = "2022-01-05T00:00:00+00:00";	//TODO fai una stringa di conversione del tempo tra me e jack? (in caso da mettere in "utils")
-	
-	
+	DataSim dataSim = new DataSim();
 
 	
 	/* ROTTE DI TEST */
@@ -31,7 +26,7 @@ public class ANcybRestController {
 	@RequestMapping(value = "/test/receiveJSONData")
 	public /*ArrayList<ForecastObject>*/ String getForecast() {	// da cambiare
 		AncybDiagnosticToolServiceImpl a = new AncybDiagnosticToolServiceImpl();
-		return a.receiveJSONData(lat, lng);
+		return a.receiveJSONData(dataSim.getLat(), dataSim.getLng());
 		//new ResponseEntity<>(productService.getProducts(), HttpStatus.OK);
 	}
  

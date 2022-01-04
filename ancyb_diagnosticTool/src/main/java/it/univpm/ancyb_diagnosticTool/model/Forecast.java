@@ -14,9 +14,22 @@ public class Forecast {
 	}
 	
 	
+	public int getForecastLength() {
+		
+		return this.forecastList.size();
+	}
+	
 	public void addToForecast(ForecastObject obj) {
 		forecastList.add(obj);
 	}
+	
+	
+	public ForecastObject getForecastObject(int i) {
+		
+		return this.forecastList.get(i);
+	}
+	
+
 	
 
 	
