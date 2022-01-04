@@ -52,7 +52,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		// TODO PARTE DI ELABORAZIONE E STOCCAGGIO DATI
 		
 
-			jsonData = createForecastList(data);
+			jsonData = data;
 			
 		}
 		catch(IOException e) {
@@ -68,39 +68,12 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	
 	
 	/*CONTROLLA*/
-
-	@Override
+	/*
 	public String createForecastList(String s) {
 
-		String outputData = null;
-		
-		try{
-					
-			JSONParser parser = new JSONParser();
-			JSONObject jsonObject = (JSONObject) parser.parse(s);
-        
-		   // loop array
-			JSONArray hoursArray = (JSONArray) jsonObject.get("hours");
-			Iterator<?> iterator = hoursArray.iterator();
-			
-			String all = " ";
-			String next = " ";
-			while (iterator.hasNext()) {
-				
-				next = (String) iterator.next();
-				all += next;
-        }
-			
-			outputData = all;
-			
-		} catch (org.json.simple.parser.ParseException e) {
-            e.printStackTrace();
-		}
-		
-		return outputData;
+		return null;
 	}
-
-	
+	*/	
 }
 
 
