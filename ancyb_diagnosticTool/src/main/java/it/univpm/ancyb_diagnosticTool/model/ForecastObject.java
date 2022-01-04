@@ -5,7 +5,7 @@ public class ForecastObject {
 	String time;
 	float waveHeight, currentDirection, latitude, longitude;
 	
-	public ForecastObject(String time, float waveHeight, float currentDirection, float latitude, float longitude) {
+	public ForecastObject(String time, float waveHeight, float currentDirection/*, float latitude, float longitude*/) {
 		
 		this.time = time;
 		this.waveHeight = waveHeight;
@@ -37,7 +37,7 @@ public class ForecastObject {
 	public void setCurrentDirection(float currentDirection) {
 		this.currentDirection = currentDirection;
 	}
-
+/*
 	public float getLatitude() {
 		return latitude;
 	}
@@ -53,10 +53,12 @@ public class ForecastObject {
 	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
-	
+	*/
 	// TODO definire l'overriding di tostring ForecastObject
 	public String toString() {
-		return "";
+		return "time: " 		  + this.getTime() 		+ "\n" + 
+			   "waveHeight: " 	  + this.getWaveHeight()	+ "\n" + 
+			   "currentDirection: " + this.getCurrentDirection();
 	}
 	
 
