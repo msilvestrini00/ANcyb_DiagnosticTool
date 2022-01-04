@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.model.Forecast;  
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
-
+import it.univpm.ancyb_diagnosticTool.datasim.DataSim;
 import it.univpm.ancyb_diagnosticTool.filters.FilterByTime;  
 
 
@@ -15,6 +15,7 @@ public class JSONArrayToArrayList {
   public static void main(String[] args){  
       //Creating string of JSON data   
 	  
+	  DataSim dataSim = new DataSim();
 	  
 	  ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
 	  Forecast f = new Forecast(forecastList);
@@ -43,9 +44,11 @@ public class JSONArrayToArrayList {
       System.out.println("");
       System.out.println("");
 
+      // estrazione dei JSONArray "waveHeight" e "currentDirection"
       
       for (int i=0;i<hoursArray.length();i++){ 
     	
+    	  //conversione a stringa dell'array estratto prima
     	  String hoursArrayElementString = hoursArray.get(i).toString();
     	  
           //Converting jsonData string into JSON object  
@@ -74,43 +77,8 @@ public class JSONArrayToArrayList {
           
           /*FILTRAGGIO SOURCE PER WAVEHEIGHTARRAY*/
           
-          float waveHeight = 0;
-          
-          for(int j=0; j<waveHeightArray.length(); j++) {
-          JSONObject waveHeightObject = new JSONObject();
-
-          waveHeightObject = waveHeightArray.getJSONObject(j);
-              
-              String s = waveHeightObject.getString("source");
-              
-              if(s.equals("sg")) {
-            	  waveHeight = waveHeightObject.getFloat("value");
-              }
-              else continue;
-              
-          }
-
-          
-          
-          
-          /*FILTRAGGIO SOURCE PER CURRENTDIRECTIONARRAY*/
-          
-          float currentDirection = 0;
-          
-          for(int k=0; k<currentDirectionArray.length(); k++) {
-          JSONObject currentDirectionObject = new JSONObject();
-
-          currentDirectionObject = currentDirectionArray.getJSONObject(k);
-              
-              String s = currentDirectionObject.getString("source");
-              
-              if(s.equals("sg")) {
-            	  currentDirection = currentDirectionObject.getFloat("value");
-              }
-              else continue;
-              
-          }
-          
+          float waveHeight = extractSgSourceFromJSONArray(waveHeightArray);
+          float currentDirection = extractSgSourceFromJSONArray(currentDirectionArray);
           
           /* STAMPA DEI DATI RICAVATI
           
@@ -124,24 +92,57 @@ public class JSONArrayToArrayList {
           */
           
         		  
-          ForecastObject fobj = new ForecastObject(time, waveHeight, currentDirection);
+          ForecastObject fobj = new ForecastObject(dataSim.getMacAddr(), dataSim.getLat(), dataSim.getLng(), 
+        		  								   time, waveHeight, currentDirection);
           f.addToForecast(fobj);
 
-          System.out.println(fobj);
+          //System.out.println(fobj);
           
           System.out.println("");
           System.out.println("");
 
-          FilterByTime filter = new FilterByTime(f, "2022-01-03T01:00:00+00:00");
-          
-          System.out.println(filter.getFilteredForecastObject());
 
+          //System.out.println(dataSim.getMacAddr());
           
           
       }
+      
+      FilterByTime filter = new FilterByTime(f, "2022-01-03T01:00:00+00:00");
+      
+      System.out.println(filter.getFilteredForecastObject());
+
+      
       
       //TODO fai tutti i metodi necessari per snellire il processo
       //TODO implementa il tutto nell'applicazione
   
   	}
+  
+	public static float extractSgSourceFromJSONArray(JSONArray array) {	//TODO lasciarlo static?
+	  	  
+  		float data = 0;
+  
+  		for(int j=0; j<array.length(); j++) {
+  			JSONObject dataObject = new JSONObject();
+
+  			dataObject = array.getJSONObject(j);
+      
+  			String s = dataObject.getString("source");
+      
+  			if(s.equals("sg")) {
+  				data = dataObject.getFloat("value");
+  			}
+  			else continue;
+      
+  	}
+  			
+  	return data;		
+  }
+  
+
+
+  
+  	
+  	
+  	
 }
