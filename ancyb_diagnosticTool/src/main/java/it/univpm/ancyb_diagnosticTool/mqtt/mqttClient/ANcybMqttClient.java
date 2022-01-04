@@ -8,8 +8,10 @@ import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import it.univpm.ancyb_diagnosticTool.dataLogger.DataLogger;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.MqttDataReceived;
@@ -25,18 +27,29 @@ public class ANcybMqttClient implements MqttCallback {
     */
     
 	MqttClient subscriber;
+	MqttConnectOptions connOpt;
 	private DataLogger dataLog;
 	public static ArrayList<DataReceived> m5data;
 	
     public ANcybMqttClient (String url, String topic, int qos, String clientID){
         
-    	//TODO qui devo creare un Array List dove memorizzare tutti i subscribe e devo creare il file di log
     	m5data = new ArrayList<DataReceived>();
     	
+    	MemoryPersistence persistence = new MemoryPersistence();
+    	connOpt = new MqttConnectOptions();
+		connOpt.setCleanSession(true);
+		connOpt.setKeepAliveInterval(30);
+		
+		/**
+		 * TODO qui dovrei trovare una soluzione che non crea un
+		 * datalogger senza che mi connetto al server e che mi 
+		 * permette di riprovare a collegarmi al broker in caso di 
+		 * fallimento.
+		 */
         try {
-            subscriber = new MqttClient(url, clientID);
+            subscriber = new MqttClient(url, clientID, persistence);
             subscriber.setCallback(this);
-            subscriber.connect();
+            subscriber.connect(connOpt);
             subscriber.subscribe(topic);
             //subscriber.disconnect();
         } catch (MqttException ex) {
