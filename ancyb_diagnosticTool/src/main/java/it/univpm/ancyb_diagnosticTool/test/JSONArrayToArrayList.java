@@ -5,7 +5,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.model.Forecast;  
-import it.univpm.ancyb_diagnosticTool.model.ForecastObject;  
+import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
+
+import it.univpm.ancyb_diagnosticTool.filters.FilterByTime;  
+
 
 //Creating JSONArrayToArrayList class  
 public class JSONArrayToArrayList {  
@@ -129,6 +132,11 @@ public class JSONArrayToArrayList {
           System.out.println("");
           System.out.println("");
 
+          FilterByTime filter = new FilterByTime(f, "2022-01-03T01:00:00+00:00");
+          
+          System.out.println(filter.getFilteredForecastObject());
+
+          
           
       }
       
