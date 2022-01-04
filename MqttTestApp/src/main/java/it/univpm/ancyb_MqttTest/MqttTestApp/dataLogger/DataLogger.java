@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 
 import it.univpm.ancyb_MqttTest.MqttTestApp.model.DataReceived;    
 
-//TODO creare superclasse da cui eredita.
 
 public class DataLogger {
 	

@@ -1,5 +1,8 @@
 package it.univpm.ancyb_MqttTest.MqttTestApp.newClient;
 
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -7,12 +10,17 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 
+import it.univpm.ancyb_MqttTest.MqttTestApp.dataLogger.DataLogger;
+import it.univpm.ancyb_MqttTest.MqttTestApp.model.DataReceived;
+
 public class Mqtt {
 
     private static final String MQTT_PUBLISHER_ID = "spring-server-ancyb";
     private static final String MQTT_SERVER_ADDRES= "tcp://public.mqtthq.com:1883";
     private static IMqttClient instance;
     Mqtt mqttClient;
+    DataLogger dataLog;
+	public static ArrayList<DataReceived> m5data;
 
     public static IMqttClient getInstance() {
         
@@ -35,7 +43,12 @@ public class Mqtt {
         } catch (MqttException e) {
         	System.err.println("Connessione con il server persa!");
         	System.err.println("Exception: " + e);
-        	System.out.println("Riconnessione...");
+        	System.err.println("Riconnessione...");
+        	try {
+				TimeUnit.MILLISECONDS.sleep(100);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
             return Mqtt.getInstance();
         }
         return instance;
@@ -43,6 +56,8 @@ public class Mqtt {
 
     public Mqtt() {
     	Mqtt.getInstance();
+    	m5data = new ArrayList<DataReceived>();
+        dataLog = new DataLogger();
     }
     
     public void subscribe(final String topic) throws MqttException, InterruptedException {
@@ -50,7 +65,14 @@ public class Mqtt {
     	System.out.println("Sottoscrivo dal server:");
 
     	Mqtt.getInstance().subscribeWithResponse(topic, (tpic, msg) -> {
-    		System.out.println(msg.getId() + " -> " + new String(msg.getPayload()));
+    		String str = new String(msg.getPayload());
+    		System.out.println(msg.getId() + " -> " + str);
+    		/*DataReceived data = MqttDataReceived.createDataObj(str);
+    		if(data!=null) {
+    			m5data.add(data);
+    			this.dataLog.write(data);
+    		}*/
+    		dataLog.write(str);
     	});
     	
     }

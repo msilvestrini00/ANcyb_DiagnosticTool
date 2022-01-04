@@ -8,4 +8,10 @@ public class MqttStringOperator {
 		return strArr;
 		
 	}
+	
+	static public float strToFloat(String str) throws NullPointerException,  NumberFormatException{
+		float num;
+		num = Float.parseFloat(str);
+		return num;
+	}
 }

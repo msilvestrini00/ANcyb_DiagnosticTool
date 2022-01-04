@@ -5,10 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;    
+import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
+import it.univpm.ancyb_diagnosticTool.utilities.Time;    
 
 //TODO creare superclasse da cui eredita.
 
@@ -20,9 +19,7 @@ public class DataLogger {
 		
 		//creo una stringa con la data di questo momento
 		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd_HH.mm.ss");
-		LocalDateTime now = LocalDateTime.now(); 
-		String date = dtf.format(now);
+		String date = Time.currentDateTime();
 		this.fileName = (date + ".txt");
 		
 		//creo il file
@@ -52,7 +49,7 @@ public class DataLogger {
 			/* scrive i valori usando println
 			 * scrivo come prima riga un semplice header
 			 */
-			file_output.println(date + " - DataLogger");
+			file_output.println(date + " - DataLogger" + "\n" + ">--------------------------------<");
 			// chiude lo stream di output
 			file_output.close ();
 			}
@@ -77,7 +74,7 @@ public class DataLogger {
         	// chiude lo stream di output
         	file_output.close ();
         	}
-        	catch (IOException e) { // in caso di errori ...
+        	catch (IOException e) {
         	System.out.println(" ERRORE metodo DataLogger.write");
         	System.out.println(e);
         	}

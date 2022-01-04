@@ -3,7 +3,7 @@ package it.univpm.ancyb_diagnosticTool.utilities;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class CurrentDateTime {
+public class Time {
 	
 	public static String currentDateTime() {
 		

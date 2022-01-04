@@ -9,16 +9,22 @@ public class CoordFormat {
 	 * ovvero gradi, decimi e secondi
 	 */
 	
-	static public boolean checkIsLat(String str) throws WrongCoordFormat {
-		boolean flag = false;
-		if(str.length()==10) {
-			if(str.charAt(5)=='.') {
-				if( str.charAt(9) =='N'|| str.charAt(9) =='S' ) {
-					flag = true;
-				}else throw new WrongCoordFormat("Non è presente il riferimento N/S");
-			} else throw new WrongCoordFormat("Nessun punto trovato");
-		} else throw new WrongCoordFormat("Numero caratteri non corrispondente");
-		return flag;
+	static public void checkIsLat(String str) throws WrongCoordFormat {
+		int i;
+		if(str.length()!=10)
+			throw new WrongCoordFormat("Latitudine: numero caratteri non corrispondente");
+		if(str.charAt(4)!='.')
+			throw new WrongCoordFormat("Latitudine: non presente la virgola tra primi e secondi");
+		if( str.charAt(9) !='N'&& str.charAt(9) !='S' )
+			throw new WrongCoordFormat("Latitudine: non presente il riferimento N/S");
+		for(i = 0; i<4; i++) {
+			if(!Character.isDigit(str.charAt(i)))
+				throw new WrongCoordFormat("Latitudine: presenti dei caratteri non ammessi");
+		}
+		for(i = 5; i < 9; i++) {
+			if(!Character.isDigit(str.charAt(i))) 
+				throw new WrongCoordFormat("Latitudine: presenti dei caratteri non ammessi");
+		}
 	}
 	
 	/**
@@ -26,41 +32,41 @@ public class CoordFormat {
 	 * ovvero gradi, decimi e secondi
 	 */
 	
-	static public boolean checkIsLong(String str) throws WrongCoordFormat {
-		boolean flag = false;
-		if(str.length()==11) {
-			if(str.charAt(5)=='.') {
-				if( str.charAt(10) =='E'|| str.charAt(10) =='W' ) {
-					flag = true;
-				}else throw new WrongCoordFormat("Non è presente il riferimento E/W");
-			} else throw new WrongCoordFormat("Nessun punto trovato");
-		} else throw new WrongCoordFormat("Numero caratteri non corrispondente");
-		return flag;
+	static public void checkIsLon(String str) throws WrongCoordFormat {
+		int i;
+		if(str.length()!=11)
+			throw new WrongCoordFormat("Longitudine: numero caratteri non corrispondente");
+		if(str.charAt(5)!='.')
+			throw new WrongCoordFormat("Longitudine: non presente la virgola tra primi e secondi");
+		if( str.charAt(10) !='W'&& str.charAt(10) !='E' )
+			throw new WrongCoordFormat("Longitudine: non presente il riferimento E/W");
+		for(i = 0; i<5; i++) {
+			if(!Character.isDigit(str.charAt(i)))
+				throw new WrongCoordFormat("Longitudine: presenti dei caratteri non ammessi");
+		}
+		for(i = 6; i < 10; i++) {
+			if(!Character.isDigit(str.charAt(i)))
+				throw new WrongCoordFormat("Longitudine: presenti dei caratteri non ammessi");
+		}
 	}
-	
-	
 	
 	/**
 	 * questa funzione converte la latitudine in GMS
 	 * (in gradi, minuti e secondi) in GD (gradi decimali)
 	 */
 	
-	static public float latGMSstringtoGDfloat(String str) throws WrongCoordFormat {
+	static public float latGMSstringToGDfloat(String str) throws WrongCoordFormat {
 		
-		String g = str.substring(0, 1);
-		String m = str.substring(2, 3);
-		String s = str.substring(5, 8);
+		String g = str.substring(0, 2);
+		String m = str.substring(2, 4);
+		String s = str.substring(5, 9);
 		float gg,mm,ssss;
 		int sign=1;
 		
-		gg = convStrToFloat(g);
-		mm = convStrToFloat(m);
-		ssss = convStrToFloat(s);
-		
-		if (gg<0 || mm<0 || ssss<0) {
-			throw new WrongCoordFormat("Stringa non conforme alla conversione in latitudine");
-		}
-				
+		gg = MqttStringOperator.strToFloat(g);
+		mm = MqttStringOperator.strToFloat(m);
+		ssss = MqttStringOperator.strToFloat(s);
+
 		float lat = gg+mm/3600+ssss/3600;
 		
 		if(lat >= 0 && lat <= 90) {
@@ -79,48 +85,29 @@ public class CoordFormat {
 	 * (in gradi, minuti e secondi) in GD (gradi decimali)
 	 */
 	
-	static public float lonGMSstringtoGDfloat(String str) throws WrongCoordFormat {
+	static public float lonGMSstringToGDfloat(String str) throws WrongCoordFormat {
 		
-		String g = str.substring(0, 2);
-		String m = str.substring(3, 4);
-		String s = str.substring(6, 9);
+		String g = str.substring(0, 3);
+		String m = str.substring(3, 5);
+		String s = str.substring(6, 10);
 		float ggg,mm,ssss;
 		int sign = 1;
 		
-		ggg = convStrToFloat(g);
-		mm = convStrToFloat(m);
-		ssss = convStrToFloat(s);
+		ggg = MqttStringOperator.strToFloat(g);
+		mm = MqttStringOperator.strToFloat(m);
+		ssss = MqttStringOperator.strToFloat(s);
 		
-		if (ggg<0 || mm<0 || ssss<0) {
-			throw new WrongCoordFormat("Stringa non conforme alla conversione in longitudine");
-		}
+		float lon = ggg+mm/3600+ssss/3600;
 		
-		float longi = ggg+mm/3600+ssss/3600;
-		
-		if(longi >= 0 && longi <= 90) {
+		if(lon >= 0 && lon <= 90) {
 			if(str.charAt(10)=='W') sign = -1;
-			longi = sign*longi;
-			return longi;
+			lon = sign*lon;
+			return lon;
 		}
 		else {
 			throw new WrongCoordFormat("Longitudine non compresa tra i -180° e 180°");
 		}
 		
-	}
-
-	public static float convStrToFloat(String str) {
-		
-		float num = -1;
-		
-		try {
-			num = Float.parseFloat(str);
-		}catch(NullPointerException e){
-			System.out.println("Exception: " + e);
-		}
-		catch(NumberFormatException e){
-			System.out.println("Exception: " + e);	
-		}
-		return num;
 	}
 	
 }

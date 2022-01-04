@@ -1,6 +1,6 @@
 package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
-import it.univpm.ancyb_diagnosticTool.utilities.CurrentDateTime;
+import it.univpm.ancyb_diagnosticTool.utilities.Time;
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 
 class ANcybFishData implements DataReceived {
@@ -22,10 +22,9 @@ class ANcybFishData implements DataReceived {
 		return date;
 	}
 	
-	//TODO avrà senso questa funzione?
 	@Override
 	public void setDate() {	
-		this.date = CurrentDateTime.currentDate();
+		this.date = Time.currentDate();
 	}
 
 	@Override
@@ -33,10 +32,9 @@ class ANcybFishData implements DataReceived {
 		return time;
 	}
 	
-	//TODO avrà senso questa funzione?
 	@Override
 	public void setTime() {
-		this.date = CurrentDateTime.currentTime();
+		this.date = Time.currentTime();
 	}
 
 	public String getMacAddr() {
