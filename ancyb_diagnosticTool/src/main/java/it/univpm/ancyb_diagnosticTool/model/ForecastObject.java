@@ -81,7 +81,7 @@ public class ForecastObject {
         jo.put("Time", this.getTime());
         jo.put("WaveHeight", this.getWaveHeight());
         jo.put("CurrentDirection", this.getCurrentDirection());
-
+        
         return jo;
     }
 

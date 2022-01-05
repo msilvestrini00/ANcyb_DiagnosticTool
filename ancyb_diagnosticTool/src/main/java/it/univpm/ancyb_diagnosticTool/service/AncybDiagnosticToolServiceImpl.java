@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
-import it.univpm.ancyb_diagnosticTool.datasim.DataSim;
+import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataSim;
 import it.univpm.ancyb_diagnosticTool.filters.FilterByTime;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolDataManager;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
@@ -28,22 +28,10 @@ import it.univpm.ancyb_diagnosticTool.utilities.Time;
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
 
-	double lat;
-	double lng;
-	
-	public AncybDiagnosticToolServiceImpl() {}
-	
-	public AncybDiagnosticToolServiceImpl(double lat, double lng) {
+	public ForecastObject getRealTimeForecast(double lat, double lng) {
 		
-		this.lat = lat;
-		this.lng = lng;
-	}
-
-	
-	public ForecastObject getRealTimeForecast() {
-		
-		AncybDiagnosticToolDataManager dataManager = new AncybDiagnosticToolDataManager(this.lat, this.lng);
-		DataSim dataSim = new DataSim();
+		AncybDiagnosticToolDataManager dataManager = new AncybDiagnosticToolDataManager(lat, lng);
+		AncybFishDataSim dataSim = new AncybFishDataSim();
 		
 		ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
 		Forecast forecast = new Forecast(forecastList);
@@ -58,7 +46,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 
 
-	
+
 
 }
 

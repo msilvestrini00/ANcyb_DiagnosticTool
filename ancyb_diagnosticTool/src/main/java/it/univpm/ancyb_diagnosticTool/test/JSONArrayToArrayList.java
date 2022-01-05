@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.model.Forecast;  
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
-import it.univpm.ancyb_diagnosticTool.datasim.DataSim;
+import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataSim;
 import it.univpm.ancyb_diagnosticTool.filters.FilterByTime;  
 
 
@@ -15,7 +15,7 @@ public class JSONArrayToArrayList {
   public static void main(String[] args){  
       //Creating string of JSON data   
 	  
-	  DataSim dataSim = new DataSim();
+	  AncybFishDataSim dataSim = new AncybFishDataSim();
 	  
 	  ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
 	  Forecast f = new Forecast(forecastList);
