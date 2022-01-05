@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univpm.ancyb_diagnosticTool.datasim.DataSim;
+import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
+import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolDataManager;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl;	// da controllare che non sia illecito
 
@@ -24,10 +26,11 @@ public class ANcybRestController {
 	/* ROTTE DI TEST */
 	
 	@RequestMapping(value = "/test/receiveJSONData")
-	public /*ArrayList<ForecastObject>*/ String getForecast() {	// da cambiare
-		AncybDiagnosticToolServiceImpl a = new AncybDiagnosticToolServiceImpl();
-		return a.receiveJSONData(dataSim.getLat(), dataSim.getLng());
-		//new ResponseEntity<>(productService.getProducts(), HttpStatus.OK);
+	public ForecastObject getForecast() {
+		
+		AncybDiagnosticToolServiceImpl service = new AncybDiagnosticToolServiceImpl();
+		return service.getRealTimeForecast(dataSim.getLat(), dataSim.getLng());
+
 	}
  
 

@@ -22,29 +22,33 @@ public class AncybDiagnosticToolDataManager {
 	
 	private double lat;
 	private double lng;
-
+	private String url;
+	private String data;
+	private ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
+	private Forecast forecast = new Forecast(forecastList);
 	
 	public AncybDiagnosticToolDataManager(double lat, double lng) {
 		
-		
-		// TODO DEFINIRE UN OGGETTO?
+	this.lat = lat;
+	this.lng = lng;
 		
 	}
-	
-	
-	
-	public String buildURL(double lat, double lng) {
 
-	return uri + apiKey + "&lat=" + lat + "&lng=" + lng;
+	public String getUrl() {
+		return this.url;
+	}
+	
+	public void buildURL() {
+		this.url = uri + apiKey + "&lat=" + this.lat + "&lng=" + this.lng;
 	}
 	
 	
-	public String downloadJSONData(String url) {
+	public void downloadJSONData() {
 
 		String jsonData = null;
 
 		try {
-			URLConnection openConnection = new URL(url).openConnection();
+			URLConnection openConnection = new URL(getUrl()).openConnection();
 			InputStream in = openConnection.getInputStream();
 			
 			String data = "";
@@ -69,12 +73,11 @@ public class AncybDiagnosticToolDataManager {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return jsonData;
+		this.data = jsonData;
 	}
 
 	
-	
-	public Forecast buildForecast(String jsonData) {
+	public Forecast buildForecast() {
 		
 		  //INIZIALIZZAZIONE DELL'OGGETTO SIMULAZIONE DATI
 		  DataSim dataSim = new DataSim();
@@ -86,7 +89,7 @@ public class AncybDiagnosticToolDataManager {
 		  Forecast f = new Forecast(forecastList);
 		
 	      //Converting jsonData string into JSON object  
-	      JSONObject jsnobject1 = new JSONObject(jsonData);	
+	      JSONObject jsnobject1 = new JSONObject(this.data);	
 		
 	      //Getting hours JSON array from the JSON object  
 	      JSONArray hoursArray = jsnobject1.getJSONArray("hours"); 
@@ -119,6 +122,8 @@ public class AncybDiagnosticToolDataManager {
 	          f.addToForecast(fobj);
 	          
 	      }
+	      this.forecast = f;
+	      
 	      return f;
 	      
 	}

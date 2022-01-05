@@ -25,7 +25,7 @@ public class JSONArrayToArrayList {
       				   + "\"meta\":{\"end\":\"2022-01-13 00:00\",\"lat\":43.574998,\"lng\":13.492686,"
       				   + "\"params\":[\"waterTemperature\",\"wavePeriod\",\"waveDirection\",\"waveDirection\",\"waveHeight\",\"windWaveDirection\",\"windWaveHeight\",\"windWavePeriod\",\"swellPeriod\",\"swellDirection\",\"swellHeight\",\"windSpeed\",\"windDirection\",\"airTemperature\",\"precipitation\",\"gust\",\"cloudCover\",\"humidity\",\"pressure\",\"visibility\",\"seaLevel\",\"currentSpeed\",\"currentDirection\"],"
       				   + "\"start\":\"2022-01-03 00:00\"}}";  
-      				   
+     	   
       
       //Converting jsonData string into JSON object  
       JSONObject jsnobject1 = new JSONObject(jsonData);  

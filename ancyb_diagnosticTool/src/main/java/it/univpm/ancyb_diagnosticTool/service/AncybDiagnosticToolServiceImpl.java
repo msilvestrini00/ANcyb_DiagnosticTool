@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.datasim.DataSim;
+import it.univpm.ancyb_diagnosticTool.filters.FilterByTime;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolDataManager;
 
 
@@ -26,18 +27,27 @@ import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolDataManager;
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
 
-	public ForecastObject getRealTimeForecast() {
+	public ForecastObject getRealTimeForecast(double lat, double lng) {
 		
-		AncybDiagnosticToolDataManager dataManager = new AncybDiagnosticToolDataManager();
+		AncybDiagnosticToolDataManager dataManager = new AncybDiagnosticToolDataManager(lat, lng);
 		DataSim dataSim = new DataSim();
-
-		String url = dataManager.buildURL(dataSim.getLat(), dataSim.getLng());
-		String data = dataManager.downloadJSONData(url);
-		Forecast f = dataManager.buildForecast(data);
 		
+		ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
+		Forecast forecast = new Forecast(forecastList);
+		
+		
+		dataManager.buildURL();		
+		dataManager.downloadJSONData();
+		forecast = dataManager.buildForecast();
+
+	    FilterByTime filter = new FilterByTime(forecast, "2022-01-07T01:00:00+00:00");
+	      
 		// TODO CAPIRE SE C'E' UN MDO PIU' CONVENIENTE PER FARLO
+		return filter.getFilteredForecastObject()
+;
 	}
-	
+
+
 	
 
 }
