@@ -13,7 +13,8 @@ import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
-import it.univpm.ancyb_diagnosticTool.datasim.DataSim;
+import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataSim;
+import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataObjectSim;
 
 public class AncybDiagnosticToolDataManager {
 
@@ -80,7 +81,7 @@ public class AncybDiagnosticToolDataManager {
 	public Forecast buildForecast() {
 		
 		  //INIZIALIZZAZIONE DELL'OGGETTO SIMULAZIONE DATI
-		  DataSim dataSim = new DataSim();
+		  AncybFishDataObjectSim dataSimObject = new AncybFishDataObjectSim("a4:cf:12:76:76:95", 43.574998, 13.492686, "2022-01-05T00:00:00+00:00");
 		  
 		  //Defining the ArrayList used by the object 'Forecast'
 		  ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
@@ -95,10 +96,12 @@ public class AncybDiagnosticToolDataManager {
 	      JSONArray hoursArray = jsnobject1.getJSONArray("hours"); 
 		
 	      //Estracting waveHeight and currentDirection JSON arrays and time JSON object from hours JSON array 
-	      for (int i=0;i<hoursArray.length();i++){ 
+	      for(Object hoursElement : hoursArray) {
 	      
+	      //for (int i=0;i<hoursArray.length();i++){ 
+	    
 	    	  //Converting the hours JSON array to string
-	    	  String hoursArrayElementString = hoursArray.get(i).toString();
+	    	  String hoursArrayElementString = hoursElement.toString();
 	    	  
 	          //Converting the string to JSON object 
 	          JSONObject jsnobject2 = new JSONObject(hoursArrayElementString); 
@@ -115,7 +118,7 @@ public class AncybDiagnosticToolDataManager {
 	          String time = jsnobject2.getString("time"); 
 
 	          //Defining a ForecastObject in which put all the data
-	          ForecastObject fobj = new ForecastObject(dataSim.getMacAddr(), dataSim.getLat(), dataSim.getLng(), 
+	          ForecastObject fobj = new ForecastObject(dataSimObject.getMacAddr(), dataSimObject.getLat(), dataSimObject.getLng(), 
 						   time, waveHeight, currentDirection);
 	          
 	          //Adding the created object in the ArrayList of the 'Forecast' object

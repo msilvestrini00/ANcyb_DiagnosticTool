@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.univpm.ancyb_diagnosticTool.datasim.DataSim;
+import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataSim;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolDataManager;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
@@ -20,20 +20,20 @@ import it.univpm.ancyb_diagnosticTool.utilities.Time;
 @RestController
 public class ANcybRestController {
 	@Autowired
-	AncybDiagnosticToolService ancybdiagnostictoolservice;
+	AncybDiagnosticToolService a;
 
-	DataSim dataSim = new DataSim();
+	AncybFishDataSim dataSim = new AncybFishDataSim();	// da togliere finito il testing
 
-	
-	/* ROTTE DI TEST */
-	
-	@RequestMapping(value = "/test/receiveJSONData")
-	public ForecastObject /*JSONObject*/ getForecast() {
 		
-		AncybDiagnosticToolServiceImpl service = new AncybDiagnosticToolServiceImpl(dataSim.getLat(), dataSim.getLng());
-		return service.getRealTimeForecast()/*.toJSON()*/;
+	@RequestMapping(value = "/{macAddr}/forecast")
+	public ResponseEntity<Object> getForecast() {
+		//TODO leva la definizione del servizio e utilizza 'a'
+		AncybDiagnosticToolServiceImpl service = new AncybDiagnosticToolServiceImpl(dataSim.getLat(), dataSim.getLng()); // le coordinate vanno prese dal mac, sistemare questa parte
+		JSONObject j = service.getRealTimeForecast().toJSON();
+        
+		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 		//TODO sistema la parte su questa rotta
-		//TODO rivedi tutto il programma fatto fin'ora
+		//TODO rivedi tutto il codice fatto fin'ora
 		//TODO fai UML fatto bene anche per le altre rotte e altre classi
 	}
  
