@@ -3,8 +3,18 @@ package it.univpm.ancyb_diagnosticTool.utilities;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+//TODO se ci sono più autori??
+/**
+ * 
+ * @author giaco
+ *
+ */
 public class Time {
 	
+	/**
+	 * Questo metodo restituisce in stringa la data e il tempo corrente
+	 * @return
+	 */
 	public static String currentDateTime() {
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd_HH.mm.ss");
@@ -14,6 +24,10 @@ public class Time {
 		
 	}
 	
+	/**
+	 * Questo metodo restituisce in stringa la data corrente
+	 * @return
+	 */
 	public static String currentDate() {
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd");
@@ -23,6 +37,10 @@ public class Time {
 		
 	}
 	
+	/**
+	 * Questo metodo restituisce in stringa il tempo corrente
+	 * @return
+	 */
 	public static String currentTime() {
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH.mm.ss");

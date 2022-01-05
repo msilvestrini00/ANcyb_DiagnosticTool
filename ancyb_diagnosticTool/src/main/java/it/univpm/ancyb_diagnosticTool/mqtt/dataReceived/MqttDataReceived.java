@@ -3,9 +3,13 @@ package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
 import it.univpm.ancyb_diagnosticTool.utilities.CoordFormat;
-import it.univpm.ancyb_diagnosticTool.utilities.MqttStringOperator;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
+/**
+ * 
+ * @author Giacomo Fiara
+ *
+ */
 public class MqttDataReceived {
 	
 	public static ANcybFishData createDataObj(String str) throws MqttStringMismatch {
@@ -19,12 +23,13 @@ public class MqttDataReceived {
 		
 		switch (strArr[1]) {
 		case "Ver_G":
-				
+			
 			if(strArr.length!=6)
 				throw new MqttStringMismatch("Stringa corrispondente alla Ver_G ma presenta un numero di elementi incompatibile");
 		
 			mac = strArr[0];
-			if(mac.length()!=17) break;
+			if(mac.length()!=17)
+				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> Mac Address");
 			
 			ver = strArr[1];
 			
@@ -35,7 +40,6 @@ public class MqttDataReceived {
 				CoordFormat.checkIsLat(latitude);
 				lat = CoordFormat.latGMSstringToGDfloat(latitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
-				e.printStackTrace();
 				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> latitudine");
 			}
@@ -45,7 +49,6 @@ public class MqttDataReceived {
 				CoordFormat.checkIsLon(longitude);
 				lon = CoordFormat.lonGMSstringToGDfloat(longitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
-				e.printStackTrace();
 				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> longitudine");
 			}
@@ -63,6 +66,8 @@ public class MqttDataReceived {
 				throw new MqttStringMismatch("Stringa corrispondente alla Ver_GT ma presenta un numero di elementi incompatibile");
 			
 			mac = strArr[0];
+			if(mac.length()!=17)
+				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> Mac Address");
 			
 			ver = strArr[1];
 			
@@ -73,7 +78,6 @@ public class MqttDataReceived {
 				CoordFormat.checkIsLat(latitude);
 				lat = CoordFormat.latGMSstringToGDfloat(latitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
-				e.printStackTrace();
 				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> latitudine");
 			}
@@ -83,7 +87,6 @@ public class MqttDataReceived {
 				CoordFormat.checkIsLon(longitude);
 				lon = CoordFormat.lonGMSstringToGDfloat(longitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
-				e.printStackTrace();
 				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> longitudine");
 			}
@@ -92,16 +95,15 @@ public class MqttDataReceived {
 			
 			temperature = strArr[6];
 			try {
-				temp = MqttStringOperator.strToFloat(temperature);
+				temp = Float.parseFloat(temperature);
 			} catch (NullPointerException|NumberFormatException e){
-				e.printStackTrace();
 				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> temperatura");
 			}
 					
 			date = Time.currentDate();
 			
-			ancybData = new ANcybFishData_VerGT(date, time, mac, ver, lat, lon, qualPos, temp);
+			ancybData = new ANcybFishData_VerGT(date, time, mac, ver, lat, lon, qualPos, temp);			
 			break;
 			
 			//nel caso avessi una versione pressione ("P"), o altre ...

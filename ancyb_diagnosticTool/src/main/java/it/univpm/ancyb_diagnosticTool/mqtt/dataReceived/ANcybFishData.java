@@ -3,20 +3,32 @@ package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 
-class ANcybFishData implements DataReceived {
+/**
+ * 
+ * @author giaco
+ *
+ */
+public class ANcybFishData implements DataReceived {
 
 	protected String time;
 	private String date;
 	private String ver;
 	private String macAddr;
-
+	
+	/**
+	 * 
+	 * @param date
+	 * @param time
+	 * @param macAddr
+	 * @param ver
+	 */
 	public ANcybFishData(String date, String time, String macAddr, String ver) {
 		this.date=date;
 		this.time=time;
 		this.ver=ver;
 		this.macAddr=macAddr;
 	}
-
+	
 	@Override
 	public String getDate() {
 		return date;

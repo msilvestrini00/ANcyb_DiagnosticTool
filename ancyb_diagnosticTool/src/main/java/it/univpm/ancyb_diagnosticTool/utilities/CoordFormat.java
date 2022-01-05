@@ -1,14 +1,19 @@
 package it.univpm.ancyb_diagnosticTool.utilities;
 
 import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
-
+/**
+ * 
+ * @author Giacomo Fiara
+ *
+ */
 public class CoordFormat {
 	
 	/**
-	 * questa fuzione controlla che la coordinata sia una latitudine GMS
+	 * questa fuzione controlla che la coordinata sia una latitudine GMS:
 	 * ovvero gradi, decimi e secondi
+	 * @param str
+	 * @throws WrongCoordFormat
 	 */
-	
 	static public void checkIsLat(String str) throws WrongCoordFormat {
 		int i;
 		if(str.length()!=10)
@@ -28,10 +33,11 @@ public class CoordFormat {
 	}
 	
 	/**
-	 * questa fuzione controlla che la coordinata sia una latitudine GMS
-	 * ovvero gradi, decimi e secondi
+	 * questa fuzione controlla che la coordinata sia una longitudine GMS:
+	 * ovvero gradi, decimi e secondi 
+	 * @param str
+	 * @throws WrongCoordFormat
 	 */
-	
 	static public void checkIsLon(String str) throws WrongCoordFormat {
 		int i;
 		if(str.length()!=11)
@@ -51,10 +57,12 @@ public class CoordFormat {
 	}
 	
 	/**
-	 * questa funzione converte la latitudine in GMS
-	 * (in gradi, minuti e secondi) in GD (gradi decimali)
+	 * questa funzione converte la latitudine in GMS (in gradi, minuti e secondi)
+	 * in GD (gradi decimali)
+	 * @param str
+	 * @return
+	 * @throws WrongCoordFormat
 	 */
-	
 	static public float latGMSstringToGDfloat(String str) throws WrongCoordFormat {
 		
 		String g = str.substring(0, 2);
@@ -63,11 +71,11 @@ public class CoordFormat {
 		float gg,mm,ssss;
 		int sign=1;
 		
-		gg = MqttStringOperator.strToFloat(g);
-		mm = MqttStringOperator.strToFloat(m);
-		ssss = MqttStringOperator.strToFloat(s);
+		gg = Float.parseFloat(g);
+		mm = Float.parseFloat(m);
+		ssss = Float.parseFloat(s);
 
-		float lat = gg+mm/3600+ssss/3600;
+		float lat = gg+mm/60+ssss/3600;
 		
 		if(lat >= 0 && lat <= 90) {
 			if(str.charAt(9)=='S') sign = -1;
@@ -80,11 +88,14 @@ public class CoordFormat {
 		
 	}
 
-	/**
-	 * questa funzione converte la longitudine in GMS
-	 * (in gradi, minuti e secondi) in GD (gradi decimali)
-	 */
 	
+	/**
+	 * questa funzione converte la longitudine in GMS (in gradi, minuti e secondi)
+	 * in GD (gradi decimali)
+	 * @param str
+	 * @return
+	 * @throws WrongCoordFormat
+	 */
 	static public float lonGMSstringToGDfloat(String str) throws WrongCoordFormat {
 		
 		String g = str.substring(0, 3);
@@ -93,11 +104,11 @@ public class CoordFormat {
 		float ggg,mm,ssss;
 		int sign = 1;
 		
-		ggg = MqttStringOperator.strToFloat(g);
-		mm = MqttStringOperator.strToFloat(m);
-		ssss = MqttStringOperator.strToFloat(s);
+		ggg = Float.parseFloat(g);
+		mm = Float.parseFloat(m);
+		ssss = Float.parseFloat(s);
 		
-		float lon = ggg+mm/3600+ssss/3600;
+		float lon = ggg+mm/60+ssss/3600;
 		
 		if(lon >= 0 && lon <= 90) {
 			if(str.charAt(10)=='W') sign = -1;
@@ -108,6 +119,6 @@ public class CoordFormat {
 			throw new WrongCoordFormat("Longitudine non compresa tra i -180° e 180°");
 		}
 		
-	}
+	}	
 	
 }
