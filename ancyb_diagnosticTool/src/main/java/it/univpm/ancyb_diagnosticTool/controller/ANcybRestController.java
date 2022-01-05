@@ -1,5 +1,6 @@
 package it.univpm.ancyb_diagnosticTool.controller;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +28,10 @@ public class ANcybRestController {
 	/* ROTTE DI TEST */
 	
 	@RequestMapping(value = "/test/receiveJSONData")
-	public ForecastObject getForecast() {
+	public ForecastObject /*JSONObject*/ getForecast() {
 		
-		AncybDiagnosticToolServiceImpl service = new AncybDiagnosticToolServiceImpl();
-		return service.getRealTimeForecast(dataSim.getLat(), dataSim.getLng());
+		AncybDiagnosticToolServiceImpl service = new AncybDiagnosticToolServiceImpl(dataSim.getLat(), dataSim.getLng());
+		return service.getRealTimeForecast()/*.toJSON()*/;
 		//TODO sistema la parte su questa rotta
 		//TODO rivedi tutto il programma fatto fin'ora
 		//TODO fai UML fatto bene anche per le altre rotte e altre classi

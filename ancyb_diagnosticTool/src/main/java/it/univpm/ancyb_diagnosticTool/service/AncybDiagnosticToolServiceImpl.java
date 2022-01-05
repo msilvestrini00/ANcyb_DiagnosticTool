@@ -28,9 +28,21 @@ import it.univpm.ancyb_diagnosticTool.utilities.Time;
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
 
-	public ForecastObject getRealTimeForecast(double lat, double lng) {
+	double lat;
+	double lng;
+	
+	public AncybDiagnosticToolServiceImpl() {}
+	
+	public AncybDiagnosticToolServiceImpl(double lat, double lng) {
 		
-		AncybDiagnosticToolDataManager dataManager = new AncybDiagnosticToolDataManager(lat, lng);
+		this.lat = lat;
+		this.lng = lng;
+	}
+
+	
+	public ForecastObject getRealTimeForecast() {
+		
+		AncybDiagnosticToolDataManager dataManager = new AncybDiagnosticToolDataManager(this.lat, this.lng);
 		DataSim dataSim = new DataSim();
 		
 		ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();

@@ -1,5 +1,7 @@
 package it.univpm.ancyb_diagnosticTool.model;
 
+import org.json.JSONObject;
+
 public class ForecastObject {
 
 	String time;
@@ -68,12 +70,24 @@ public class ForecastObject {
 		this.currentDirection = currentDirection;
 	}
 
+	
+    public JSONObject toJSON() {
 
+        JSONObject jo = new JSONObject();
+        
+        jo.put("macAddress", this.getMacAddress());
+        jo.put("Latitude", this.getLatitude());
+        jo.put("Longitude", this.getLongitude());
+        jo.put("Time", this.getTime());
+        jo.put("WaveHeight", this.getWaveHeight());
+        jo.put("CurrentDirection", this.getCurrentDirection());
+
+        return jo;
+    }
 
 	
-
-	// TODO definire l'overriding di tostring ForecastObject
-	public String toString() {
+    public String toString() {
+    	
 		return "macAddr: " 		  	  + this.getMacAddress() 		+ "\n" + 
 			   "Latitude: " 		  + this.getLatitude() 	 		+ "\n" + 
 			   "Longitude: " 		  + this.getLongitude()  		+ "\n" + 
