@@ -21,6 +21,7 @@ import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.datasim.DataSim;
 import it.univpm.ancyb_diagnosticTool.filters.FilterByTime;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolDataManager;
+import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 
 @Service
@@ -35,16 +36,13 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
 		Forecast forecast = new Forecast(forecastList);
 		
-		
 		dataManager.buildURL();		
 		dataManager.downloadJSONData();
 		forecast = dataManager.buildForecast();
 
-	    FilterByTime filter = new FilterByTime(forecast, "2022-01-07T01:00:00+00:00");
-	      
-		// TODO CAPIRE SE C'E' UN MDO PIU' CONVENIENTE PER FARLO
-		return filter.getFilteredForecastObject()
-;
+	    FilterByTime filter = new FilterByTime(forecast, Time.currentDateTime2());
+
+		return filter.getFilteredForecastObject();
 	}
 
 

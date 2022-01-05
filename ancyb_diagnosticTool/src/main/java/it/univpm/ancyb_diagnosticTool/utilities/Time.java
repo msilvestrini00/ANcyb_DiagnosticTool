@@ -32,4 +32,14 @@ public class Time {
 		
 	}
 	
+	//format used for filtering ForecastObjects by the time string
+	public static String currentDateTime2() {	//"2022-01-05T00:00:00+00:00"
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd.HH:00:00+00:00");
+		LocalDateTime now = LocalDateTime.now(); 
+		String currDateTime = dtf.format(now);
+		String newcurrDateTime = currDateTime.replace('.', 'T');
+		return newcurrDateTime;
+		
+	}
 }

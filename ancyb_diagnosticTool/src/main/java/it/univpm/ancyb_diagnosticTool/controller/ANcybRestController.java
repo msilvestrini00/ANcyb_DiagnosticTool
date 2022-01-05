@@ -14,6 +14,7 @@ import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolDataManager;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl;	// da controllare che non sia illecito
+import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 @RestController
 public class ANcybRestController {
@@ -30,7 +31,9 @@ public class ANcybRestController {
 		
 		AncybDiagnosticToolServiceImpl service = new AncybDiagnosticToolServiceImpl();
 		return service.getRealTimeForecast(dataSim.getLat(), dataSim.getLng());
-
+		//TODO sistema la parte su questa rotta
+		//TODO rivedi tutto il programma fatto fin'ora
+		//TODO fai UML fatto bene anche per le altre rotte e altre classi
 	}
  
 

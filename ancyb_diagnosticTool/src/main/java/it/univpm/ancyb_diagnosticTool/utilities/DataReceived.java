@@ -8,4 +8,5 @@ public interface DataReceived {
 	public void setTime();
 	public String toString();
 	
+	//TODO implementa l'interfaccia negli oggetti che Manuele ha scritto
 }
