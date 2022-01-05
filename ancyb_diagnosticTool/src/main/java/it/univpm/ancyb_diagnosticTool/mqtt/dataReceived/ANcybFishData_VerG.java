@@ -1,16 +1,20 @@
 package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
+import java.util.ArrayList;
+
 public class ANcybFishData_VerG extends ANcybFishData {
 
 	private float latitude;
 	private float longitude;
 	private String qualPos;
+	public static ArrayList<ANcybFishData_VerG> verGData = new ArrayList<ANcybFishData_VerG>();
 	
 	public ANcybFishData_VerG(String date, String time, String macAddr, String ver, float latitude, float longitude, String qualPos) {
 		super(date, time, macAddr, ver);
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.qualPos = qualPos;
+		verGData.add(this);
 	}
 
 	public float getLatitude() {
