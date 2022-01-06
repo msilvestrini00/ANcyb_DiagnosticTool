@@ -1,6 +1,8 @@
 package it.univpm.ancyb_diagnosticTool.service;
 
 
+import java.util.ArrayList;
+
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
@@ -13,7 +15,9 @@ public interface AncybDiagnosticToolService {
 	//public abstract JSONArray stringToJSONArray(String s);						// riceve la stringa pulita e la converte in JSONArray, che restituisce				
 	//public abstract /*ArrayList<ForecastObject>*/ String createForecastList(String s);	// riceve il JSONArray e lo sistema nell'ArrayList (che restituisce)
 
-	public abstract ANcybFishData getRealTimePosition(String macAddr) throws VersionMismatch, FilterFailure;
+	public abstract ANcybFishData getLastTimePosition(String macAddr) throws VersionMismatch, FilterFailure;
+
+	public abstract ArrayList<ANcybFishData> getAllPositions(String macAddr) throws FilterFailure, VersionMismatch;
 
 
 }

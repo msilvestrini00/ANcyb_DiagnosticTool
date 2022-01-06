@@ -11,7 +11,6 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerGT;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
 
-@SuppressWarnings("unused")
 class TestMqttDataReceived {
 	
 	static ANcybFishData data;

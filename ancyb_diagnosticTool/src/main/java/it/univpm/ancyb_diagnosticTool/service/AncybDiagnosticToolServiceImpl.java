@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.filters.FilterByTime;
+import it.univpm.ancyb_diagnosticTool.filters.FilterListByMac;
 import it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
@@ -36,12 +37,21 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 
 		return filter.getFilteredForecastObject();
 	}
+	
 
 	@Override
-	public ANcybFishData getRealTimePosition(String macAddr) throws VersionMismatch, FilterFailure {
-		
+	public ANcybFishData getLastTimePosition(String macAddr) throws VersionMismatch, FilterFailure {
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
 		ANcybFishData fishData = filterFishData.getDataFiltered();
+		checkVersion.verG(fishData);
+		return fishData;
+	}
+
+
+	@Override
+	public ArrayList<ANcybFishData> getAllPositions(String macAddr) throws FilterFailure, VersionMismatch {
+		FilterListByMac filterFishData = new FilterListByMac(macAddr);
+		ArrayList<ANcybFishData> fishData = filterFishData.getDataFiltered();
 		checkVersion.verG(fishData);
 		return fishData;
 	}
@@ -53,3 +63,5 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 
 
 //TODO implementa i metodi (es di stoccaggio dati)
+
+

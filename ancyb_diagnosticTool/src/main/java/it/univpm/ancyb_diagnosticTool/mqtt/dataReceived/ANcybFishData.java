@@ -10,7 +10,7 @@ import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 /**
  * 
- * @author giaco
+ * @author Giacomo Fiara
  *
  */
 public class ANcybFishData implements DataReceived {

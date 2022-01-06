@@ -1,5 +1,7 @@
 package it.univpm.ancyb_diagnosticTool.controller;
 
+import java.util.ArrayList;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 
 @RestController
@@ -18,6 +21,7 @@ public class ANcybRestController {
 	@Autowired
 	AncybDiagnosticToolService a;
 	private JSONObject j;
+	ArrayList<ANcybFishData> list;
 
 	//AncybFishDataSim dataSim = new AncybFishDataSim();	// da togliere finito il testing
 
@@ -45,13 +49,19 @@ public class ANcybRestController {
 		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 		
 	}
-
-	@RequestMapping(value = "/{macAddr}/device", method = RequestMethod.GET)
-	public ResponseEntity<Object> getCurrentPosition(@PathVariable("macAddr") String macAddr) {
+	
+	/**
+	 * Rotta che restituisce l'ultima posizione inviata dal dispositivo corrispondente
+	 * al Mac address inserito come parametro.
+	 * @param macAddr
+	 * @return
+	 */
+	@RequestMapping(value = "/{macAddr}/device/last", method = RequestMethod.GET)
+	public ResponseEntity<Object> getLastPosition(@PathVariable("macAddr") String macAddr) {
 		
 		j = null;
 		try {
-			j = a.getRealTimePosition(macAddr).toJSON();
+			j = a.getLastTimePosition(macAddr).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 		} catch (VersionMismatch | FilterFailure e) {
 			System.err.println("Exception: " + e);
@@ -60,7 +70,19 @@ public class ANcybRestController {
 		
 	}
 
-
+	@RequestMapping(value = "/{macAddr}/device/all", method = RequestMethod.GET)
+	public ResponseEntity<Object> getAllPositions(@PathVariable("macAddr") String macAddr) {
+		
+		try {
+			list = a.getAllPositions(macAddr);
+			return new ResponseEntity<>(list.hashCode(), HttpStatus.OK);
+		} catch (VersionMismatch | FilterFailure e) {
+			System.err.println("Exception: " + e);
+			//TODO ovviamente non funziona, trova il mondo di fargli passare l'arraylist
+			return new ResponseEntity<>( list, HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 
 }
 
