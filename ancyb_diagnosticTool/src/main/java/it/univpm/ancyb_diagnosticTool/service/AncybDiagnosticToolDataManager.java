@@ -30,12 +30,11 @@ public class AncybDiagnosticToolDataManager {
 
 	public AncybDiagnosticToolDataManager(String macAddr) {
 		
-		AncybFishDataSim dataSim = new AncybFishDataSim();
+		AncybFishDataSim dataSim = new AncybFishDataSim();	// da levare dopo i test
 
 		this.macAddr = macAddr;
 		this.lat = dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLat();
 		this.lng = dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLng();
-		
 	}
 
 	public String getUrl() {
@@ -43,7 +42,7 @@ public class AncybDiagnosticToolDataManager {
 	}
 	
 	public void buildUrl() {
-		this.url = uri + apiKey + "&lat=" + this.lat + "&lng=" + this.lng;
+		this.url = uri + apiKey + "&lat=" + this.lat + "&lng=" + this.lng;		//TODO in questi casi devo mettere il get o posso fare così?
 	}
 	
 	

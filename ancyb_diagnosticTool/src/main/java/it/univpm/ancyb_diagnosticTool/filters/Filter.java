@@ -7,27 +7,20 @@ import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 
 public class Filter {
 
-	
-	Forecast forecast;
+	Forecast forecastToFilter;
 
 	
-	public Filter(Forecast f) {
+	public Filter(Forecast forecastToFilter) {
 		
-		this.forecast = f;
+		this.forecastToFilter = forecastToFilter;
 	}
 	
 	
-	public Forecast getForecast() {
-		return forecast;
+	public Forecast getForecastToFilter() {
+		return forecastToFilter;
 	}
-
-	public void setForecast(Forecast f) {
-		this.forecast = f;
-	}
-
 
 	public ForecastObject getFilteredForecastObject() {
-		
 		return null;
 	}
 

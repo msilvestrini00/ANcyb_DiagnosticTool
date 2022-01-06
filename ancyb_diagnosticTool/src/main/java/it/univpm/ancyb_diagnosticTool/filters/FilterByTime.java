@@ -16,15 +16,17 @@ public class FilterByTime extends Filter {
  }
 
 	@Override
-	public ForecastObject getFilteredForecastObject() {
+	public ForecastObject getFilteredForecastObject() {	//TODO qui ci va un'eccezione
 		
 		ForecastObject fobj = null;
 		
-		for(int i=0; i<getForecast().getForecastLength(); i++) {
+		forecastToFilter = getForecastToFilter();
+		
+		for(int i=0; i<forecastToFilter.getForecastLength(); i++) {	//TODO mettere il for each?
 			
-			if(getForecast().getForecastObject(i).getTime().equals(this.time)) {
+			if(forecastToFilter.getForecastObject(i).getTime().equals(this.time)) {
 				
-				fobj = getForecast().getForecastObject(i);
+				fobj = forecastToFilter.getForecastObject(i);
 			}
 		}
 		

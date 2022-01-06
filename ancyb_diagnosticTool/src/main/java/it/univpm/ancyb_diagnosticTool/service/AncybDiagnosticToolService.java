@@ -1,9 +1,5 @@
 package it.univpm.ancyb_diagnosticTool.service;
 
-import java.util.ArrayList;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 

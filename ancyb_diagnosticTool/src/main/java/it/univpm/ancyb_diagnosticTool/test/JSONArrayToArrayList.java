@@ -92,8 +92,8 @@ public class JSONArrayToArrayList {
           */
           
         		  
-          ForecastObject fobj = new ForecastObject(dataSim.getMacAddr(), dataSim.getLat(), dataSim.getLng(), 
-        		  								   time, waveHeight, currentDirection);
+          ForecastObject fobj = new ForecastObject(null, 0, 0,
+        		  								   time, waveHeight, currentDirection);//TODO da sistemare se è da usare
           f.addToForecast(fobj);
 
           //System.out.println(fobj);
