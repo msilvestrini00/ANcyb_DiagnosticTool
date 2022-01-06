@@ -13,25 +13,28 @@ import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
+import it.univpm.ancyb_diagnosticTool.utilities.Time;
 import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataSim;
-import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataObjectSim;
 
 public class AncybDiagnosticToolDataManager {
 
-	private String apiKey = "4380b6f80amshdae4ed371f74652p1857c6jsn3c4a8bf96244";
-	private String uri = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
 	
+	private String macAddr;
 	private double lat;
 	private double lng;
+	
 	private String url;
 	private String data;
-	private ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
-	private Forecast forecast = new Forecast(forecastList);
-	
-	public AncybDiagnosticToolDataManager(double lat, double lng) {
+	private String apiKey = "4380b6f80amshdae4ed371f74652p1857c6jsn3c4a8bf96244";
+	private String uri = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
+
+	public AncybDiagnosticToolDataManager(String macAddr) {
 		
-	this.lat = lat;
-	this.lng = lng;
+		AncybFishDataSim dataSim = new AncybFishDataSim();
+
+		this.macAddr = macAddr;
+		this.lat = dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLat();
+		this.lng = dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLng();
 		
 	}
 
@@ -39,7 +42,7 @@ public class AncybDiagnosticToolDataManager {
 		return this.url;
 	}
 	
-	public void buildURL() {
+	public void buildUrl() {
 		this.url = uri + apiKey + "&lat=" + this.lat + "&lng=" + this.lng;
 	}
 	
@@ -79,10 +82,7 @@ public class AncybDiagnosticToolDataManager {
 
 	
 	public Forecast buildForecast() {
-		
-		  //INIZIALIZZAZIONE DELL'OGGETTO SIMULAZIONE DATI
-		  AncybFishDataObjectSim dataSimObject = new AncybFishDataObjectSim("a4:cf:12:76:76:95", 43.574998, 13.492686, "2022-01-05T00:00:00+00:00");
-		  
+				  
 		  //Defining the ArrayList used by the object 'Forecast'
 		  ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
 		  
@@ -118,14 +118,13 @@ public class AncybDiagnosticToolDataManager {
 	          String time = jsnobject2.getString("time"); 
 
 	          //Defining a ForecastObject in which put all the data
-	          ForecastObject fobj = new ForecastObject(dataSimObject.getMacAddr(), dataSimObject.getLat(), dataSimObject.getLng(), 
+	          ForecastObject fobj = new ForecastObject(this.macAddr, this.lat, this.lng, 
 						   time, waveHeight, currentDirection);
 	          
 	          //Adding the created object in the ArrayList of the 'Forecast' object
 	          f.addToForecast(fobj);
 	          
 	      }
-	      this.forecast = f;
 	      
 	      return f;
 	      

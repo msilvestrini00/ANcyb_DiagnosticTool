@@ -26,12 +26,11 @@ public class ANcybRestController {
 
 		
 	@RequestMapping(value = "/{macAddr}/forecast")
-	public ResponseEntity<Object> getForecast() {
-		//TODO leva la definizione del servizio e utilizza 'a'
-		AncybDiagnosticToolServiceImpl service = new AncybDiagnosticToolServiceImpl(dataSim.getLat(), dataSim.getLng()); // le coordinate vanno prese dal mac, sistemare questa parte
-		JSONObject j = service.getRealTimeForecast().toJSON();
-        
+	public ResponseEntity<Object> getForecast(@PathVariable("macAddr") String macAddr) {
+
+		JSONObject j = a.getRealTimeForecast(macAddr).toJSON();
 		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
+		
 		//TODO sistema la parte su questa rotta
 		//TODO rivedi tutto il codice fatto fin'ora
 		//TODO fai UML fatto bene anche per le altre rotte e altre classi

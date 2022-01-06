@@ -28,15 +28,16 @@ import it.univpm.ancyb_diagnosticTool.utilities.Time;
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
 
-	public ForecastObject getRealTimeForecast(double lat, double lng) {
+	public ForecastObject getRealTimeForecast(String macAddr) {
 		
-		AncybDiagnosticToolDataManager dataManager = new AncybDiagnosticToolDataManager(lat, lng);
-		AncybFishDataSim dataSim = new AncybFishDataSim();
+		
+		//definisco l'oggetto per cui ricavo le coordinate per elaborare i dati
+		AncybDiagnosticToolDataManager dataManager = new AncybDiagnosticToolDataManager(macAddr);
 		
 		ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
 		Forecast forecast = new Forecast(forecastList);
 		
-		dataManager.buildURL();		
+		dataManager.buildUrl();		
 		dataManager.downloadJSONData();
 		forecast = dataManager.buildForecast();
 

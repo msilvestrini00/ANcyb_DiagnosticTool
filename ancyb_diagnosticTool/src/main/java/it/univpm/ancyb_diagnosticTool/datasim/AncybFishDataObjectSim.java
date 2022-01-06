@@ -7,9 +7,9 @@ public class AncybFishDataObjectSim {
 	String time; // = "2022-01-05T00:00:00+00:00";	//TODO fai una stringa di conversione del tempo tra me e jack? (in caso da mettere in "utils")
 	double lat; //= 43.574998;
 	double lng; // = 13.492686;	
-	int temp;	// = 15,6;
+	float temp;	// = 15,6;
 	
-	public AncybFishDataObjectSim(String macAddr, String time, double lat, double lng, int temp) {
+	public AncybFishDataObjectSim(String macAddr, String time, double lat, double lng, float temp) {
 		
 		this.macAddr = macAddr;
 		this.time = time;
@@ -50,7 +50,7 @@ public class AncybFishDataObjectSim {
 		this.lng = lng;
 	}
 
-	public int getTemp() {
+	public float getTemp() {
 		return temp;
 	}
 

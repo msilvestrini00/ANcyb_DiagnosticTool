@@ -24,9 +24,9 @@ public class Forecast {
 	}
 	
 	
-	public ForecastObject getForecastObject(int i) {
+	public ForecastObject getForecastObject(int index) {
 		
-		return this.forecastList.get(i);
+		return this.forecastList.get(index);
 	}
 	
 

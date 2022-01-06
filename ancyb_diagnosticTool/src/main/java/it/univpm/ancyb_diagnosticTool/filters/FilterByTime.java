@@ -20,11 +20,11 @@ public class FilterByTime extends Filter {
 		
 		ForecastObject fobj = null;
 		
-		for(int i=0; i<getF().getForecastLength(); i++) {
+		for(int i=0; i<getForecast().getForecastLength(); i++) {
 			
-			if(getF().getForecastObject(i).getTime().equals(this.time)) {
+			if(getForecast().getForecastObject(i).getTime().equals(this.time)) {
 				
-				fobj = getF().getForecastObject(i);
+				fobj = getForecast().getForecastObject(i);
 			}
 		}
 		

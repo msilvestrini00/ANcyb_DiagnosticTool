@@ -5,25 +5,24 @@ import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 
 
-
-
 public class Filter {
 
-	Forecast f;
+	
+	Forecast forecast;
 
+	
 	public Filter(Forecast f) {
 		
-		this.f = f;
+		this.forecast = f;
 	}
 	
 	
-	
-	public Forecast getF() {
-		return f;
+	public Forecast getForecast() {
+		return forecast;
 	}
 
-	public void setF(Forecast f) {
-		this.f = f;
+	public void setForecast(Forecast f) {
+		this.forecast = f;
 	}
 
 
