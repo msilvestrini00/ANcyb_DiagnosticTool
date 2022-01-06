@@ -9,7 +9,7 @@ import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerGT;
-import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.MqttDataReceived;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
 
 @SuppressWarnings("unused")
 class TestMqttDataReceived {
@@ -21,7 +21,7 @@ class TestMqttDataReceived {
 		
 		String str = "a4:cf:12:76:76:95 Ver_GT 16:05:45 4320.1200N 01323.7442E 1 10.5";
 		try {
-			data = MqttDataReceived.createDataObj(str);
+			data = ANcybDataManager.createDataObj(str);
 		} catch (MqttStringMismatch e) {
 			e.printStackTrace();
 		}

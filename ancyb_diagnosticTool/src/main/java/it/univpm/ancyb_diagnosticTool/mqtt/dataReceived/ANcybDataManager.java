@@ -10,7 +10,7 @@ import it.univpm.ancyb_diagnosticTool.utilities.Time;
  * @author Giacomo Fiara
  *
  */
-public class MqttDataReceived {
+public class ANcybDataManager {
 	
 	public static ANcybFishData createDataObj(String str) throws MqttStringMismatch {
 		

@@ -12,7 +12,7 @@ import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.dataLogger.DataLogger;
-import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.MqttDataReceived;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
@@ -83,10 +83,11 @@ public class ANcybMqttClient {
     		String str = new String(msg.getPayload());
     		System.out.println(msg.getId() + " -> " + str);
     		try {
-    			DataReceived data = MqttDataReceived.createDataObj(str);
+    			DataReceived data = ANcybDataManager.createDataObj(str);
         		m5data.add(data);
         		dataLog.write(data);
     		} catch(MqttStringMismatch e) {
+    			System.err.println("Exception:" + e);
     			System.err.println("Dato ricevuto da MQTT broker non valido!");
     			System.err.println("Il dato non è stato memorizzato");
     		}

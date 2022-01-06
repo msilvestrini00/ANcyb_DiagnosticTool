@@ -1,17 +1,17 @@
 package it.univpm.ancyb_diagnosticTool.Exception;
 
-public class ElementNotFound extends Exception {
+public class FilterFailure extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public ElementNotFound() {
+	public FilterFailure() {
 		super();
 	}
 	
-	public ElementNotFound(String msg) {
+	public FilterFailure(String msg) {
 		super(msg);
 	}
 }

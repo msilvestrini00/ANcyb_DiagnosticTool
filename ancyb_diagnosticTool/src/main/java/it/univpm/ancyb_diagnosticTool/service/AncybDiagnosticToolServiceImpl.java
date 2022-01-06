@@ -1,34 +1,25 @@
 package it.univpm.ancyb_diagnosticTool.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 
+import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
+import it.univpm.ancyb_diagnosticTool.filters.FilterByTime;
+import it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
-import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataSim;
-import it.univpm.ancyb_diagnosticTool.filters.FilterByTime;
-import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolDataManager;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
+import it.univpm.ancyb_diagnosticTool.utilities.checkVersion;
 
 
 @Service
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
 
-	public ForecastObject getRealTimeForecast(String macAddr) {
+	public ForecastObject getRealTimeForecast(String macAddr) throws FilterFailure, VersionMismatch {
 		
 		
 		//definisco l'oggetto per cui ricavo le coordinate per elaborare i dati
@@ -44,6 +35,15 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	    FilterByTime filter = new FilterByTime(forecast, Time.currentDateTime2());
 
 		return filter.getFilteredForecastObject();
+	}
+
+	@Override
+	public ANcybFishData getRealTimePosition(String macAddr) throws VersionMismatch, FilterFailure {
+		
+		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
+		ANcybFishData fishData = filterFishData.getDataFiltered();
+		checkVersion.verG(fishData);
+		return fishData;
 	}
 
 

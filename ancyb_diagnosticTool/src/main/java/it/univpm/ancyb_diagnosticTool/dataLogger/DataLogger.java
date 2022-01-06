@@ -20,7 +20,7 @@ public class DataLogger {
 		//creo una stringa con la data di questo momento
 		
 		String date = Time.currentDateTime();
-		this.fileName = (date + ".txt");
+		this.fileName = (date + "_DataLogger.txt");
 		
 		//creo il file
 	
@@ -70,7 +70,7 @@ public class DataLogger {
         			new PrintWriter(new BufferedWriter (
         					new FileWriter (this.fileName, true)));
         	// scrive i valori usando println
-        	file_output.println(str);
+        	file_output.println(str + '\n');
         	// chiude lo stream di output
         	file_output.close ();
         	}

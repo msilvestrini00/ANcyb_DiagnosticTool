@@ -1,7 +1,12 @@
 package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
-import it.univpm.ancyb_diagnosticTool.utilities.Time;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.json.JSONObject;
+
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
+import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 /**
  * 
@@ -14,6 +19,8 @@ public class ANcybFishData implements DataReceived {
 	private String date;
 	private String ver;
 	private String macAddr;
+	public static ArrayList<ANcybFishData> list = new ArrayList<ANcybFishData>();
+
 	
 	/**
 	 * 
@@ -22,11 +29,13 @@ public class ANcybFishData implements DataReceived {
 	 * @param macAddr
 	 * @param ver
 	 */
+	//TODO per ora mi servono public, ma alla fine li metto protected in modo che non si possa accedere ai costruttori se non tramite ancybdatamanager
 	public ANcybFishData(String date, String time, String macAddr, String ver) {
 		this.date=date;
 		this.time=time;
 		this.ver=ver;
 		this.macAddr=macAddr;
+		list.add(this);
 	}
 	
 	@Override
@@ -70,9 +79,21 @@ public class ANcybFishData implements DataReceived {
 		String s = "Date " + getDate() + " " +
 				   "Time" + getTime() + " " +
 			       "Mac address " + getMacAddr() + " " +
-				   "Version " + getVer();
+				   "Version " + getVer() + "\n";
 		
 		return s;
 		
+	}
+
+	public JSONObject toJSON() {
+
+        JSONObject jo = new JSONObject();
+        
+        jo.put("Date", this.getDate());
+        jo.put("Time", this.getTime());
+        jo.put("Mac address", this.getMacAddr());
+        jo.put("Version", this.getVer());
+        
+        return jo;
 	}
 }

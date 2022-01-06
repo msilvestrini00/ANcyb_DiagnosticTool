@@ -11,10 +11,14 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
+import it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
-import it.univpm.ancyb_diagnosticTool.utilities.Time;
-import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataSim;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG;
+import it.univpm.ancyb_diagnosticTool.utilities.checkVersion;
 
 public class AncybDiagnosticToolDataManager {
 
@@ -28,13 +32,26 @@ public class AncybDiagnosticToolDataManager {
 	private String apiKey = "4380b6f80amshdae4ed371f74652p1857c6jsn3c4a8bf96244";
 	private String uri = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
 
-	public AncybDiagnosticToolDataManager(String macAddr) {
+	public AncybDiagnosticToolDataManager(String macAddr) throws FilterFailure, VersionMismatch {
 		
-		AncybFishDataSim dataSim = new AncybFishDataSim();	// da levare dopo i test
-
+		/**
+		 * ROBA VECCHIA
+		 */
+		/*AncybFishDataSim dataSim = new AncybFishDataSim();	// da levare dopo i test
 		this.macAddr = macAddr;
 		this.lat = dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLat();
 		this.lng = dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLng();
+		*/
+		/**
+		 * ROBA NUOVA
+		 */
+		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
+		ANcybFishData fishData = filterFishData.getDataFiltered();
+		checkVersion.verG(fishData);
+		this.macAddr = macAddr;
+		//TODO andrà bene il cast? Ho già controllato dentro getDataFiltered se è verG
+		this.lat = ((ANcybFishData_VerG) fishData).getLatitude();
+		this.lng = ((ANcybFishData_VerG) fishData).getLongitude();
 	}
 
 	public String getUrl() {

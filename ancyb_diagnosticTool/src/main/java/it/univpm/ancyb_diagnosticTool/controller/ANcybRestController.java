@@ -5,39 +5,60 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataSim;
-import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
-import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolDataManager;
+import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
-import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl;	// da controllare che non sia illecito
-import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 @RestController
 public class ANcybRestController {
 	@Autowired
 	AncybDiagnosticToolService a;
+	private JSONObject j;
 
-	AncybFishDataSim dataSim = new AncybFishDataSim();	// da togliere finito il testing
+	//AncybFishDataSim dataSim = new AncybFishDataSim();	// da togliere finito il testing
 
-		
+	
 	@RequestMapping(value = "/{macAddr}/forecast")
 	public ResponseEntity<Object> getForecast(@PathVariable("macAddr") String macAddr) {
-
-		JSONObject j = a.getRealTimeForecast(macAddr).toJSON();
+		/*
+		//VECCHIA ROTTA
+		j = a.getRealTimeForecast(macAddr).toJSON();
 		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
-		
 		//TODO sistema la parte su questa rotta
 		//TODO rivedi tutto il codice fatto fin'ora
 		//TODO fai UML fatto bene anche per le altre rotte e altre classi
+		*/
+		/**
+		 * NUOVA ROTTA
+		 */
+		j = null;
+		try {
+			j = a.getRealTimeForecast(macAddr).toJSON();
+		} catch (FilterFailure | VersionMismatch e) {
+			System.err.println("Exception" + e);
+			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
+		
 	}
- 
 
-	
+	@RequestMapping(value = "/{macAddr}/device", method = RequestMethod.GET)
+	public ResponseEntity<Object> getCurrentPosition(@PathVariable("macAddr") String macAddr) {
+		
+		j = null;
+		try {
+			j = a.getRealTimePosition(macAddr).toJSON();
+			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
+		} catch (VersionMismatch | FilterFailure e) {
+			System.err.println("Exception: " + e);
+			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 
 
 
