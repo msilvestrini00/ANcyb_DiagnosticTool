@@ -9,32 +9,36 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
+import it.univpm.ancyb_diagnosticTool.filters.FilterForecastByTime;
+import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerGT;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
+import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 @RestController
 public class ANcybRestController {
 	@Autowired
 	private AncybDiagnosticToolService a;
 	private JSONObject j;
+	private Forecast f;
 	ArrayList<ANcybFishData> list;
 
 	//AncybFishDataSim dataSim = new AncybFishDataSim();	// da togliere finito il testing
 
-	
+	/*
+	 * ROTTA VECCHIA
+	 */
+	/*
 	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
 	public ResponseEntity<Object> getForecast(@PathVariable("macAddr") String macAddr) {
 
-		/**
-		 * 
-		 * Rotta che restituisce le previsioni meteo in base alla posizione del dispositivo
-		 * il quale mac è stato inserito come PathVariable
-		 * 
-		 */
 		j = null;
 		try {
 			j = a.getRealTimeForecast(macAddr).toJSON();
@@ -45,6 +49,88 @@ public class ANcybRestController {
 		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 		
 	}
+	*/
+	
+	
+	
+	/*
+	 * ROTTA AGGIORNATA (con filtro estratto dalla funzione per farlo qui, per evitare di ripetere due volte il procedimento identico
+	 */
+	
+	/**
+	 * 
+	 * Rotta che restituisce le previsioni meteo in base alla posizione in tempo reale del dispositivo,
+	 * il quale mac è stato inserito come PathVariable
+	 * 
+	 */
+	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
+	public ResponseEntity<Object> getRealTimeForecast(@PathVariable("macAddr") String macAddr) {
+		
+		//TEST
+		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", (float) 43.684017, (float) 13.354755, "3", 10.5f);
+		//ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
+		//ANcybFishData ancybData3 = new ANcybFishData_VerGT("2022.01.06", "18:26:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
+		//ANcybFishData ancybData4 = new ANcybFishData_VerG("2022.01.06", "18:27:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
+		//ANcybFishData ancybData5 = new ANcybFishData_VerGT("2022.01.06", "18:28:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "5", 10.5f);
+		//ANcybFishData ancybData6 = new ANcybFishData_VerG("2022.01.06", "18:29:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
+		//ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
+
+		try {
+			
+			f = a.getForecast(macAddr);
+			j = null;
+		
+		    FilterForecastByTime filter = new FilterForecastByTime(f, Time.currentDateTime2());
+			j = filter.getDataFiltered().toJSON();
+
+		} catch (FilterFailure | VersionMismatch e) {
+			System.err.println("Exception" + e);
+			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
+		
+	}
+	
+	
+	/**
+	 * 
+	 * Rotta che restituisce le previsioni meteo in base all'orario inserito come parametro 
+	 * (parametro 'date' in formato "yyy-mm-dd" e parametro 'hour' in formato numero intero, da 0 a 23)
+	 *  e alla posizione del dispositivo, il quale mac è stato inserito come PathVariable
+	 * 
+	 */
+	
+	@RequestMapping(value = "/{macAddr}/forecast/filter", method = RequestMethod.POST)
+	public ResponseEntity<Object> getSelectedTimeForecast(@PathVariable("macAddr") String macAddr, @RequestParam(name = "date") String date, 
+																								   @RequestParam(name = "hour") int hour) {
+		
+		//TEST
+		//ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
+		//ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
+		ANcybFishData ancybData3 = new ANcybFishData_VerGT("2022.01.10", "18:26:38", "A4:cf:12:76:76:95", "Ver_GT", 43.670050f, 13.793283f, "NO_signal", 10.5f);
+		//ANcybFishData ancybData4 = new ANcybFishData_VerG("2022.01.06", "18:27:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
+		//ANcybFishData ancybData5 = new ANcybFishData_VerGT("2022.01.06", "18:28:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "5", 10.5f);
+		//ANcybFishData ancybData6 = new ANcybFishData_VerG("2022.01.06", "18:29:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
+		//ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
+
+		try {
+			
+			f = a.getForecast(macAddr);
+			j = null;
+		
+		    FilterForecastByTime filter = new FilterForecastByTime(f, date + "T" + hour + ":00:00+00:00");
+			j = filter.getDataFiltered().toJSON();
+
+		} catch (FilterFailure | VersionMismatch e) {
+			System.err.println("Exception" + e);
+			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
+		
+	}
+	
+	
+	
 	
 	/**
 	 * Rotta che restituisce l'ultima posizione inviata dal dispositivo corrispondente
@@ -54,7 +140,7 @@ public class ANcybRestController {
 	 */
 	@RequestMapping(value = "/{macAddr}/device/last", method = RequestMethod.GET)
 	public ResponseEntity<Object> getLastPosition(@PathVariable("macAddr") String macAddr) {
-		
+			
 		j = null;
 		try {
 			j = a.getLastTimePosition(macAddr).toJSON();

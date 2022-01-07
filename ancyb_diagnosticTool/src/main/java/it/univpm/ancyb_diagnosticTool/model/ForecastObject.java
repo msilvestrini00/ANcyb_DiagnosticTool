@@ -8,10 +8,10 @@ public class ForecastObject {
 	String macAddress;
 	float waveHeight;
 	float currentDirection;
-	double latitude;
-	double longitude;
+	float latitude;
+	float longitude;
 	
-	public ForecastObject(String macAddress, double latitude, double longitude, String time, float waveHeight, float currentDirection) {
+	public ForecastObject(String macAddress, float latitude, float longitude, String time, float waveHeight, float currentDirection) {
 		
 		this.macAddress = macAddress;
 		this.latitude = latitude;
@@ -30,19 +30,19 @@ public class ForecastObject {
 		this.macAddress = macAddress;
 	}
 	
-	public double getLatitude() {
+	public float getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(float latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public float getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
 	

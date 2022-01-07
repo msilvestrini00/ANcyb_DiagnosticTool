@@ -19,6 +19,11 @@ import it.univpm.ancyb_diagnosticTool.utilities.checkVersion;
 @Service
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
+	
+	/*
+	 * METODO VECCHIO
+	 */
+	/*
 	@Override
 	public ForecastObject getRealTimeForecast(String macAddr) throws FilterFailure, VersionMismatch {
 		
@@ -36,7 +41,26 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 
 		return filter.getDataFiltered();
 	}
+	*/
 	
+	/*
+	 * METODO NUOVO (senza filtro e eccezione relativa, esportati in ancybRestController)
+	 */
+	@Override
+	public Forecast getForecast(String macAddr) throws FilterFailure, VersionMismatch {
+		
+		//definisco l'oggetto per cui ricavo le coordinate per elaborare i dati
+		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
+		
+		ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
+		Forecast forecast = new Forecast(forecastList);
+		
+		dataManager.buildUrl();		
+		dataManager.downloadJSONData();
+		forecast = dataManager.buildForecast();
+
+		return forecast;
+	}
 
 	@Override
 	public ANcybFishData getLastTimePosition(String macAddr) throws VersionMismatch, FilterFailure {

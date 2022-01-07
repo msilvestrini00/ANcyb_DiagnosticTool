@@ -50,6 +50,15 @@ public class Time {
 		
 	}
 	
+	public static String currentTime2() {
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now(); 
+		String currTime = dtf.format(now);
+		return currTime;
+		
+	}
+	
 	//format used for filtering ForecastObjects by the time string
 	public static String currentDateTime2() {	//"2022-01-05T00:00:00+00:00"
 		
