@@ -20,29 +20,7 @@ import it.univpm.ancyb_diagnosticTool.utilities.checkVersion;
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
 	
-	/*
-	 * METODO VECCHIO
-	 */
-	/*
-	@Override
-	public ForecastObject getRealTimeForecast(String macAddr) throws FilterFailure, VersionMismatch {
-		
-		//definisco l'oggetto per cui ricavo le coordinate per elaborare i dati
-		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
-		
-		ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
-		Forecast forecast = new Forecast(forecastList);
-		
-		dataManager.buildUrl();		
-		dataManager.downloadJSONData();
-		forecast = dataManager.buildForecast();
 
-	    FilterForecastByTime filter = new FilterForecastByTime(forecast, Time.currentDateTime2());
-
-		return filter.getDataFiltered();
-	}
-	*/
-	
 	/*
 	 * METODO NUOVO (senza filtro e eccezione relativa, esportati in ancybRestController)
 	 */
@@ -65,7 +43,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	@Override
 	public ANcybFishData getLastPositionByMac(String macAddr) throws VersionMismatch, FilterFailure {
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
-		ANcybFishData fishData = filterFishData.getDataFiltered();
+		ANcybFishData fishData = filterFishData.getFilteredData();
 		checkVersion.verG(fishData);
 		return fishData;
 	}
@@ -74,7 +52,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	@Override
 	public ArrayList<ANcybFishData> getAllPositionsByMac(String macAddr) throws FilterFailure, VersionMismatch {
 		FilterListByMac filterFishData = new FilterListByMac(macAddr);
-		ArrayList<ANcybFishData> fishData = filterFishData.getDataFiltered();
+		ArrayList<ANcybFishData> fishData = filterFishData.getFilteredData();
 		checkVersion.verG(fishData);
 		return fishData;
 	}

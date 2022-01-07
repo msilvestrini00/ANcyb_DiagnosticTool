@@ -23,7 +23,7 @@ public class FilterForecastByTime implements FilterInterface {
 	}
 	
 	@Override
-	public ForecastObject getDataFiltered() throws FilterFailure{	
+	public ForecastObject getFilteredData() throws FilterFailure{	
 		
 		ForecastObject output = null;
 				

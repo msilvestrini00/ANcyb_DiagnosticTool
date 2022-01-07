@@ -31,33 +31,7 @@ public class ANcybRestController {
 	private Forecast f;
 	ArrayList<ANcybFishData> list;
 
-	//AncybFishDataSim dataSim = new AncybFishDataSim();	// da togliere finito il testing
 
-	/*
-	 * ROTTA VECCHIA
-	 */
-	/*
-	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
-	public ResponseEntity<Object> getForecast(@PathVariable("macAddr") String macAddr) {
-
-		j = null;
-		try {
-			j = a.getRealTimeForecast(macAddr).toJSON();
-		} catch (FilterFailure | VersionMismatch e) {
-			System.err.println("Exception" + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
-		
-	}
-	*/
-	
-	
-	
-	/*
-	 * ROTTA AGGIORNATA (con filtro estratto dalla funzione per farlo qui, per evitare di ripetere due volte il procedimento identico
-	 */
-	
 	/**
 	 * 
 	 * Rotta che restituisce le previsioni meteo in base alla posizione in tempo reale del dispositivo,
@@ -82,7 +56,7 @@ public class ANcybRestController {
 			j = null;
 		
 		    FilterForecastByTime filter = new FilterForecastByTime(f, Time.currentDateTime2());
-			j = filter.getDataFiltered().toJSON();
+			j = filter.getFilteredData().toJSON();
 
 		} catch (FilterFailure | VersionMismatch e) {
 			System.err.println("Exception" + e);
@@ -120,7 +94,7 @@ public class ANcybRestController {
 			j = null;
 		
 		    FilterForecastByTime filter = new FilterForecastByTime(f, date + "T" + hour + ":00:00+00:00");
-			j = filter.getDataFiltered().toJSON();
+			j = filter.getFilteredData().toJSON();
 
 		} catch (FilterFailure | VersionMismatch e) {
 			System.err.println("Exception" + e);
@@ -129,6 +103,23 @@ public class ANcybRestController {
 		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 		
 	}
+	
+	
+	/*
+	 * 
+	 * PER LA ROTTA FORECAST/STATS:
+	 * - crei oggetti ANcybfishdata
+	 * - usare j = a.getLastPositionByMac(macAddr).toJSON();
+	 * - crei forecast
+	 * - fai "new stats(forecast, giorni per cui fare la stats)
+	 * - fai stats.computeStats();
+	 * 
+	 * 
+	 * 
+	 */
+	
+	
+	
 	
 	
 	
@@ -177,36 +168,3 @@ public class ANcybRestController {
 
 
 
-
-
-/*
-
-public class ProductController {
-	
-	
-	@RequestMapping(value = "/products", method = RequestMethod.GET) // scrivendo method così faccio in modo da poter prendere solo le chiamate di tipo GET, e non le altre
-	public ResponseEntity<Object> getProduct() {
-		return new ResponseEntity<>(productService.getProducts(), HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Object>
-	updateProduct(@PathVariable("id") int id, @RequestBody Product product) {
-		
-		productService.updateProduct(id,  product);
-		return new ResponseEntity<>("Product is updated successfully", HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> delete(@PathVariable("id") Integer id) {
-		productService.deleteProduct(id);
-		return new ResponseEntity<>("Product is deleted successfully", HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/products", method = RequestMethod.POST)
-	public ResponseEntity<Object> createproduct(@RequestBody Product product) {
-		productService.createProduct(product);
-		return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
-	}
-}
-*/

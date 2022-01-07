@@ -56,7 +56,7 @@ public class ForecastDataManager {
 
 		
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
-		ANcybFishData fishData = filterFishData.getDataFiltered();
+		ANcybFishData fishData = filterFishData.getFilteredData();
 		checkVersion.verG(fishData);
 		this.macAddr = macAddr;
 

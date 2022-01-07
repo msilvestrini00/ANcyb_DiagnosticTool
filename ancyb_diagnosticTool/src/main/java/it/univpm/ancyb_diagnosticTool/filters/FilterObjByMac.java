@@ -22,7 +22,7 @@ public class FilterObjByMac implements FilterInterface {
 	}
 
 	@Override
-	public ANcybFishData getDataFiltered() throws FilterFailure {
+	public ANcybFishData getFilteredData() throws FilterFailure {
 		
 		for(int i=ANcybFishData.list.size()-1; i>=0; i--) {
 			if(ANcybFishData.list.get(i).getMacAddr().equals(macAddr)) {

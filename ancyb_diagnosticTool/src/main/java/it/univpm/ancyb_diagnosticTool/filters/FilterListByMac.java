@@ -25,7 +25,7 @@ public class FilterListByMac implements FilterInterface {
 	}
 
 	@Override
-	public ArrayList<ANcybFishData> getDataFiltered() throws FilterFailure {
+	public ArrayList<ANcybFishData> getFilteredData() throws FilterFailure {
 		
 		ArrayList<ANcybFishData> fishDataList = new ArrayList<ANcybFishData>();
 		for(int i=ANcybFishData.list.size()-1; i>=0; i--) {
