@@ -13,9 +13,9 @@ public interface AncybDiagnosticToolService {
 
 	public abstract Forecast getForecast(String macAddr) throws FilterFailure, VersionMismatch;				// riceve i dati e li mette in un'unica stringa, che restituisce
 
-	ANcybFishData getLastPositionByMac(String macAddr) throws VersionMismatch, FilterFailure;
-
 	ArrayList<ANcybFishData> getAllPositionsByMac(String macAddr) throws FilterFailure, VersionMismatch;
+
+	ANcybFishData getLatestPositionByMac(String macAddr) throws VersionMismatch, FilterFailure;
 
 
 }

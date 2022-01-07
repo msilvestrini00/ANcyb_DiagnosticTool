@@ -41,7 +41,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 
 	@Override
-	public ANcybFishData getLastPositionByMac(String macAddr) throws VersionMismatch, FilterFailure {
+	public ANcybFishData getLatestPositionByMac(String macAddr) throws VersionMismatch, FilterFailure {
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
 		ANcybFishData fishData = filterFishData.getFilteredData();
 		checkVersion.verG(fishData);

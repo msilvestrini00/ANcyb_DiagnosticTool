@@ -135,7 +135,7 @@ public class ANcybRestController {
 			
 		j = null;
 		try {
-			j = a.getLastPositionByMac(macAddr).toJSON();
+			j = a.getLatestPositionByMac(macAddr).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 		} catch (VersionMismatch | FilterFailure e) {
 			System.err.println("Exception: " + e);
