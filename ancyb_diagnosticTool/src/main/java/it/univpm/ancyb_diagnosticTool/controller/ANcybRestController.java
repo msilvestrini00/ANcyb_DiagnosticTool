@@ -38,6 +38,9 @@ public class ANcybRestController {
 		*/
 		/**
 		 * NUOVA ROTTA
+		 * Rotta che restituisce le previsioni meteo in base alla posizione del dispositivo
+		 * il quale mac è stato inserito come PathVariable
+		 * 
 		 */
 		j = null;
 		try {
