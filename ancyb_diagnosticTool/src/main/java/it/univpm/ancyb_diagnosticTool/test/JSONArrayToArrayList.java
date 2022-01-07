@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;  
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataSim;
-import it.univpm.ancyb_diagnosticTool.filters.FilterByTime;  
+import it.univpm.ancyb_diagnosticTool.filters.FilterForecastByTime;  
 
 
 //Creating JSONArrayToArrayList class  
@@ -93,7 +93,7 @@ public class JSONArrayToArrayList {
           
         		  
           ForecastObject fobj = new ForecastObject(null, 0, 0,
-        		  								   time, waveHeight, currentDirection);//TODO da sistemare se è da usare
+        		  								   time, waveHeight, currentDirection);
           f.addToForecast(fobj);
 
           //System.out.println(fobj);
@@ -107,18 +107,16 @@ public class JSONArrayToArrayList {
           
       }
       
-      FilterByTime filter = new FilterByTime(f, "2022-01-03T01:00:00+00:00");
+      FilterForecastByTime filter = new FilterForecastByTime(f, "2022-01-03T01:00:00+00:00");
       
-      System.out.println(filter.getFilteredForecastObject());
+      //System.out.println(filter.getFilteredForecastObject());
 
       
       
-      //TODO fai tutti i metodi necessari per snellire il processo
-      //TODO implementa il tutto nell'applicazione
   
   	}
   
-	public static float extractSgSourceFromJSONArray(JSONArray array) {	//TODO lasciarlo static?
+	public static float extractSgSourceFromJSONArray(JSONArray array) {	
 	  	  
   		float data = 0;
   

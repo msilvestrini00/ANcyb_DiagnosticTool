@@ -19,25 +19,18 @@ import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 @RestController
 public class ANcybRestController {
 	@Autowired
-	AncybDiagnosticToolService a;
+	private AncybDiagnosticToolService a;
 	private JSONObject j;
 	ArrayList<ANcybFishData> list;
 
 	//AncybFishDataSim dataSim = new AncybFishDataSim();	// da togliere finito il testing
 
 	
-	@RequestMapping(value = "/{macAddr}/forecast")
+	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
 	public ResponseEntity<Object> getForecast(@PathVariable("macAddr") String macAddr) {
-		/*
-		//VECCHIA ROTTA
-		j = a.getRealTimeForecast(macAddr).toJSON();
-		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
-		//TODO sistema la parte su questa rotta
-		//TODO rivedi tutto il codice fatto fin'ora
-		//TODO fai UML fatto bene anche per le altre rotte e altre classi
-		*/
+
 		/**
-		 * NUOVA ROTTA
+		 * 
 		 * Rotta che restituisce le previsioni meteo in base alla posizione del dispositivo
 		 * il quale mac è stato inserito come PathVariable
 		 * 

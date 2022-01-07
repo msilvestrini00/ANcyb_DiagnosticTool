@@ -13,6 +13,9 @@ public class Forecast {
 		this.forecastList = forecastList;
 	}
 	
+	public ArrayList<ForecastObject> getForecastList() {
+		return this.forecastList;
+	}
 	
 	public int getForecastLength() {
 		

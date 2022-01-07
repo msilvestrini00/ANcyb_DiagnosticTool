@@ -30,7 +30,7 @@ public class FilterObjByMac implements FilterInterface {
 				return fishData;
 			}
 		}
-		if(fishData ==null) {
+		if(fishData == null) {
 			throw new FilterFailure("Nessun elemento di posizione trovato nel database con questo mac address" + macAddr);
 		}
 		return fishData;

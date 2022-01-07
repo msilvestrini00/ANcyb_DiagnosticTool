@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.URLIsNull;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
@@ -20,19 +21,19 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG;
 import it.univpm.ancyb_diagnosticTool.utilities.checkVersion;
 
-public class AncybDiagnosticToolDataManager {
+public class ForecastDataManager {
 
 	
 	private String macAddr;
 	private double lat;
 	private double lng;
 	
-	private String url;
+	private String url = null;
 	private String data;
 	private String apiKey = "4380b6f80amshdae4ed371f74652p1857c6jsn3c4a8bf96244";
 	private String uri = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
 
-	public AncybDiagnosticToolDataManager(String macAddr) throws FilterFailure, VersionMismatch {
+	public ForecastDataManager(String macAddr) throws FilterFailure, VersionMismatch {
 		
 		/**
 		 * ROBA VECCHIA
@@ -54,12 +55,15 @@ public class AncybDiagnosticToolDataManager {
 		this.lng = ((ANcybFishData_VerG) fishData).getLongitude();
 	}
 
-	public String getUrl() {
+	public String getUrl() throws URLIsNull {	
+		
+		if(this.url == null) throw new URLIsNull("L'URL non è ancora stato creato. Costruire un URL prima di richiederlo.");
+		
 		return this.url;
 	}
 	
 	public void buildUrl() {
-		this.url = uri + apiKey + "&lat=" + this.lat + "&lng=" + this.lng;		//TODO in questi casi devo mettere il get o posso fare così?
+		this.url = uri + apiKey + "&lat=" + this.lat + "&lng=" + this.lng;		
 	}
 	
 	
@@ -77,7 +81,7 @@ public class AncybDiagnosticToolDataManager {
 				InputStreamReader inR = new InputStreamReader(in);
 				BufferedReader buf = new BufferedReader(inR);
 			
-				while ((line = buf.readLine()) != null){	//TODO vedi se farlo meglio (in teoria è ricevuta una sola riga)
+				while ((line = buf.readLine()) != null){	
 					
 					data += line;
 				}
@@ -146,7 +150,7 @@ public class AncybDiagnosticToolDataManager {
 	      
 	}
 	
-  	public static float extractSgSourceFromJSONArray(JSONArray array) {	//TODO lasciarlo static?
+  	public static float extractSgSourceFromJSONArray(JSONArray array) {	
   	  
   		float data = 0;
   
