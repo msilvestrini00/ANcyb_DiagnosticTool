@@ -1,6 +1,7 @@
 package it.univpm.ancyb_diagnosticTool.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,17 +48,17 @@ public class ANcybRestController {
 	}
 	
 	/**
-	 * Rotta che restituisce l'ultima posizione inviata dal dispositivo corrispondente
-	 * al Mac address inserito come parametro.
+	 * Rotta che restituisce l'ultima istanza (e posizione) inviata dal dispositivo
+	 * corrispondente al Mac address inserito come parametro.
 	 * @param macAddr
 	 * @return
 	 */
-	@RequestMapping(value = "/{macAddr}/device/last", method = RequestMethod.GET)
+	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.GET)
 	public ResponseEntity<Object> getLastPosition(@PathVariable("macAddr") String macAddr) {
 		
 		j = null;
 		try {
-			j = a.getLastTimePosition(macAddr).toJSON();
+			j = a.getLastPositionByMac(macAddr).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 		} catch (VersionMismatch | FilterFailure e) {
 			System.err.println("Exception: " + e);
@@ -66,19 +67,25 @@ public class ANcybRestController {
 		
 	}
 
-	@RequestMapping(value = "/{macAddr}/device/all", method = RequestMethod.GET)
+	/**
+	 * Rotta che restituisce tutte le istanze (e le posizioni) dei dati inviati dal 
+	 * dispositivo corrispondente al Mac address inserito come parametro.
+	 * @param macAddr
+	 * @return
+	 */
+	@RequestMapping(value = "/{macAddr}/device/filter/all", method = RequestMethod.GET)
 	public ResponseEntity<Object> getAllPositions(@PathVariable("macAddr") String macAddr) {
-		
+	
 		try {
-			list = a.getAllPositions(macAddr);
-			return new ResponseEntity<>(list.hashCode(), HttpStatus.OK);
+			ArrayList<ANcybFishData> result = a.getAllPositionsByMac(macAddr);
+			Collection<ANcybFishData> collANcyb = result;
+			return new ResponseEntity<>( collANcyb, HttpStatus.OK);
 		} catch (VersionMismatch | FilterFailure e) {
 			System.err.println("Exception: " + e);
-			//TODO ovviamente non funziona, trova il mondo di fargli passare l'arraylist
-			return new ResponseEntity<>( list, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
 		}
 		
-	}
+	}	
 
 }
 

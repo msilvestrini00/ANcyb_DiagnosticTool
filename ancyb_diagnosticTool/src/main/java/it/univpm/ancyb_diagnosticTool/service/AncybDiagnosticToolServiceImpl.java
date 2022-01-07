@@ -39,7 +39,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	
 
 	@Override
-	public ANcybFishData getLastTimePosition(String macAddr) throws VersionMismatch, FilterFailure {
+	public ANcybFishData getLastPositionByMac(String macAddr) throws VersionMismatch, FilterFailure {
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
 		ANcybFishData fishData = filterFishData.getDataFiltered();
 		checkVersion.verG(fishData);
@@ -48,7 +48,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 
 
 	@Override
-	public ArrayList<ANcybFishData> getAllPositions(String macAddr) throws FilterFailure, VersionMismatch {
+	public ArrayList<ANcybFishData> getAllPositionsByMac(String macAddr) throws FilterFailure, VersionMismatch {
 		FilterListByMac filterFishData = new FilterListByMac(macAddr);
 		ArrayList<ANcybFishData> fishData = filterFishData.getDataFiltered();
 		checkVersion.verG(fishData);
