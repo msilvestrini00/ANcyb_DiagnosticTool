@@ -2,26 +2,30 @@ package it.univpm.ancyb_diagnosticTool.service;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
-import it.univpm.ancyb_diagnosticTool.filters.FilterForecastByTime;
 import it.univpm.ancyb_diagnosticTool.filters.FilterListByMac;
 import it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
-import it.univpm.ancyb_diagnosticTool.stats.StatsFishData;
-import it.univpm.ancyb_diagnosticTool.utilities.Time;
+import it.univpm.ancyb_diagnosticTool.stats.StatsGPSData;
+import it.univpm.ancyb_diagnosticTool.stats.StatsTempData;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
+import it.univpm.ancyb_diagnosticTool.utilities.IsVersion;
 
 
 @Service
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
 	
+
+	private JSONObject statsResults;
 
 	/*
 	 * METODO NUOVO (senza filtro e eccezione relativa, esportati in ancybRestController)
@@ -62,10 +66,19 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 
 	@Override
-	public JSONObject getFishStats(ArrayList<ANcybFishData> historyFishData) {
-		StatsFishData statsFishData = new StatsFishData(historyFishData);
-		statsFishData.computeStats();
-		JSONObject statsResults = statsFishData.getStats();
+	public JSONObject getFishStats(ArrayList<ANcybFishData> historyFishData) throws JSONException, StatsFailure, VersionMismatch {
+		statsResults = new JSONObject();
+		if(IsVersion.verG(historyFishData)) {
+			StatsGPSData statsGPSData = new StatsGPSData(historyFishData);
+			statsGPSData.computeStats();
+			statsResults.put("GPS stats", statsGPSData.getStats());
+		}
+		if(IsVersion.verGT(historyFishData)) {
+			StatsTempData statsTempData = new StatsTempData(historyFishData);
+			statsTempData.computeStats();
+			statsResults.put("Temperature stats", statsTempData.getStats());
+		}
+		if(statsResults == null) throw new StatsFailure("Nessuna statistica computabile per questo dispositivo.");
 		return statsResults;
 	}
 

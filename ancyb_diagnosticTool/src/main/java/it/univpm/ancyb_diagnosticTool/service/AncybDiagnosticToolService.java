@@ -3,9 +3,11 @@ package it.univpm.ancyb_diagnosticTool.service;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
@@ -43,8 +45,11 @@ public interface AncybDiagnosticToolService {
 	 * 
 	 * @param historyFishData
 	 * @return
+	 * @throws StatsFailure 
+	 * @throws JSONException 
+	 * @throws VersionMismatch 
 	 */
-	public abstract JSONObject getFishStats(ArrayList<ANcybFishData> historyFishData);
+	public abstract JSONObject getFishStats(ArrayList<ANcybFishData> historyFishData) throws JSONException, StatsFailure, VersionMismatch;
 
 
 }

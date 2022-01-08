@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
-import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 /**
  * 
@@ -43,8 +42,8 @@ public class ANcybFishData implements DataReceived {
 	}
 	
 	@Override
-	public void setDate() {	
-		this.date = Time.currentDate();
+	public void setDate(String date) {	
+		this.date = date;
 	}
 
 	@Override
@@ -53,8 +52,8 @@ public class ANcybFishData implements DataReceived {
 	}
 	
 	@Override
-	public void setTime() {
-		this.date = Time.currentTime();
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 	public String getMacAddr() {

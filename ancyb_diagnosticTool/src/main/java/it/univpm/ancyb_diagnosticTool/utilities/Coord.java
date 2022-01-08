@@ -6,7 +6,7 @@ import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
  * @author Giacomo Fiara
  *
  */
-public class CoordFormat {
+public class Coord {
 	
 	/**
 	 * questa fuzione controlla che la coordinata sia una latitudine GMS:
@@ -120,5 +120,40 @@ public class CoordFormat {
 		}
 		
 	}	
+	
+	/**
+	 * Calcolo della distanza geodetica (in km) tra due punti (A e B) della superficie terrestre.
+	 * Lavora esclusivamente con coordinate in gradi decimali
+	 * @param f1 coppia di coordinate del punto A (latitudine e longitudine)
+	 * @param f2 coppia di coordinate del punto B (latitudine e longitudine)
+	 * @return
+	 */
+	static public double disgeod(float[] f1, float[] f2) {
+		
+		//Definisce le costanti e le variabili
+		double R = 6371;
+		double pi = 3.1415927;
+		double latA_rad, latB_rad;
+		double lonA_rad, lonB_rad;
+		double fi;
+		double p, d;
+		
+		// Converte i gradi in radianti
+		latA_rad = ( pi * f1[0] ) / 180;
+		latB_rad = ( pi * f2[0] ) / 180;
+		lonA_rad = ( pi * f1[1] ) / 180;
+		lonB_rad = ( pi * f2[1] ) / 180;
+		
+		// Calcola l'angolo compreso fi
+		fi = Math.abs(lonA_rad - lonB_rad);
+		
+		// Calcola il terzo lato del triangolo sferico
+		p = Math.acos(Math.sin(latB_rad) * Math.sin(latA_rad) + 
+			Math.cos(latB_rad) * Math.cos(latA_rad) * Math.cos(fi));
+		
+		// Calcola la distanza sulla superficie terrestre R = ~6371 km
+		d = p * R;
+		return(d);
+	}
 	
 }

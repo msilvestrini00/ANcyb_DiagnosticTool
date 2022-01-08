@@ -2,7 +2,7 @@ package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
-import it.univpm.ancyb_diagnosticTool.utilities.CoordFormat;
+import it.univpm.ancyb_diagnosticTool.utilities.Coord;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 /**
@@ -37,8 +37,8 @@ public class ANcybDataManager {
 			
 			latitude = strArr[3];
 			try {
-				CoordFormat.checkIsLat(latitude);
-				lat = CoordFormat.latGMSstringToGDfloat(latitude);
+				Coord.checkIsLat(latitude);
+				lat = Coord.latGMSstringToGDfloat(latitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
 				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> latitudine");
@@ -46,8 +46,8 @@ public class ANcybDataManager {
 		
 			longitude = strArr[4];
 			try {
-				CoordFormat.checkIsLon(longitude);
-				lon = CoordFormat.lonGMSstringToGDfloat(longitude);
+				Coord.checkIsLon(longitude);
+				lon = Coord.lonGMSstringToGDfloat(longitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
 				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> longitudine");
@@ -75,8 +75,8 @@ public class ANcybDataManager {
 			
 			latitude = strArr[3];
 			try {
-				CoordFormat.checkIsLat(latitude);
-				lat = CoordFormat.latGMSstringToGDfloat(latitude);
+				Coord.checkIsLat(latitude);
+				lat = Coord.latGMSstringToGDfloat(latitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
 				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> latitudine");
@@ -84,8 +84,8 @@ public class ANcybDataManager {
 		
 			longitude = strArr[4];
 			try {
-				CoordFormat.checkIsLon(longitude);
-				lon = CoordFormat.lonGMSstringToGDfloat(longitude);
+				Coord.checkIsLon(longitude);
+				lon = Coord.lonGMSstringToGDfloat(longitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
 				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> longitudine");
