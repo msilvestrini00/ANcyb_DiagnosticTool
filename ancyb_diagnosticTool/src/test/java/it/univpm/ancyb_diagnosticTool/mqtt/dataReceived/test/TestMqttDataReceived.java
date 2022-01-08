@@ -29,7 +29,7 @@ class TestMqttDataReceived {
 
 	@Test
 	void test() {
-		assertEquals(data.getTime(), "16:05:45");
+		assertEquals(data.getForecastTime(), "16:05:45");
 		assertEquals(data.getVer(), "Ver_GT");
 		assertEquals(43.66667, ((ANcybFishData_VerG) data).getLatitude(), 0.001);
 		assertEquals(15.45056,((ANcybFishData_VerG) data).getLongitude(), 0.001);
