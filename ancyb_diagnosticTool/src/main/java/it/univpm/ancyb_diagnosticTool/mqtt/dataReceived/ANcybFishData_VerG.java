@@ -54,7 +54,7 @@ public class ANcybFishData_VerG extends ANcybFishData {
 	public String toString() {
 		
 		String s = "Date " + getDate() + " " +
-				   "Time " + getForecastTime() + " " +
+				   "Time " + getTime() + " " +
 			       "Mac address " + getMacAddr() + " " +
 				   "Version " + getVer() +  " " +
 				   "Latitude " + getLatitude() + " " +
@@ -70,7 +70,7 @@ public class ANcybFishData_VerG extends ANcybFishData {
         JSONObject jo = new JSONObject();
         
         jo.put("Date", this.getDate());
-        jo.put("Time", this.getForecastTime());
+        jo.put("Time", this.getTime());
         jo.put("Mac address", this.getMacAddr());
         jo.put("Version", this.getVer());
         jo.put("Latitude", this.getLatitude());

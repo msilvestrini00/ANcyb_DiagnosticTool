@@ -62,8 +62,8 @@ public class ForecastObject implements DataReceived{
 
 	public void setTime(String time) {
 		
-		String firsthalf = time.substring(0, 10);
-		String secondhalf = time.substring(19, 25);
+		String firsthalf = forecastTime.substring(0, 10);
+		String secondhalf = forecastTime.substring(19, 25);
 
 		this.forecastTime = firsthalf + time + secondhalf;
 	}
