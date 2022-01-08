@@ -9,6 +9,6 @@ public interface StatsInterface {
 
 		public Object getDataForStats();
 		public JSONObject getStats() throws StatsFailure;
-		public void computeStats();	
+		public void computeStats() throws StatsFailure;	
 		
 }

@@ -38,6 +38,19 @@ public class Time {
 	}
 	
 	/**
+	 * Questo metodo restituisce in stringa il giorno corrente
+	 * @return
+	 */
+	public static String currentDay() {
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd");
+		LocalDateTime now = LocalDateTime.now(); 
+		String currDate = dtf.format(now);
+		return currDate;
+		
+	}
+	
+	/**
 	 * Questo metodo restituisce in stringa il tempo corrente
 	 * @return
 	 */

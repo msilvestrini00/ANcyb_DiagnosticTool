@@ -20,6 +20,7 @@ import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
+import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 public class ForecastDataManager {
 
@@ -183,5 +184,24 @@ public class ForecastDataManager {
   	return data;		
   }
 	
-	
+  	
+	public JSONObject createForecastStatsJSONObject (Forecast forecast, int days) {
+		
+		
+        JSONObject jo = new JSONObject();
+        
+        jo.put("macAddress", this.macAddr);
+        jo.put("Latitude", this.lat);
+        jo.put("Longitude", this.lng);
+        jo.put("Time", Time.currentDateTime2());
+        jo.put("End",  Time.currentDateTime2().substring(0, 8) + 
+        			   String.format("%02d", Integer.parseInt(Time.currentDay())+days) + 
+        			   Time.currentDateTime2().substring(10));
+        System.out.println(Time.currentDay());
+        return jo;
+    }
+
 }
+
+  	
+

@@ -75,6 +75,4 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 }
 
 
-//TODO implementa i metodi (es di stoccaggio dati)
-
 

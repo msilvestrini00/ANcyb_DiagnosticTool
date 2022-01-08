@@ -32,6 +32,10 @@ public class Forecast {
 		return this.forecastList.get(index);
 	}
 	
+	public String getForecastMacAddr() {
+		return forecastList.get(0).getMacAddress();
+	}
+	
 
 	
 

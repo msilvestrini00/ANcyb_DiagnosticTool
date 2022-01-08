@@ -9,10 +9,9 @@ public interface DataReceived {
 	
 	//TODO come si costruisce il JavaDoc?
 	public String getDate();
-	public void setDate();
+	public void setDate(String date);
 	public String getTime();
-	public void setTime();
+	public void setTime(String time);
 	public String toString();
 	
-	//TODO implementa l'interfaccia negli oggetti che Manuele ha scritto
 }
