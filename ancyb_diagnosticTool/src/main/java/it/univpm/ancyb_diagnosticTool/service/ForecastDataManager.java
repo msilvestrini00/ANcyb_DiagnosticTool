@@ -197,7 +197,7 @@ public class ForecastDataManager {
         jo.put("End",  Time.currentDateTime2().substring(0, 8) + 
         			   String.format("%02d", Integer.parseInt(Time.currentDay())+days) + 
         			   Time.currentDateTime2().substring(10));
-        System.out.println(Time.currentDay());
+
         return jo;
     }
 

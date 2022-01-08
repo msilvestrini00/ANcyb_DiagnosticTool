@@ -15,7 +15,7 @@ public class JSONArrayToArrayList {
   public static void main(String[] args){  
       //Creating string of JSON data   
 	  
-	  AncybFishDataSim dataSim = new AncybFishDataSim();
+	 // AncybFishDataSim dataSim = new AncybFishDataSim();
 	  
 	  ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
 	  Forecast f = new Forecast(forecastList);
