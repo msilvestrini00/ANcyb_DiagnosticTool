@@ -2,6 +2,7 @@ package it.univpm.ancyb_diagnosticTool.service;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -9,15 +10,19 @@ import org.springframework.stereotype.Service;
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
+import it.univpm.ancyb_diagnosticTool.filters.FilterForecastByTime;
 import it.univpm.ancyb_diagnosticTool.filters.FilterListByMac;
 import it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
+import it.univpm.ancyb_diagnosticTool.stats.AverageCurrentDirection;
+import it.univpm.ancyb_diagnosticTool.stats.AverageWaveHeight;
 import it.univpm.ancyb_diagnosticTool.stats.StatsGPSData;
 import it.univpm.ancyb_diagnosticTool.stats.StatsTempData;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.IsVersion;
+import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 /**
  * 
@@ -34,21 +39,79 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	/*
 	 * METODO NUOVO (senza filtro e eccezione relativa, esportati in ancybRestController)
 	 */
-	@Override
-	public Forecast getForecast(String macAddr) throws FilterFailure, VersionMismatch {
-		
-		//definisco l'oggetto per cui ricavo le coordinate per elaborare i dati
-		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
-		
-		ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
-		Forecast forecast = new Forecast(forecastList);
-		
-		dataManager.buildUrl();		
-		dataManager.downloadJSONData();
-		forecast = dataManager.buildForecast();
 
-		return forecast;
+	//TODO i concetti di filtri e stats costruiti in questo modo vanno bene?
+
+	@Override
+	public ForecastObject getForecastByRealTime(String macAddr) throws FilterFailure, VersionMismatch {
+		
+		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
+		Forecast f = dataManager.getForecast();
+
+	    FilterForecastByTime forecastFilter = new FilterForecastByTime(f, Time.currentDateTime2());
+	    forecastFilter.computeFilter();
+		return forecastFilter.getFilteredData();
 	}
+
+
+
+
+	@Override
+	public ForecastObject getForecastBySelectedTime(String macAddr, String date, int hour)
+			throws FilterFailure, VersionMismatch {
+		
+		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
+		Forecast f = dataManager.getForecast();
+
+	    FilterForecastByTime forecastFilter = new FilterForecastByTime(f, date + "T" + String.format("%02d" , hour) + ":00:00+00:00");
+	    forecastFilter.computeFilter();
+		return forecastFilter.getFilteredData();
+	}
+	
+
+
+
+
+	@Override
+	public JSONObject getForecastStats(String macAddr, int days) throws StatsFailure, VersionMismatch, FilterFailure {
+		
+		//inizializzo gli elementi che mi servono
+		JSONArray statsValueArray = new JSONArray();
+		JSONObject statsValueObject = new JSONObject();
+		JSONArray statsResultsArray = new JSONArray();
+		JSONObject output = new JSONObject();	//TODO capire perchè se uso statsResults per far ritornare l'oggetto mi da che è null
+
+		
+		//creo l'oggetto coi dati e lo metto nell'array finale
+		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
+		Forecast f = dataManager.getForecast();
+		
+		statsResultsArray.put(dataManager.createForecastStatsDataJSONObject(f, days));
+		
+		// prendo i valori delle stts e li metto in un rray che me li raggruppa
+	    AverageWaveHeight avgWaveHeight = new AverageWaveHeight(f, days);
+	    avgWaveHeight.computeStats();
+	    statsValueArray.put(avgWaveHeight.getStats());
+		
+	    AverageCurrentDirection avgCurrentDirection = new AverageCurrentDirection(f, days);
+	    avgCurrentDirection.computeStats();
+	    statsValueArray.put(avgCurrentDirection.getStats());
+		
+	    //metto l'array dei valori in un oggetto per poterlo nominare
+	    statsValueObject.put("Stats values", statsValueArray);
+	    
+	    statsResultsArray.put(statsValueObject);
+
+	    //metto quest'ultimo oggetto nell'array finale
+	    output.put("Stats", statsResultsArray);
+
+		if(output == null) throw new StatsFailure("Nessuna statistica computabile per questo dispositivo.");
+		
+		return output;
+	}
+
+
+
 
 	/**
 	 * 

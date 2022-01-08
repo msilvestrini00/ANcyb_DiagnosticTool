@@ -44,7 +44,7 @@ public class AverageCurrentDirection implements StatsInterface{
 		//prendo i valori dell'elemento del tempo corrente
 		for(ForecastObject fobj : list) {
 						
-			if(fobj.getTime().equals(Time.currentDateTime2())) {
+			if(fobj.getForecastTime().equals(Time.currentDateTime2())) {
 				index = list.indexOf(fobj);
 				break;
 			}

@@ -65,6 +65,20 @@ public class ForecastDataManager {
 		this.lng = ((ANcybFishData_VerG) fishData).getLongitude(); //dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLng();
 	}
 
+	
+	public Forecast getForecast() throws FilterFailure, VersionMismatch {
+		
+		//definisco l'oggetto per cui ricavo le coordinate per elaborare i dati
+		
+		Forecast forecast;
+		
+		this.buildUrl();		
+		this.downloadJSONData();
+		forecast = this.buildForecast();
+
+		return forecast;
+	}
+	
 	public String getUrl() throws URLIsNull {	
 		
 		if(this.url == null) throw new URLIsNull("L'URL non è ancora stato creato. Costruire un URL prima di richiederlo.");
@@ -163,7 +177,7 @@ public class ForecastDataManager {
 	      
 	}
 	
-  	public static float extractSgSourceFromJSONArray(JSONArray array) {	
+  	public static float extractSgSourceFromJSONArray(JSONArray array) {		//TODO abbiamo avuto bisogno di implementare dei metodi statici, è un problema?
   	  
   		float data = 0;
   
@@ -185,10 +199,11 @@ public class ForecastDataManager {
   }
 	
   	
-	public JSONObject createForecastStatsJSONObject (Forecast forecast, int days) {
+	public JSONObject createForecastStatsDataJSONObject (Forecast forecast, int days) {
 		
 		
         JSONObject jo = new JSONObject();
+        JSONObject out = new JSONObject();
         
         jo.put("macAddress", this.macAddr);
         jo.put("Latitude", this.lat);
@@ -198,7 +213,9 @@ public class ForecastDataManager {
         			   String.format("%02d", Integer.parseInt(Time.currentDay())+days) + 
         			   Time.currentDateTime2().substring(10));
 
-        return jo;
+        out.put("Stats data", jo);
+        
+        return out;
     }
 
 }

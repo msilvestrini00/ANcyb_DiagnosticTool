@@ -28,7 +28,7 @@ public class FilterForecastByTime implements FilterInterface {
 	public ForecastObject getFilteredData() throws FilterFailure{	
 		
 		if(filteredForecast == null) {
-			throw new FilterFailure("Nessun 'ForecastObject' filtrato, invocare prima la funzione computeFilter()");
+			throw new FilterFailure("Nessun filtraggio eseguito, invocare prima la funzione computeFilter()");
 		}
 		return filteredForecast;	
 	}
@@ -41,10 +41,14 @@ public class FilterForecastByTime implements FilterInterface {
 		
 		for(ForecastObject fobj : forecastToFilter.getForecastList()) {
 					
-			if(fobj.getTime().equals(this.time)) this.filteredForecast = fobj;
+			if(fobj.getForecastTime().equals(this.time)) {
+				this.filteredForecast = fobj;
+				break;
+			}
+			else continue;
 		}
 		if(filteredForecast == null) {
-			throw new FilterFailure("Nessuna previsione trovata per l'orario inserito: " + this.time);
+			throw new FilterFailure("Nessuna previsione trovata per l'orario: " + this.time);
 		}
 		
 	}

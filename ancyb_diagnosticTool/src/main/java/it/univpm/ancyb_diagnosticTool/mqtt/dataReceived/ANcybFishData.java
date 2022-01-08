@@ -47,12 +47,12 @@ public class ANcybFishData implements DataReceived {
 	}
 
 	@Override
-	public String getTime() {
+	public String getForecastTime() {
 		return time;
 	}
 	
 	@Override
-	public void setTime(String time) {
+	public void setForecastTime(String time) {
 		this.time = time;
 	}
 
@@ -75,7 +75,7 @@ public class ANcybFishData implements DataReceived {
 	public String toString() {
 		
 		String s = "Date " + getDate() + " " +
-				   "Time" + getTime() + " " +
+				   "Time" + getForecastTime() + " " +
 			       "Mac address " + getMacAddr() + " " +
 				   "Version " + getVer() + "\n";
 		
@@ -88,7 +88,7 @@ public class ANcybFishData implements DataReceived {
         JSONObject jo = new JSONObject();
         
         jo.put("Date", this.getDate());
-        jo.put("Time", this.getTime());
+        jo.put("Time", this.getForecastTime());
         jo.put("Mac address", this.getMacAddr());
         jo.put("Version", this.getVer());
         

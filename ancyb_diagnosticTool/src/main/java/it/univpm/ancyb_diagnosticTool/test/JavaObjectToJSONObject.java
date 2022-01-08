@@ -21,7 +21,7 @@ public class JavaObjectToJSONObject {
 		jo.put("macAddress", fobj.getMacAddress());
 		jo.put("Latitude", fobj.getLatitude());
 		jo.put("Longitude", fobj.getLongitude());
-		jo.put("Time", fobj.getTime());
+		jo.put("Time", fobj.getForecastTime());
 		jo.put("WaveHeight", fobj.getWaveHeight());
 		jo.put("CurrentDirection", fobj.getCurrentDirection());
 

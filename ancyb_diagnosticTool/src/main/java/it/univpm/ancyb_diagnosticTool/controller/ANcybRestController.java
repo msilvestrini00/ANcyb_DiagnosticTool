@@ -33,7 +33,6 @@ public class ANcybRestController {
 	@Autowired
 	private AncybDiagnosticToolService a;
 	private JSONObject j;
-	private Forecast f;
 	ArrayList<ANcybFishData> list;
 
 
@@ -56,12 +55,8 @@ public class ANcybRestController {
 		//ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
 
 		try {
-			
-			f = a.getForecast(macAddr);
-			j = null;
 		
-		    FilterForecastByTime filter = new FilterForecastByTime(f, Time.currentDateTime2());
-			j = filter.getFilteredData().toJSON();
+			j = a.getForecastByRealTime(macAddr).toJSON();
 
 		} catch (FilterFailure | VersionMismatch e) {
 			System.err.println("Exception" + e);
@@ -85,9 +80,9 @@ public class ANcybRestController {
 																								   @RequestParam(name = "hour") int hour) {
 		
 		//TEST
-		//ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
+		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
 		//ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
-		ANcybFishData ancybData3 = new ANcybFishData_VerGT("2022.01.10", "18:26:38", "A4:cf:12:76:76:95", "Ver_GT", 43.670050f, 13.793283f, "NO_signal", 10.5f);
+		//ANcybFishData ancybData3 = new ANcybFishData_VerGT("2022.01.10", "18:26:38", "A4:cf:12:76:76:95", "Ver_GT", 43.670050f, 13.793283f, "NO_signal", 10.5f);
 		//ANcybFishData ancybData4 = new ANcybFishData_VerG("2022.01.06", "18:27:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
 		//ANcybFishData ancybData5 = new ANcybFishData_VerGT("2022.01.06", "18:28:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "5", 10.5f);
 		//ANcybFishData ancybData6 = new ANcybFishData_VerG("2022.01.06", "18:29:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
@@ -95,12 +90,7 @@ public class ANcybRestController {
 
 		try {
 			
-			f = a.getForecast(macAddr);
-			j = null;
-		
-		    FilterForecastByTime filter = new FilterForecastByTime(f, date + "T" + hour + ":00:00+00:00");
-		    filter.computeFilter();
-			j = filter.getFilteredData().toJSON();
+			j = a.getForecastBySelectedTime(macAddr, date, hour).toJSON();
 
 		} catch (FilterFailure | VersionMismatch e) {
 			System.err.println("Exception" + e);
@@ -112,7 +102,7 @@ public class ANcybRestController {
 	
 	
 	@RequestMapping(value = "/{macAddr}/forecast/stats", method = RequestMethod.POST)
-	public ResponseEntity<Object> getForecastStats(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") int days) {
+	public ResponseEntity<Object> getForecastStatistics(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") int days) {
 			
 			//TEST
 			ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
@@ -124,26 +114,8 @@ public class ANcybRestController {
 			//ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
 
 			try {
-				
-				f = a.getForecast(macAddr);
-			
-				
-				//creo il JSONObject finale
-				ForecastDataManager m = new ForecastDataManager(macAddr);
-				j = m.createForecastStatsJSONObject(f, days);
-				
-				
-			    AverageWaveHeight avgWaveHeight = new AverageWaveHeight(f, days);
-			    avgWaveHeight.computeStats();
-			    
-			    AverageCurrentDirection avgCurrentDirection = new AverageCurrentDirection(f, days);
-			    avgCurrentDirection.computeStats();
 
-			    String wave = avgWaveHeight.getStats().getString("WaveHeight");
-			    String curr = avgCurrentDirection.getStats().getString("CurrentDirection");
-
-			    j.put("waveHeight", wave );
-			    j.put("currentDirection", curr);
+			j = a.getForecastStats(macAddr, days);	
 				
 			} catch (FilterFailure | StatsFailure | VersionMismatch e) {
 				System.err.println("Exception" + e);
