@@ -10,6 +10,6 @@ public class ForecastTimeConv {
 
 	public static int ForecastTimeToDay(String time) {
 		
-		return Integer.parseInt(time.substring(8, 10)) + 1;
+		return Integer.parseInt(time.substring(8, 10));
 	}
 }
