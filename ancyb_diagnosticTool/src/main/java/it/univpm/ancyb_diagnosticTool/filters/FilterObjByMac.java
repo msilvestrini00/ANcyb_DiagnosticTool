@@ -14,6 +14,7 @@ public class FilterObjByMac implements FilterInterface {
 	
 	public FilterObjByMac(String macAddr) {
 		this.macAddr = macAddr;
+		this.fishData = null;
 	}
 
 	@Override
@@ -23,17 +24,24 @@ public class FilterObjByMac implements FilterInterface {
 
 	@Override
 	public ANcybFishData getFilteredData() throws FilterFailure {
-		
+		if(fishData == null) {
+			throw new FilterFailure("Nessun 'ANcybFishData' filtrato, invocare prima la funzione computeFilter()");
+		}
+		return fishData;
+	}
+
+	@Override
+	public void computeFilter() throws FilterFailure {
+
 		for(int i=ANcybFishData.list.size()-1; i>=0; i--) {
 			if(ANcybFishData.list.get(i).getMacAddr().equals(macAddr)) {
 				fishData = ANcybFishData.list.get(i);
-				return fishData;
 			}
 		}
 		if(fishData == null) {
 			throw new FilterFailure("Nessun elemento di posizione trovato nel database con questo mac address" + macAddr);
 		}
-		return fishData;
+		
 	}
 
 }

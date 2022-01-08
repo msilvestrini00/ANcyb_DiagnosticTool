@@ -2,6 +2,7 @@ package it.univpm.ancyb_diagnosticTool.service;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
@@ -12,8 +13,9 @@ import it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
+import it.univpm.ancyb_diagnosticTool.stats.StatsFishData;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
-import it.univpm.ancyb_diagnosticTool.utilities.checkVersion;
+import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
 
 
 @Service
@@ -43,8 +45,9 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	@Override
 	public ANcybFishData getLatestPositionByMac(String macAddr) throws VersionMismatch, FilterFailure {
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
+		filterFishData.computeFilter();
 		ANcybFishData fishData = filterFishData.getFilteredData();
-		checkVersion.verG(fishData);
+		CheckVersion.verG(fishData);
 		return fishData;
 	}
 
@@ -52,9 +55,18 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	@Override
 	public ArrayList<ANcybFishData> getAllPositionsByMac(String macAddr) throws FilterFailure, VersionMismatch {
 		FilterListByMac filterFishData = new FilterListByMac(macAddr);
+		filterFishData.computeFilter();
 		ArrayList<ANcybFishData> fishData = filterFishData.getFilteredData();
-		checkVersion.verG(fishData);
+		CheckVersion.verG(fishData);
 		return fishData;
+	}
+
+	@Override
+	public JSONObject getFishStats(ArrayList<ANcybFishData> historyFishData) {
+		StatsFishData statsFishData = new StatsFishData(historyFishData);
+		statsFishData.computeStats();
+		JSONObject statsResults = statsFishData.getStats();
+		return statsResults;
 	}
 
 

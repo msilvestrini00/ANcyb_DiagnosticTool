@@ -9,11 +9,13 @@ public class FilterForecastByTime implements FilterInterface {
 	
 	private Forecast forecastToFilter;
 	private String time;
+	private ForecastObject filteredForecast ;
 
 	public FilterForecastByTime(Forecast forecastToFilter, String time) {
 		
 		this.forecastToFilter = forecastToFilter;
 		this.time = time;
+		this.filteredForecast = null;
  }
 
 	
@@ -25,17 +27,25 @@ public class FilterForecastByTime implements FilterInterface {
 	@Override
 	public ForecastObject getFilteredData() throws FilterFailure{	
 		
-		ForecastObject output = null;
-				
+		if(filteredForecast == null) {
+			throw new FilterFailure("Nessun 'ForecastObject' filtrato, invocare prima la funzione computeFilter()");
+		}
+		return filteredForecast;	
+	}
+
+
+	@Override
+	public void computeFilter() throws FilterFailure {
+		
 		//for(int i=0; i<forecastToFilter.getForecastLength(); i++) {
 		
 		for(ForecastObject fobj : forecastToFilter.getForecastList()) {
 					
-			if(fobj.getTime().equals(this.time)) output = fobj;
+			if(fobj.getTime().equals(this.time)) this.filteredForecast = fobj;
 		}
-		if(output ==null) {
+		if(filteredForecast == null) {
 			throw new FilterFailure("Nessuna previsione trovata per l'orario inserito: " + this.time);
 		}
-		return output;	
+		
 	}
 }

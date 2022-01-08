@@ -36,7 +36,13 @@ public class ANcybFishData_VerG extends ANcybFishData {
 	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
-
+	
+	public float[] getCoord() {
+		float[] coord = {this.latitude, this.longitude};
+		return coord;
+	}
+	
+	
 	public String getQualPos() {
 		return qualPos;
 	}

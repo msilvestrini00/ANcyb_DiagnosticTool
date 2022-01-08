@@ -1,7 +1,6 @@
 package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import org.json.JSONObject;
 

@@ -13,10 +13,11 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 public class FilterListByMac implements FilterInterface {
 
 	private String macAddr;
-	
+	private ArrayList<ANcybFishData> filteredFishDataList;
 	
 	public FilterListByMac(String macAddr) {
 		this.macAddr = macAddr;
+		this.filteredFishDataList = new ArrayList<ANcybFishData>();
 	}
 
 	@Override
@@ -25,18 +26,24 @@ public class FilterListByMac implements FilterInterface {
 	}
 
 	@Override
-	public ArrayList<ANcybFishData> getFilteredData() throws FilterFailure {
-		
-		ArrayList<ANcybFishData> fishDataList = new ArrayList<ANcybFishData>();
+	public ArrayList<ANcybFishData> getFilteredData() throws FilterFailure {	
+		if(filteredFishDataList.size()==0) {
+			throw new FilterFailure("Nessun 'ArrayList<ANcybFishData>' filtrato, invocare prima la funzione computeFilter()");
+		}
+		return filteredFishDataList;	
+	}
+
+	@Override
+	public void computeFilter() throws FilterFailure {
+
 		for(int i=ANcybFishData.list.size()-1; i>=0; i--) {
 			if(ANcybFishData.list.get(i).getMacAddr().equals(macAddr)) {
-				fishDataList.add(ANcybFishData.list.get(i));
+				filteredFishDataList.add(ANcybFishData.list.get(i));
 			}
 		}
-		if(fishDataList.size()==0) {
-			throw new FilterFailure("Nessun elemento di posizione trovato nel database con questo mac address" + macAddr);
+		if(filteredFishDataList.size()==0) {
+			throw new FilterFailure("Nessun elemento di posizione trovato nel database con questo mac address: " + macAddr);
 		}
-		return fishDataList;
 		
 	}
 		

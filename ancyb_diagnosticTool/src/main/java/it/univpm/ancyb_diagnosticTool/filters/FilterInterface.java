@@ -5,6 +5,6 @@ import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 public interface FilterInterface {
 	public Object getDataToFilter();
 	public Object getFilteredData() throws FilterFailure;
-	public void computeFilter();	// FAI FILTERFAILURE QUI, NON SU GETFILTEREDDATA
+	public void computeFilter() throws FilterFailure;
 
 }

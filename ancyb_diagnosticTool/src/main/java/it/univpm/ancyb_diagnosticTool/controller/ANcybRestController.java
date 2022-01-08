@@ -132,7 +132,15 @@ public class ANcybRestController {
 	 */
 	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.GET)
 	public ResponseEntity<Object> getLastPosition(@PathVariable("macAddr") String macAddr) {
-			
+		/*
+		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
+		ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
+		ANcybFishData ancybData3 = new ANcybFishData_VerGT("2022.01.10", "18:26:38", "A4:cf:12:76:76:95", "Ver_GT", 43.670050f, 13.793283f, "NO_signal", 10.5f);
+		ANcybFishData ancybData4 = new ANcybFishData_VerG("2022.01.06", "18:27:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
+		ANcybFishData ancybData5 = new ANcybFishData_VerGT("2022.01.06", "18:28:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "5", 10.5f);
+		ANcybFishData ancybData6 = new ANcybFishData_VerG("2022.01.06", "18:29:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
+		ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
+		*/
 		j = null;
 		try {
 			j = a.getLatestPositionByMac(macAddr).toJSON();
@@ -154,9 +162,28 @@ public class ANcybRestController {
 	public ResponseEntity<Object> getAllPositions(@PathVariable("macAddr") String macAddr) {
 	
 		try {
-			ArrayList<ANcybFishData> result = a.getAllPositionsByMac(macAddr);
-			Collection<ANcybFishData> collANcyb = result;
+			ArrayList<ANcybFishData> historyFishData = a.getAllPositionsByMac(macAddr);
+			Collection<ANcybFishData> collANcyb = historyFishData;
 			return new ResponseEntity<>( collANcyb, HttpStatus.OK);
+		} catch (VersionMismatch | FilterFailure e) {
+			System.err.println("Exception: " + e);
+			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	/**
+	 * Rotta che restituisce le statisticheo.
+	 * @param macAddr
+	 * @return
+	 */
+	@RequestMapping(value = "/{macAddr}/device/stats", method = RequestMethod.GET)
+	public ResponseEntity<Object> getDeviceStats(@PathVariable("macAddr") String macAddr) {
+		
+		try {
+			ArrayList<ANcybFishData> historyFishData = a.getAllPositionsByMac(macAddr);
+			j = a.getFishStats(historyFishData);
+			return new ResponseEntity<>( j.toMap() , HttpStatus.OK);
 		} catch (VersionMismatch | FilterFailure e) {
 			System.err.println("Exception: " + e);
 			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);

@@ -14,14 +14,12 @@ import org.json.JSONObject;
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.URLIsNull;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
-import it.univpm.ancyb_diagnosticTool.datasim.AncybFishDataSim;
 import it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG;
-import it.univpm.ancyb_diagnosticTool.utilities.Time;
-import it.univpm.ancyb_diagnosticTool.utilities.checkVersion;
+import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
 
 public class ForecastDataManager {
 
@@ -56,8 +54,9 @@ public class ForecastDataManager {
 
 		
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
+		filterFishData.computeFilter();
 		ANcybFishData fishData = filterFishData.getFilteredData();
-		checkVersion.verG(fishData);
+		CheckVersion.verG(fishData);
 		this.macAddr = macAddr;
 
 		//TEST
