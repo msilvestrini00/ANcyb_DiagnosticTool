@@ -67,11 +67,10 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	 * 
 	 */
 	@Override
-	public ArrayList<ANcybFishData> getAllPositionsByMac(String macAddr) throws FilterFailure, VersionMismatch {
+	public ArrayList<ANcybFishData> getAllResultsByMac(String macAddr) throws FilterFailure {
 		FilterListByMac filterFishData = new FilterListByMac(macAddr);
 		filterFishData.computeFilter();
 		ArrayList<ANcybFishData> fishData = filterFishData.getFilteredData();
-		CheckVersion.verG(fishData);
 		return fishData;
 	}
 

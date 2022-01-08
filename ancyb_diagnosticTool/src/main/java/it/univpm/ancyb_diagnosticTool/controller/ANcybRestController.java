@@ -20,7 +20,6 @@ import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.filters.FilterForecastByTime;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
-import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerGT;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 import it.univpm.ancyb_diagnosticTool.service.ForecastDataManager;
@@ -165,7 +164,7 @@ public class ANcybRestController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.GET)
-	public ResponseEntity<Object> getLastPosition(@PathVariable("macAddr") String macAddr) {
+	public ResponseEntity<Object> getLastData(@PathVariable("macAddr") String macAddr) {
 		/*
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
 		ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
@@ -193,7 +192,7 @@ public class ANcybRestController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{macAddr}/device/filter/all", method = RequestMethod.GET)
-	public ResponseEntity<Object> getAllPositions(@PathVariable("macAddr") String macAddr) {
+	public ResponseEntity<Object> getAllData(@PathVariable("macAddr") String macAddr) {
 		/*
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
 		ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
@@ -204,10 +203,10 @@ public class ANcybRestController {
 		ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
 		*/
 		try {
-			ArrayList<ANcybFishData> historyFishData = a.getAllPositionsByMac(macAddr);
+			ArrayList<ANcybFishData> historyFishData = a.getAllResultsByMac(macAddr);
 			Collection<ANcybFishData> collANcyb = historyFishData;
 			return new ResponseEntity<>( collANcyb, HttpStatus.OK);
-		} catch (VersionMismatch | FilterFailure e) {
+		} catch (FilterFailure e) {
 			System.err.println("Exception: " + e);
 			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
 		}
@@ -231,7 +230,7 @@ public class ANcybRestController {
 		ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
 		*/
 		try {
-			ArrayList<ANcybFishData> historyFishData = a.getAllPositionsByMac(macAddr);
+			ArrayList<ANcybFishData> historyFishData = a.getAllResultsByMac(macAddr);
 			j = a.getFishStats(historyFishData);
 			return new ResponseEntity<>( j.toMap() , HttpStatus.OK);
 		} catch (VersionMismatch | FilterFailure | JSONException | StatsFailure e) {

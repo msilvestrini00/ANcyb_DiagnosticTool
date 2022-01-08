@@ -30,7 +30,7 @@ public interface AncybDiagnosticToolService {
 	 * @throws FilterFailure
 	 * @throws VersionMismatch
 	 */
-	ArrayList<ANcybFishData> getAllPositionsByMac(String macAddr) throws FilterFailure, VersionMismatch;
+	ArrayList<ANcybFishData> getAllResultsByMac(String macAddr) throws FilterFailure;
 
 	/**
 	 * 
@@ -50,7 +50,6 @@ public interface AncybDiagnosticToolService {
 	 * @throws VersionMismatch 
 	 */
 	public abstract JSONObject getFishStats(ArrayList<ANcybFishData> historyFishData) throws JSONException, StatsFailure, VersionMismatch;
-
 
 }
 

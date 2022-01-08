@@ -2,12 +2,11 @@ package it.univpm.ancyb_diagnosticTool.utilities;
 
 /**
  * 
- * @author giaco
+ * @author Giacomo Fiara, Manuele Silvestrini
  *
  */
 public interface DataReceived {
 	
-	//TODO come si costruisce il JavaDoc?
 	public String getDate();
 	public void setDate(String date);
 	public String getTime();

@@ -16,6 +16,12 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
+/**
+ * Classe che implementa i vari metodi per creare e gestire un MQTT client
+ * 
+ * @author Giacomo Fiara
+ *
+ */
 public class ANcybMqttClient {
 
 	private static final String mqttClientId = "spring-server-ancyb-" + Time.currentDateTime();
@@ -24,25 +30,30 @@ public class ANcybMqttClient {
     DataLogger dataLog;
 	public static ArrayList<DataReceived> m5data;
 	
+	/**
+	 * Costruttore del client. Viene inoltre creato un nuovo datalogger.
+	 * 
+	 * @throws	MqttException
+	 * @throws	InterruptedException
+	 */
     public ANcybMqttClient() throws MqttException, InterruptedException {
+    	
     	ANcybMqttClient.getInstance();
-    	m5data = new ArrayList<DataReceived>();
         dataLog = new DataLogger();
         
-        //Questo è il subscriber
         this.subscribe("ANcybDiagnosticTool");
+        //this.publish("ANcybDiagnosticTool", "Risposta Di Prova", 1, false);
   		
-  		//Questo è il publisher, ricorda che si disconnette finita la pubblicazione
-  		/*try {
-  			mqttClient.publish("ANcybDiagnosticTool", "Risposta Di Prova", 1, false);
-  		} catch (MqttPersistenceException e) {
-  			e.printStackTrace();
-  		} catch (MqttException e) {
-  			e.printStackTrace();
-  		}
-  		*/
     }
 	
+    /**
+     * Metodo che restituisce un oggetto che implementa l'interfaccia IMqttClient.
+     * Questo metodo crea un nuova istanza se ancora non è stata creata,
+     * imposta inoltre le opzioni di connessioni, verifica lo stato di connessione 
+     * e lancia in automatico un nuovo tentativo in caso di errori.
+     * 
+     * @return	l'oggetto che può usare i metodi dell'interfaccia IMQTT per comunicare con un broker MQTT.
+     */
     public static IMqttClient getInstance() {
         
     	try {
@@ -75,6 +86,14 @@ public class ANcybMqttClient {
         return instance;
     }
     
+    /**
+     * Questo metodo sottoscrive il client al topic inserito come parametro.
+     * Il dato ricevuto viene poi mostrato in console e scritto sul data logger
+     * creato precedentemente dal costruttore nel caso abbia una struttura nota.
+     * 
+     * @param	topic	è il topic a cui si vuole fare la sottoscrizione
+     * @throws	MqttException
+     */
     public void subscribe(final String topic) throws MqttException {
     	
     	System.out.println("Sottoscrivo dal server:");
@@ -84,7 +103,6 @@ public class ANcybMqttClient {
     		System.out.println(msg.getId() + " -> " + str);
     		try {
     			DataReceived data = ANcybDataManager.createDataObj(str);
-        		m5data.add(data);
         		dataLog.write(data);
     		} catch(MqttStringMismatch e) {
     			System.err.println("Exception:" + e);
@@ -96,10 +114,18 @@ public class ANcybMqttClient {
     	
     }
 
+    /**
+     * 
+     * 
+     * @param	topic		è il topic in cui si vuole fare la pubblicazione
+     * @param	payload		è la stringa che si vuole pubblicare sul broker
+     * @param	qos			è il parametro "Quality Of Service" (può essere impostato da 0 a 2)
+     * @param	retained	
+     * @throws	MqttPersistenceException
+     * @throws	MqttException
+     */
     public void publish(final String topic, final String payload, int qos, boolean retained)
     		throws MqttPersistenceException, MqttException {
-    	
-    	System.out.println("Dentro publish");
     	
     	MqttMessage mqttMessage = new MqttMessage();
     	mqttMessage.setPayload(payload.getBytes());
@@ -108,13 +134,12 @@ public class ANcybMqttClient {
     	
     	System.out.println("Impostato mqttMessage");
     	
-    	ANcybMqttClient.getInstance().publish(/*messagePublishModel.getTopic()*/topic, mqttMessage);
+    	ANcybMqttClient.getInstance().publish(topic, mqttMessage);
     	
-        System.out.println("Dovrei aver pubblicato >> " + payload);
+        System.out.println(Time.currentDateTime() + " pubblicato >> " + payload);
         
-        //TODO non so se conviene lasciarlo, altrimenti ogni volta che pubblico mi si disconnette il client
-        ANcybMqttClient.getInstance().disconnect();
-    	
-    	System.out.println("Dovrei essermi disconnesso");
+        // In questo modo evito di disconettermi al client nel caso facessi un publish
+        //ANcybMqttClient.getInstance().disconnect();
+  
     }	
 }

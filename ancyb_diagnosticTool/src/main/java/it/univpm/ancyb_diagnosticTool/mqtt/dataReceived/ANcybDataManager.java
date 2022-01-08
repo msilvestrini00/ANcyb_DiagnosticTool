@@ -40,7 +40,7 @@ public class ANcybDataManager {
 				Coord.checkIsLat(latitude);
 				lat = Coord.latGMSstringToGDfloat(latitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
-				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
+				//TODO lanciare un'eccezione nel catch ha senso?
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> latitudine");
 			}
 		
@@ -49,7 +49,6 @@ public class ANcybDataManager {
 				Coord.checkIsLon(longitude);
 				lon = Coord.lonGMSstringToGDfloat(longitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
-				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> longitudine");
 			}
 			
@@ -78,7 +77,6 @@ public class ANcybDataManager {
 				Coord.checkIsLat(latitude);
 				lat = Coord.latGMSstringToGDfloat(latitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
-				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> latitudine");
 			}
 		
@@ -87,7 +85,6 @@ public class ANcybDataManager {
 				Coord.checkIsLon(longitude);
 				lon = Coord.lonGMSstringToGDfloat(longitude);
 			} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
-				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> longitudine");
 			}
 			
@@ -97,7 +94,6 @@ public class ANcybDataManager {
 			try {
 				temp = Float.parseFloat(temperature);
 			} catch (NullPointerException|NumberFormatException e){
-				//TODO chiedere al prof o a chi di dovere se sta cosa ha senso
 				throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> temperatura");
 			}
 					
@@ -106,7 +102,7 @@ public class ANcybDataManager {
 			ancybData = new ANcybFishData_VerGT(date, time, mac, ver, lat, lon, qualPos, temp);			
 			break;
 			
-			//nel caso avessi una versione pressione ("P"), o altre ...
+			//nel caso avessi una versione con sensore di pressione ("P"), o altre ...
 		    /*case "Ver_P":
 			
 			break;*/

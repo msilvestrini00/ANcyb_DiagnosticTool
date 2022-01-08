@@ -46,10 +46,12 @@ public class DataLogger {
 			PrintWriter file_output =
 					new PrintWriter(new BufferedWriter (
 							new FileWriter (this.fileName, true)));
+			
 			/* scrive i valori usando println
 			 * scrivo come prima riga un semplice header
 			 */
 			file_output.println(date + " - DataLogger" + "\n" + ">--------------------------------<");
+			
 			// chiude lo stream di output
 			file_output.close ();
 			}

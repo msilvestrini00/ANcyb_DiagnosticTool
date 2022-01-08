@@ -13,7 +13,7 @@ import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
  */
 public class ANcybFishData implements DataReceived {
 
-	protected String time;
+	private String time;
 	private String date;
 	private String ver;
 	private String macAddr;

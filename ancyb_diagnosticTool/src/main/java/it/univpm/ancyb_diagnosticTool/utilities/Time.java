@@ -3,10 +3,10 @@ package it.univpm.ancyb_diagnosticTool.utilities;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-//TODO se ci sono più autori??
 /**
  * 
- * @author giaco
+ * @author Giacomo Fiara
+ * @author Manuele Silvestrini
  *
  */
 public class Time {
