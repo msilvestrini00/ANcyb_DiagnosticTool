@@ -19,7 +19,11 @@ import it.univpm.ancyb_diagnosticTool.stats.StatsTempData;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.IsVersion;
 
-
+/**
+ * 
+ * @author Giacomo Fiara, Manuele Silvestrini
+ *
+ */
 @Service
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
@@ -46,6 +50,9 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		return forecast;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public ANcybFishData getLatestPositionByMac(String macAddr) throws VersionMismatch, FilterFailure {
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
@@ -56,6 +63,9 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 
 
+	/**
+	 * 
+	 */
 	@Override
 	public ArrayList<ANcybFishData> getAllPositionsByMac(String macAddr) throws FilterFailure, VersionMismatch {
 		FilterListByMac filterFishData = new FilterListByMac(macAddr);
@@ -65,6 +75,9 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		return fishData;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public JSONObject getFishStats(ArrayList<ANcybFishData> historyFishData) throws JSONException, StatsFailure, VersionMismatch {
 		statsResults = new JSONObject();

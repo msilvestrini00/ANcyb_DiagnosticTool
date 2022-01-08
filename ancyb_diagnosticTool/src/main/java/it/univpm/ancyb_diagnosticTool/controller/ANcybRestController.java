@@ -3,7 +3,6 @@ package it.univpm.ancyb_diagnosticTool.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,7 +142,6 @@ public class ANcybRestController {
 			    String wave = avgWaveHeight.getStats().getString("WaveHeight");
 			    String curr = avgCurrentDirection.getStats().getString("CurrentDirection");
 
-			    
 			    j.put("waveHeight", wave );
 			    j.put("currentDirection", curr);
 				
@@ -223,7 +221,7 @@ public class ANcybRestController {
 	 */
 	@RequestMapping(value = "/{macAddr}/device/stats", method = RequestMethod.GET)
 	public ResponseEntity<Object> getDeviceStats(@PathVariable("macAddr") String macAddr) {
-		
+		/*
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
 		ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
 		ANcybFishData ancybData3 = new ANcybFishData_VerGT("2022.01.10", "18:26:38", "A4:cf:12:76:76:95", "Ver_GT", 43.670050f, 13.793283f, "NO_signal", 10.5f);
@@ -231,7 +229,7 @@ public class ANcybRestController {
 		ANcybFishData ancybData5 = new ANcybFishData_VerGT("2022.01.06", "18:28:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "5", 10.5f);
 		ANcybFishData ancybData6 = new ANcybFishData_VerG("2022.01.06", "18:29:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
 		ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
-		
+		*/
 		try {
 			ArrayList<ANcybFishData> historyFishData = a.getAllPositionsByMac(macAddr);
 			j = a.getFishStats(historyFishData);
