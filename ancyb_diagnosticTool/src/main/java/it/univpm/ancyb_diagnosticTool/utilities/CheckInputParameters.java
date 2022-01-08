@@ -28,7 +28,7 @@ public class CheckInputParameters {
 			System.err.println("Exception" + e);
 		}
 		
-		if(days < 1 || days > 7) throw new InvalidParameter("Invalid days parameter.");
+		if(days < 0 || days > 7) throw new InvalidParameter("Invalid days parameter.");
 	}
 	
 	

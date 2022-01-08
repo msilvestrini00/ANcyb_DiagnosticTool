@@ -36,24 +36,6 @@ public class ForecastDataManager {
 
 	public ForecastDataManager(String macAddr) throws FilterFailure, VersionMismatch {
 		
-		/**
-		 * ROBA VECCHIA
-		 */
-		/*AncybFishDataSim dataSim = new AncybFishDataSim();	// da levare dopo i test
-		this.macAddr = macAddr;
-		this.lat = dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLat();
-		this.lng = dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLng();
-		*/
-		
-		
-		/**
-		 * ROBA NUOVA
-		 */
-		
-		//TEST
-		//AncybFishDataSim dataSim = new AncybFishDataSim();	
-
-		
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
 		filterFishData.computeFilter();
 		ANcybFishData fishData = filterFishData.getFilteredData();
