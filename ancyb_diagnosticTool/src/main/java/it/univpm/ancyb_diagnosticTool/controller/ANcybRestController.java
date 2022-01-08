@@ -110,19 +110,6 @@ public class ANcybRestController {
 	}
 	
 	
-	/*
-	 * 
-	 * PER LA ROTTA FORECAST/STATS:
-	 * - crei oggetti ANcybfishdata
-	 * - usare j = a.getLastPositionByMac(macAddr).toJSON();
-	 * - crei forecast
-	 * - fai "new stats(forecast, giorni per cui fare la stats)
-	 * - fai stats.computeStats();
-	 * 
-	 * 
-	 * 
-	 */
-	
 	@RequestMapping(value = "/{macAddr}/forecast/stats", method = RequestMethod.POST)
 	public ResponseEntity<Object> getForecastStats(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") int days) {
 			

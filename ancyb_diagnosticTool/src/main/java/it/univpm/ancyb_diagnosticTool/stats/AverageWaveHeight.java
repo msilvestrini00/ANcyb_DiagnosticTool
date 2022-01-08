@@ -8,7 +8,6 @@ import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
-import it.univpm.ancyb_diagnosticTool.utilities.ForecastTimeConv;
 
 
 public class AverageWaveHeight implements StatsInterface{
