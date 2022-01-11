@@ -48,6 +48,7 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
 	public ResponseEntity<Object> getRealTimeForecast(@PathVariable("macAddr") String macAddr) {
 		
+		//TODO annida nel try catch sotto
 		//verifica dei parametri di input
 		try {
 			
@@ -86,6 +87,7 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/forecast/filter", method = RequestMethod.POST)
 	public ResponseEntity<Object> getSelectedTimeForecast(@PathVariable("macAddr") String macAddr, @RequestParam(name = "date") String date, 
 																								   @RequestParam(name = "hour") int hour) {
+		//TODO annida nel try catch sotto
 		//verifica dei parametri di input
 		try {
 			
@@ -115,6 +117,7 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/forecast/stats", method = RequestMethod.POST)
 	public ResponseEntity<Object> getForecastStatistics(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") int days) {
 			
+		//TODO annida nel try catch sotto
 		//verifica dei parametri di input
 		try {
 			
@@ -155,6 +158,7 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.GET)
 	public ResponseEntity<Object> getLastData(@PathVariable("macAddr") String macAddr) {
 		
+		//TODO annida nel try catch sotto
 		//verifica dei parametri di input
 		try {
 			
@@ -194,6 +198,7 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/device/filter/all", method = RequestMethod.GET)
 	public ResponseEntity<Object> getAllData(@PathVariable("macAddr") String macAddr) {
 		
+		//TODO annida nel try catch sotto
 		//verifica dei parametri di input
 		try {
 			
@@ -232,6 +237,7 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/device/stats", method = RequestMethod.GET)
 	public ResponseEntity<Object> getDeviceStats(@PathVariable("macAddr") String macAddr) {
 		
+		//TODO annida nel try catch sotto
 		//verifica dei parametri di input
 		try {
 			
