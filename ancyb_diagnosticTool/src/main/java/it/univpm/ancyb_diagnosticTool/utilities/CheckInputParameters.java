@@ -48,7 +48,7 @@ public class CheckInputParameters {
 	}
 	
 	
-	public static boolean CheckDate(String date) {
+	private static boolean CheckDate(String date) {
 		
 		String[] tokens = date.split("-");
 		
