@@ -2,22 +2,20 @@ package it.univpm.ancyb_diagnosticTool.stats;
 
 import java.util.ArrayList;
 
-import org.json.JSONObject;
-
 import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerGT;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
 
-public class StatsTempData implements StatsInterface {
+public class AverageTemperatureFish implements StatsInterface {
 
 	private ArrayList<ANcybFishData> dataForStats;
-	private JSONObject stats;
+	private String stats;
 
-	public StatsTempData(ArrayList<ANcybFishData> dataForStats) {
+	public AverageTemperatureFish(ArrayList<ANcybFishData> dataForStats) {
 		this.dataForStats = dataForStats;
-		this.stats = new JSONObject();
+		this.stats = null;
 	}
 	
 	@Override
@@ -26,7 +24,7 @@ public class StatsTempData implements StatsInterface {
 	}
 
 	@Override
-	public JSONObject getStats() throws StatsFailure {
+	public String getStats() throws StatsFailure {
 		if ( stats == null) throw new StatsFailure("Nessuna statistica elaborata, invocare prima la funzione computeStats()");
 		return stats;
 	}
@@ -39,7 +37,7 @@ public class StatsTempData implements StatsInterface {
 			sum += ((ANcybFishData_VerGT) fishData).getTemp();
 		}
 		float avgTemp = sum/dataForStats.size();
-		stats.put("Average temperature", avgTemp);
+		stats = avgTemp + " °C";
 	}
 
 }

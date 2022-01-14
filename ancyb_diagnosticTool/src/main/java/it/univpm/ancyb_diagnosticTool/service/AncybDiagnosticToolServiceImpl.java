@@ -18,8 +18,8 @@ import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.stats.AverageCurrentDirection;
 import it.univpm.ancyb_diagnosticTool.stats.AverageWaveHeight;
-import it.univpm.ancyb_diagnosticTool.stats.StatsGPSData;
-import it.univpm.ancyb_diagnosticTool.stats.StatsTempData;
+import it.univpm.ancyb_diagnosticTool.stats.GeodeticDistance;
+import it.univpm.ancyb_diagnosticTool.stats.AverageTemperatureFish;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.IsVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
@@ -104,7 +104,8 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 
 	    //metto quest'ultimo oggetto nell'array finale
 	    output.put("Stats", statsResultsArray);
-
+	    
+	    //TODO da togliere
 		if(output == null) throw new StatsFailure("Nessuna statistica computabile per questo dispositivo.");
 		
 		return output;
@@ -143,14 +144,14 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	public JSONObject getFishStats(ArrayList<ANcybFishData> historyFishData) throws JSONException, StatsFailure, VersionMismatch {
 		statsResults = new JSONObject();
 		if(IsVersion.verG(historyFishData)) {
-			StatsGPSData statsGPSData = new StatsGPSData(historyFishData);
-			statsGPSData.computeStats();
-			statsResults.put("GPS stats", statsGPSData.getStats());
+			GeodeticDistance geodeticDistance = new GeodeticDistance(historyFishData);
+			geodeticDistance.computeStats();
+			statsResults.put("GPS stats", geodeticDistance.getStats());
 		}
 		if(IsVersion.verGT(historyFishData)) {
-			StatsTempData statsTempData = new StatsTempData(historyFishData);
-			statsTempData.computeStats();
-			statsResults.put("Temperature stats", statsTempData.getStats());
+			AverageTemperatureFish averageTemperatureFish = new AverageTemperatureFish(historyFishData);
+			averageTemperatureFish.computeStats();
+			statsResults.put("Temperature stats", averageTemperatureFish.getStats());
 		}
 		if(statsResults == null) throw new StatsFailure("Nessuna statistica computabile per questo dispositivo.");
 		return statsResults;
