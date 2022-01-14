@@ -21,8 +21,8 @@ public class ANcybFishData implements DataReceived {
 
 	
 	/**
-	 * 
-	 * @param date
+	 *
+ 	 * @param date
 	 * @param time
 	 * @param macAddr
 	 * @param ver

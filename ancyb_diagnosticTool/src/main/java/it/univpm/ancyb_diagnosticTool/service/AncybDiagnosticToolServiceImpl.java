@@ -125,7 +125,6 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		return fishData;
 	}
 
-
 	/**
 	 * 
 	 */

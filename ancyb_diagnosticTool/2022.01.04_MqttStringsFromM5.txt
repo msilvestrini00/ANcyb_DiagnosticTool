@@ -1,5 +1,62 @@
-Ver G
+Per poter provare l'applicativo (parte Mqtt):
 
-Ver GT
+1 > Recarsi sul sito https://mqtthq.com/client.
+2 > Accertarsi che "Connection Status" risulti "Connected to public.mqtthq.com".
+3 > Alla voce "Topic" sotto il publisher (sotto "Publish to topic:") inserire "ANcybDiagnosticTool".
+4 > Alla voce "QoS" selezionare "1 - At Least Once".
+5 > Inserire una delle stringhe qua sotto e premere su "Publish".
 
-Ver P
+(Facoltativo) Impostando il "Topic" e "QoS" del subscriber (sotto "Publish to topic:") in maniera analoga, dopo aver premuto il pulsante "Subscribe", si potrà osservare le stringhe che verrano pubblicate di lì in poi. 
+
+> Ver G (dotato di GPS)
+Esatta>> "a4:cf:12:76:76:95 Ver_G 16:05:45 4331.5283N 01323.7442E 1"
+
+> Ver GT (dotato di GPS e sensore di Temperatura)
+Esatta>> "a4:cf:12:76:76:95 Ver_GT 16:10:45 4331.5283N 01323.7442E 1 10.5"
+
+> Alcuni esempi di stringhe che possono generare eccezioni
+Errata>> "a4:cf:12:76:76:95 Ver_GTP 16:05:45 4331.5283N 01323.7442E 1"		-->	La Stringa della versione non corrisponde alle versioni implementate
+Errata>> "a4:cf812:76:76:95 Ver_G 16:05:45 4331.5283N 01323.7442E 1"  		-->	Il Mac Address non rispetta le regole di sintassi
+Errata>> "a4:cf:12:76:76:95 Ver_G 16:05:45 4331.5283N 01323.7442E 1 10.5"	-->	La Stringa ricevuta presenta degli elementi in più (per la versione G)
+Errata>> "a4:cf:12:76:76:95 Ver_G 16:05:45 9731.5283N 01323.7442E 1 10.5"	-->	La latitudine è sbagliata (maggiore di 90°) 
+
+> Un esempio di dati inviati al broker e ricevuti corretamente dal subscriber (SpringBoot app):
+"a4:cf:12:76:76:95 Ver_G 16:05:45 4334.3060N 1335.1580E 1"
+"b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.2360N 7401.2330W 1 10.5"
+"c4:cf:12:76:76:95 Ver_GT 16:05:55 3400.5850S 15150.4460E 1 5.3"
+"a4:cf:12:76:76:95 Ver_G 16:06:00 4334.4060N 1335.1580E 1"
+"b4:cf:11:76:76:95 Ver_GT 16:06:05 4031.1360N 7401.2330W 1 11.3"
+"c4:cf:12:76:76:95 Ver_GT 16:06:10 3400.5850S 15150.4460E 1 4.8"
+"a4:cf:12:76:76:95 Ver_G 16:06:15 4334.5060N 1335.1580E 1"
+"b4:cf:12:76:76:95 Ver_GT 16:06:20 4031.1560N 7401.2330W 1 10.2"
+"c4:cf:12:76:76:95 Ver_GT 16:06:25 3400.5850S 15150.4460E 1 6.1"
+"a4:cf:12:76:76:95 Ver_G 16:06:30 4334.4060N 1335.1580E 1"
+"b4:cf:11:76:76:95 Ver_GT 16:06:35 4031.1860N 7401.2330W 1 10.5"
+"c4:cf:12:76:76:95 Ver_GT 16:06:40 3400.5850S 15150.4460E 1 4.5"
+"a4:cf:12:76:76:95 Ver_G 16:06:45 4334.5060N 1335.1580E 1"
+"b4:cf:12:76:76:95 Ver_GT 16:06:50 4031.1960N 7401.2330W 1 10.8"
+"c4:cf:12:76:76:95 Ver_GT 16:06:55 3400.5850S 15150.4460E 1 5"
+"a4:cf:12:76:76:95 Ver_G 16:07:00 4334.6060N 1335.1580E 1"
+"b4:cf:12:76:76:95 Ver_GT 16:07:05 4031.1260N 7401.2330W 1 10.5"
+"c4:cf:12:76:76:95 Ver_GT 16:07:10 3400.5850S 15150.4460E 1 5.1"
+
+> Considerando 3 coordinate di esempio
+
+Qui sotto il primo istante:
+DAVANTI ANCONA 		4334.3060N 1335.1580E	-->    43.57517		 13.587715
+DAVANTI NEW YORK 	4031.2360N 7401.2330W	-->    40.52321		-74.023125
+DAVANTI SIDNEY		3400.5850S 15150.4460E	-->   -34.01626		151.845730
+
+Qui sotto l'ultimo istante:
+DAVANTI ANCONA 		4334.6060N 1335.1580E	-->     43.5835		  13.58772
+DAVANTI NEW YORK 	4031.1260N 7401.2330W	-->    40.52017		 -74.02314
+DAVANTI SIDNEY		3400.5850S 15150.4460E	-->   -34.01626 	  151.845730
+
+> Risultati (stats sul gps) attesi
+a4:cf:12:76:76:95	-->		0.925 km
+b4:cf:12:76:76:95   -->		0.338 km
+c4:cf:12:76:76:95 	-->		0.000 km
+
+> Risultati (stats sulla temp) attesi
+b4:cf:12:76:76:95   -->		10.63
+c4:cf:12:76:76:95 	-->		5.175
