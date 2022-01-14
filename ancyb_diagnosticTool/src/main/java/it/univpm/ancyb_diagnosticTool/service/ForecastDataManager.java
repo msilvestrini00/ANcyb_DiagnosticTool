@@ -159,7 +159,7 @@ public class ForecastDataManager {
 	      
 	}
 	
-  	private float extractSgSourceFromJSONArray(JSONArray array) {		//TODO abbiamo avuto bisogno di implementare dei metodi statici, è un problema?
+  	private float extractSgSourceFromJSONArray(JSONArray array) {	
   	  
   		float data = 0;
   

@@ -67,8 +67,8 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	public JSONObject getForecastStats(String macAddr, int days) throws StatsFailure, VersionMismatch, FilterFailure {
 		
 		//inizializzo gli elementi che mi servono
-		JSONArray statsValueArray = new JSONArray();
 		JSONObject statsValueObject = new JSONObject();
+		JSONObject statsValueObject2 = new JSONObject();
 		JSONArray statsResultsArray = new JSONArray();
 		JSONObject output = new JSONObject();	//TODO capire perchè se uso statsResults per far ritornare l'oggetto mi da che è null
 
@@ -82,23 +82,20 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		// prendo i valori delle stts e li metto in un rray che me li raggruppa
 	    AverageWaveHeight avgWaveHeight = new AverageWaveHeight(f, days);
 	    avgWaveHeight.computeStats();
-	    statsValueArray.put(avgWaveHeight.getStats());
+	    statsValueObject.put("Wave Height", avgWaveHeight.getStats());
 		
 	    AverageCurrentDirection avgCurrentDirection = new AverageCurrentDirection(f, days);
 	    avgCurrentDirection.computeStats();
-	    statsValueArray.put(avgCurrentDirection.getStats());
+	    statsValueObject.put("Current Direction", avgCurrentDirection.getStats());
 		
 	    //metto l'array dei valori in un oggetto per poterlo nominare
-	    statsValueObject.put("Stats values", statsValueArray);
+	    statsValueObject2.put("Stats values", statsValueObject);
 	    
-	    statsResultsArray.put(statsValueObject);
+	    statsResultsArray.put(statsValueObject2);
 
 	    //metto quest'ultimo oggetto nell'array finale
 	    output.put("Stats", statsResultsArray);
-	    
-	    //TODO da togliere
-		if(output == null) throw new StatsFailure("Nessuna statistica computabile per questo dispositivo.");
-		
+	    		
 		return output;
 	}
 

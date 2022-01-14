@@ -14,7 +14,7 @@ public class AverageWaveHeight implements StatsInterface{
 	
 	private Forecast forecastForStats;
 	private int days;
-	private JSONObject stats = null;
+	private String stats = null;
 
 	
 	public AverageWaveHeight(Forecast forecastForStats, int days) {
@@ -56,28 +56,16 @@ public class AverageWaveHeight implements StatsInterface{
 		}
 		
 		if(sum == 0) throw new StatsFailure("Errore nel calcolo della statistica. Riprovare");
-		this.stats = waveHeightToJSON(String.format("%.2f", sum/totalHours));
+		this.stats = String.format("%.2f", sum/totalHours);
 	}
 
 	
 	
 	
 	@Override
-	public JSONObject getStats() throws StatsFailure {
+	public String getStats() throws StatsFailure {
 		if ( stats == null) throw new StatsFailure("Nessuna statistica elaborata, invocare prima la funzione computeStats()");
 		return this.stats;
 	}
-
-	
-	
-    public JSONObject waveHeightToJSON( String waveHeight) { //TODO fare metodo a parte? (e tipo metterlo in DataManager)
-
-        JSONObject jo = new JSONObject();
-
-        jo.put("WaveHeight", waveHeight);
-        
-        return jo;
-    }
-
 
 }
