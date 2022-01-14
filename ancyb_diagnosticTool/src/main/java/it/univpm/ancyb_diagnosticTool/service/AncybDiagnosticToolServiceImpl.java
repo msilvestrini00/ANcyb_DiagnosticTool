@@ -32,8 +32,6 @@ import it.univpm.ancyb_diagnosticTool.utilities.Time;
 @Service
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
-	
-
 	private JSONObject statsResults;
 
 	/*
@@ -53,9 +51,6 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		return forecastFilter.getFilteredData();
 	}
 
-
-
-
 	@Override
 	public ForecastObject getForecastBySelectedTime(String macAddr, String date, int hour)
 			throws FilterFailure, VersionMismatch {
@@ -68,10 +63,6 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		return forecastFilter.getFilteredData();
 	}
 	
-
-
-
-
 	@Override
 	public JSONObject getForecastStats(String macAddr, int days) throws StatsFailure, VersionMismatch, FilterFailure {
 		
@@ -111,9 +102,6 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		return output;
 	}
 
-
-
-
 	/**
 	 * 
 	 */
@@ -146,19 +134,16 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		if(IsVersion.verG(historyFishData)) {
 			GeodeticDistance geodeticDistance = new GeodeticDistance(historyFishData);
 			geodeticDistance.computeStats();
-			statsResults.put("GPS stats", geodeticDistance.getStats());
+			statsResults.put("Geodetic distance", geodeticDistance.getStats());
 		}
 		if(IsVersion.verGT(historyFishData)) {
 			AverageTemperatureFish averageTemperatureFish = new AverageTemperatureFish(historyFishData);
 			averageTemperatureFish.computeStats();
-			statsResults.put("Temperature stats", averageTemperatureFish.getStats());
+			statsResults.put("Average temperature", averageTemperatureFish.getStats());
 		}
 		if(statsResults == null) throw new StatsFailure("Nessuna statistica computabile per questo dispositivo.");
 		return statsResults;
 	}
-
-
-
 
 }
 

@@ -26,7 +26,7 @@ public class GeodeticDistance implements StatsInterface {
 
 	@Override
 	public String getStats() throws StatsFailure {
-		if ( stats == null) throw new StatsFailure("Nessuna statistica elaborata, invocare prima la funzione computeStats()");
+		if ( stats == null ) throw new StatsFailure("Nessuna statistica elaborata, invocare prima la funzione computeStats()");
 		return stats;
 	}
 
@@ -34,7 +34,7 @@ public class GeodeticDistance implements StatsInterface {
 	public void computeStats() throws VersionMismatch {
 		CheckVersion.verG(dataForStats);
 		double avgMoving = Coord.disgeod( ((ANcybFishData_VerG) dataForStats.get(0)).getCoord(), ((ANcybFishData_VerG) dataForStats.get(dataForStats.size()-1)).getCoord());
-		stats = avgMoving + " km";
+		this.stats = avgMoving + " km";
 	}
 
 }

@@ -25,7 +25,6 @@ public class AverageWaveHeight implements StatsInterface{
 
 	}
 	
-	
 	@Override
 	public Object getDataForStats() {
 		return this.forecastForStats;

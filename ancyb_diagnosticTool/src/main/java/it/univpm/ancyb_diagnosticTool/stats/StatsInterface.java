@@ -7,7 +7,7 @@ public interface StatsInterface {
 
 
 		public Object getDataForStats();
-		public Object getStats() throws StatsFailure;
+		public String getStats() throws StatsFailure;
 		public void computeStats() throws StatsFailure, VersionMismatch;	
 		
 }
