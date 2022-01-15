@@ -2,6 +2,10 @@ package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
 import org.json.JSONObject;
 
+import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
+import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
+import it.univpm.ancyb_diagnosticTool.utilities.Coord;
+
 /**
  * 
  * @author Giacomo Fiara
@@ -13,6 +17,16 @@ public class ANcybFishData_VerG extends ANcybFishData {
 	private float longitude;
 	private String qualPos;
 	
+	/**
+	 * Costruttore di servizio
+	 * @param date
+	 * @param time
+	 * @param macAddr
+	 * @param ver
+	 * @param latitude
+	 * @param longitude
+	 * @param qualPos
+	 */
 	//TODO per ora mi servono public, ma alla fine li metto protected in modo che non si possa accedere ai costruttori se non tramite ancybdatamanager
 	public ANcybFishData_VerG(String date, String time, String macAddr, String ver, float latitude, float longitude, String qualPos) {
 		super(date, time, macAddr, ver);
@@ -20,7 +34,36 @@ public class ANcybFishData_VerG extends ANcybFishData {
 		this.longitude = longitude;
 		this.qualPos = qualPos;
 	}
-
+	
+	/**
+	 * Costruttore utilizzato dalla classe "ANcybDataManager".
+	 * @param strArr
+	 * @throws MqttStringMismatch
+	 */
+	ANcybFishData_VerG(String[] strArr) throws MqttStringMismatch {
+		
+		super(strArr);
+		
+		String latitudeStr = strArr[3];
+		try {
+			Coord.checkIsLat(latitudeStr);
+			this.latitude = Coord.latGMSstringToGDfloat(latitudeStr);
+		} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
+			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> latitudine");
+		}
+	
+		String longitudeStr = strArr[4];
+		try {
+			Coord.checkIsLon(longitudeStr);
+			this.longitude = Coord.lonGMSstringToGDfloat(longitudeStr);
+		} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
+			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> longitudine");
+		}
+		
+		qualPos = strArr[5];
+		
+	}
+	
 	public float getLatitude() {
 		return latitude;
 	}

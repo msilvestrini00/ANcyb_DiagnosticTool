@@ -52,7 +52,7 @@ public class ANcybRestController {
 			j = a.getForecastByRealTime(macAddr).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
-		}catch (InvalidParameter | FilterFailure | VersionMismatch e) {
+		} catch (InvalidParameter | FilterFailure | VersionMismatch e) {
 			System.err.println("Exception: " + e);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);	
 		}
@@ -101,7 +101,7 @@ public class ANcybRestController {
 			j = a.getForecastStats(macAddr, days);	
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
-		}catch (InvalidParameter | FilterFailure | StatsFailure | VersionMismatch e) {
+		} catch (InvalidParameter | FilterFailure | StatsFailure | VersionMismatch e) {
 			System.err.println("Exception: " + e);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
@@ -117,18 +117,7 @@ public class ANcybRestController {
 	 */
 	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.GET)
 	public ResponseEntity<Object> getLastData(@PathVariable("macAddr") String macAddr) {
-		
-		//TODO annida nel try catch sotto
-		//verifica dei parametri di input
-		try {
-			
-		CheckInputParameters.CheckMacAddr(macAddr);
-		
-		} catch(InvalidParameter e) {
-			System.err.println("Exception" + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
-		}
-		
+				
 		/*
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
 		ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
@@ -140,11 +129,12 @@ public class ANcybRestController {
 		*/
 		j = null;
 		try {
+			CheckInputParameters.CheckMacAddr(macAddr);
 			j = a.getLatestPositionByMac(macAddr).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
-		} catch (VersionMismatch | FilterFailure e) {
+		} catch (VersionMismatch | FilterFailure | InvalidParameter e) {
 			System.err.println("Exception: " + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
 		
 	}
@@ -158,17 +148,6 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/device/filter/all", method = RequestMethod.GET)
 	public ResponseEntity<Object> getAllData(@PathVariable("macAddr") String macAddr) {
 		
-		//TODO annida nel try catch sotto
-		//verifica dei parametri di input
-		try {
-			
-		CheckInputParameters.CheckMacAddr(macAddr);
-		
-		} catch(InvalidParameter e) {
-			System.err.println("Exception" + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
-		}
-		
 		/*
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
 		ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
@@ -179,35 +158,26 @@ public class ANcybRestController {
 		ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
 		*/
 		try {
+			CheckInputParameters.CheckMacAddr(macAddr);
 			ArrayList<ANcybFishData> historyFishData = a.getAllResultsByMac(macAddr);
 			Collection<ANcybFishData> collANcyb = historyFishData;
 			return new ResponseEntity<>( collANcyb, HttpStatus.OK);
-		} catch (FilterFailure e) {
+		} catch (FilterFailure | InvalidParameter e) {
 			System.err.println("Exception: " + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
 		
 	}
 	
 	/**
-	 * Rotta che restituisce le statisticheo.
+	 * Rotta che restituisce tutte le statistiche disponibili per il dispositivo 
+	 * corrispondente al Mac address inserito come parametro.
 	 * @param macAddr
 	 * @return
 	 */
 	@RequestMapping(value = "/{macAddr}/device/stats", method = RequestMethod.GET)
 	public ResponseEntity<Object> getDeviceStats(@PathVariable("macAddr") String macAddr) {
-		
-		//TODO annida nel try catch sotto
-		//verifica dei parametri di input
-		try {
-			
-		CheckInputParameters.CheckMacAddr(macAddr);
-		
-		} catch(InvalidParameter e) {
-			System.err.println("Exception" + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
-		}
-		
+				
 		/*
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
 		ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
@@ -218,12 +188,13 @@ public class ANcybRestController {
 		ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
 		*/
 		try {
+			CheckInputParameters.CheckMacAddr(macAddr);
 			ArrayList<ANcybFishData> historyFishData = a.getAllResultsByMac(macAddr);
 			j = a.getFishStats(historyFishData);
 			return new ResponseEntity<>( j.toMap() , HttpStatus.OK);
-		} catch (VersionMismatch | FilterFailure | JSONException | StatsFailure e) {
+		} catch (VersionMismatch | FilterFailure | JSONException | StatsFailure | InvalidParameter e) {
 			System.err.println("Exception: " + e);
-			return new ResponseEntity<>( j.toMap() , HttpStatus.BAD_REQUEST);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
 	}	
 

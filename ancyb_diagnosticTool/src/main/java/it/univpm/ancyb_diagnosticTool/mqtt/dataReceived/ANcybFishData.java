@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
+import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
+import it.univpm.ancyb_diagnosticTool.utilities.CheckInputParameters;
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
+import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 /**
  * 
@@ -21,7 +25,7 @@ public class ANcybFishData implements DataReceived {
 
 	
 	/**
-	 *
+	 * Costruttore di servizio
  	 * @param date
 	 * @param time
 	 * @param macAddr
@@ -34,6 +38,33 @@ public class ANcybFishData implements DataReceived {
 		this.ver=ver;
 		this.macAddr=macAddr;
 		list.add(this);
+	}
+	
+	/**
+	 * 
+	 * @param strArr
+	 * @throws MqttStringMismatch
+	 */
+	ANcybFishData(String[] strArr) throws MqttStringMismatch {
+		
+		this.date = Time.currentDate();
+		
+		this.macAddr = strArr[0];
+		try {
+			CheckInputParameters.CheckMacAddr(this.macAddr);
+		} catch (InvalidParameter e) {
+			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> Mac Address");
+		}
+		
+		this.ver = strArr[1];
+		
+		this.time = strArr[2];
+		try {
+			CheckInputParameters.CheckMacAddr(time);
+		} catch (InvalidParameter e1) {
+			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> Orario");
+		}
+		
 	}
 	
 	@Override
