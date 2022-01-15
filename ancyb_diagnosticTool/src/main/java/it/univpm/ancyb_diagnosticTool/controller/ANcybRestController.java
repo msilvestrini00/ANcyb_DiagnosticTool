@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
@@ -44,18 +45,17 @@ public class ANcybRestController {
 		
 		//TEST
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
-
-		try {	
-		CheckInputParameters.CheckMacAddr(macAddr);
 		
-		j = a.getForecastByRealTime(macAddr).toJSON();
+		try {	
+			CheckInputParameters.CheckMacAddr(macAddr);
+		
+			j = a.getForecastByRealTime(macAddr).toJSON();
+			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
+		}catch (InvalidParameter | FilterFailure | VersionMismatch e) {
+			System.err.println("Exception: " + e);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);	
 		}
-		catch (InvalidParameter | FilterFailure | VersionMismatch e) {
-			System.err.println("Exception" + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 		
 	}
 	
@@ -77,14 +77,14 @@ public class ANcybRestController {
 
 		try {
 			CheckInputParameters.CheckForecastFilterParameters(macAddr, date, hour);
-
+			
 			j = a.getForecastBySelectedTime(macAddr, date, hour).toJSON();
+			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
+
+		}catch (InvalidParameter | FilterFailure | VersionMismatch e) {
+			System.err.println("Exception: " + e);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
-		catch (InvalidParameter | FilterFailure | VersionMismatch e) {
-			System.err.println("Exception" + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 		
 	}
 	
@@ -97,22 +97,18 @@ public class ANcybRestController {
 
 		try {
 			CheckInputParameters.CheckForecastStatsParameters(macAddr, days);
+			
+			j = a.getForecastStats(macAddr, days);	
+			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
-			j = a.getForecastStats(macAddr, days);		
-		} 
-		catch (InvalidParameter | FilterFailure | StatsFailure | VersionMismatch e) {
-			System.err.println("Exception" + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
+		}catch (InvalidParameter | FilterFailure | StatsFailure | VersionMismatch e) {
+			System.err.println("Exception: " + e);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
-		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 			
 	}
 		
-	
-	
-	
-	
-	
+
 	/**
 	 * Rotta che restituisce l'ultima istanza (e posizione) inviata dal dispositivo
 	 * corrispondente al Mac address inserito come parametro.
