@@ -18,26 +18,20 @@ import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
 import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
-import it.univpm.ancyb_diagnosticTool.filters.FilterForecastByTime;
-import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerGT;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
-import it.univpm.ancyb_diagnosticTool.service.ForecastDataManager;
-import it.univpm.ancyb_diagnosticTool.stats.AverageCurrentDirection;
-import it.univpm.ancyb_diagnosticTool.stats.AverageWaveHeight;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckInputParameters;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 @RestController
 public class ANcybRestController {
 	@Autowired
+	
 	private AncybDiagnosticToolService a;
 	private JSONObject j;
-	ArrayList<ANcybFishData> list;
-
-	// TODO mettere l'eccezione generica Exception annidata in ogni rotta?
 	
+	ArrayList<ANcybFishData> list;	
 	
 	/**
 	 * 
@@ -48,26 +42,16 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
 	public ResponseEntity<Object> getRealTimeForecast(@PathVariable("macAddr") String macAddr) {
 		
-		//TODO annida nel try catch sotto
-		//verifica dei parametri di input
-		try {
-			
-		CheckInputParameters.CheckMacAddr(macAddr);
-		
-		} catch(InvalidParameter e) {
-			System.err.println("Exception" + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
-		}
-		
 		//TEST
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
 
+		try {	
+		CheckInputParameters.CheckMacAddr(macAddr);
 		
-		try {
-		
-			j = a.getForecastByRealTime(macAddr).toJSON();
+		j = a.getForecastByRealTime(macAddr).toJSON();
 
-		} catch (FilterFailure | VersionMismatch e) {
+		}
+		catch (InvalidParameter | FilterFailure | VersionMismatch e) {
 			System.err.println("Exception" + e);
 			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
 		}
@@ -87,25 +71,16 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/forecast/filter", method = RequestMethod.POST)
 	public ResponseEntity<Object> getSelectedTimeForecast(@PathVariable("macAddr") String macAddr, @RequestParam(name = "date") String date, 
 																								   @RequestParam(name = "hour") int hour) {
-		//TODO annida nel try catch sotto
-		//verifica dei parametri di input
-		try {
-			
-		CheckInputParameters.CheckForecastFilterParameters(macAddr, date, hour);
-		
-		} catch(InvalidParameter e) {
-			System.err.println("Exception" + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
-		}		
-		
+
 		//TEST
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
 
 		try {
-			
-			j = a.getForecastBySelectedTime(macAddr, date, hour).toJSON();
+			CheckInputParameters.CheckForecastFilterParameters(macAddr, date, hour);
 
-		} catch (FilterFailure | VersionMismatch e) {
+			j = a.getForecastBySelectedTime(macAddr, date, hour).toJSON();
+		}
+		catch (InvalidParameter | FilterFailure | VersionMismatch e) {
 			System.err.println("Exception" + e);
 			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
 		}
@@ -116,33 +91,22 @@ public class ANcybRestController {
 	
 	@RequestMapping(value = "/{macAddr}/forecast/stats", method = RequestMethod.POST)
 	public ResponseEntity<Object> getForecastStatistics(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") int days) {
-			
-		//TODO annida nel try catch sotto
-		//verifica dei parametri di input
-		try {
-			
-		CheckInputParameters.CheckForecastStatsParameters(macAddr, days);
-		
-		} catch(InvalidParameter e) {
-			System.err.println("Exception" + e);
-			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
-		}
-		
 		
 		//TEST
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
 
 		try {
+			CheckInputParameters.CheckForecastStatsParameters(macAddr, days);
 
-			j = a.getForecastStats(macAddr, days);	
-				
-		} catch (FilterFailure | StatsFailure | VersionMismatch e) {
+			j = a.getForecastStats(macAddr, days);		
+		} 
+		catch (InvalidParameter | FilterFailure | StatsFailure | VersionMismatch e) {
 			System.err.println("Exception" + e);
 			return new ResponseEntity<>(j.toMap(), HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 			
-		}
+	}
 		
 	
 	
