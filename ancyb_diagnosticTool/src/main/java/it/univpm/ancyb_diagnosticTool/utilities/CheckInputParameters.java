@@ -60,4 +60,19 @@ public class CheckInputParameters {
 
 		return false;
 	}
+	
+	public static void CheckTime(String time) throws InvalidParameter {
+		
+		String[] tokens = time.split(":");
+		
+		if(tokens.length != 3) throw new InvalidParameter("Invalid time parameter");
+		for(int i=0; i<3; i++) {
+			if(tokens[i].length() != 2) throw new InvalidParameter("Invalid time parameter");
+			try {
+				Double.parseDouble(tokens[i]); 
+			  } catch(NumberFormatException e){  
+				throw new InvalidParameter("Invalid time parameter"); 
+			  }  
+		}
+	}
 }
