@@ -2,8 +2,6 @@ package it.univpm.ancyb_diagnosticTool.stats;
 
 import java.util.ArrayList;
 
-import org.json.JSONObject;
-
 import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;

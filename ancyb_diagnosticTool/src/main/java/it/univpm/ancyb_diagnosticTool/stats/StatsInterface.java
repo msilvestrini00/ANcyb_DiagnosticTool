@@ -5,9 +5,24 @@ import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 
 public interface StatsInterface {
 
-
-		public Object getDataForStats();
-		public String getStats() throws StatsFailure;
-		public void computeStats() throws StatsFailure, VersionMismatch;	
+	/**
+	 * 
+	 * @return
+	 */
+	public Object getDataForStats();
+	
+	/**
+	 * 
+	 * @return
+	 * @throws StatsFailure
+	 */
+	public String getStats() throws StatsFailure;
+	
+	/**
+	 * 
+	 * @throws StatsFailure
+	 * @throws VersionMismatch
+	 */
+	public void computeStats() throws StatsFailure, VersionMismatch;	
 		
 }

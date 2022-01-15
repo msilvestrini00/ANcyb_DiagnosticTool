@@ -32,7 +32,7 @@ public class FilterObjByMac implements FilterInterface {
 
 	@Override
 	public void computeFilter() throws FilterFailure {
-
+		
 		for(int i=ANcybFishData.list.size()-1; i>=0; i--) {
 			if(ANcybFishData.list.get(i).getMacAddr().equals(macAddr)) {
 				fishData = ANcybFishData.list.get(i);
