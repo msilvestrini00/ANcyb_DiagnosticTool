@@ -14,7 +14,7 @@ public class CheckInputParameters {
 		try {
 		CheckMacAddr(macAddr); 
 		} catch(InvalidParameter e) {
-			System.err.println("Exception" + e);
+			throw new InvalidParameter("Invalid mac address parameter.");
 		}
 		
 		if(CheckDate(date)) throw new InvalidParameter("Invalid date parameter.");
@@ -28,10 +28,10 @@ public class CheckInputParameters {
 		try {
 		CheckMacAddr(macAddr); 
 		} catch(InvalidParameter e) {
-			System.err.println("Exception" + e);
+			throw new InvalidParameter("Invalid mac address parameter.");
 		}
 		
-		if(days < 0 || days > 7) throw new InvalidParameter("Invalid days parameter.");
+		if(days < 1 || days > 7) throw new InvalidParameter("Invalid days parameter.");
 	}
 	
 	
