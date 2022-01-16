@@ -22,10 +22,8 @@ import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
-import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.DataSaved;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckInputParameters;
-import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 @RestController
 public class ANcybRestController {
@@ -59,9 +57,7 @@ public class ANcybRestController {
 		//TODO TEST
 		try {
 			fishdata1 = ancybDataManager.createDataObj(str1);
-			DataSaved.getList().add((ANcybFishData) fishdata1);
 			fishdata2 = ancybDataManager.createDataObj(str2);
-			DataSaved.getList().add((ANcybFishData) fishdata2);
 		} catch (MqttStringMismatch e) {
 			//System.err.println("Exception: " + e);
 			e.printStackTrace();
@@ -98,9 +94,7 @@ public class ANcybRestController {
 		//TODO TEST
 		try {
 			fishdata1 = ancybDataManager.createDataObj(str1);
-			DataSaved.getList().add((ANcybFishData) fishdata1);
 			fishdata2 = ancybDataManager.createDataObj(str2);
-			DataSaved.getList().add((ANcybFishData) fishdata2);
 		} catch (MqttStringMismatch e) {
 			//System.err.println("Exception: " + e);
 			e.printStackTrace();
@@ -129,9 +123,7 @@ public class ANcybRestController {
 		//TODO TEST
 		try {
 			fishdata1 = ancybDataManager.createDataObj(str1);
-			DataSaved.getList().add((ANcybFishData) fishdata1);
 			fishdata2 = ancybDataManager.createDataObj(str2);
-			DataSaved.getList().add((ANcybFishData) fishdata2);
 		} catch (MqttStringMismatch e) {
 			//System.err.println("Exception: " + e);
 			e.printStackTrace();
