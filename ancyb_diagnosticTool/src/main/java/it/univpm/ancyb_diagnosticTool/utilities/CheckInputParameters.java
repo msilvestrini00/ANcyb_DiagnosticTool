@@ -11,12 +11,8 @@ public class CheckInputParameters {
 	
 	public static void CheckForecastFilterParameters(String macAddr, String date, byte hour) throws InvalidParameter {
 		
-		try {
 		CheckMacAddr(macAddr); 
-		} catch(InvalidParameter e) {
-			throw new InvalidParameter("Invalid parameter: mac address");
-		}
-		
+
 		if(CheckDate(date)) throw new InvalidParameter("Invalid parameter: date");
 		
 		if(hour < 0 || hour > 23) throw new InvalidParameter("Invalid parameter: hour");
@@ -60,22 +56,22 @@ public class CheckInputParameters {
 
 		return false;
 	}
-	
-	//TODO fare il messaggio di errore come gli altri metodi?
-	//TODO mettere un flag come in CheckMacAddr?
+
 	public static void CheckTime(String time) throws InvalidParameter {
 		
+		boolean exc = false;
 		String[] tokens = time.split(":");
 		
-		if(tokens.length != 3) throw new InvalidParameter("Invalid time parameter");
+		if(tokens.length != 3) exc = true;
 		for(int i=0; i<3; i++) {
-			if(tokens[i].length() != 2) throw new InvalidParameter("Invalid time parameter");
+			if(tokens[i].length() != 2) exc = true;
 			try {
 				Double.parseDouble(tokens[i]); 
 			  } catch(NumberFormatException e){  
-				throw new InvalidParameter("Invalid time parameter"); 
-			  }  
+				exc = true;			  
+			}  
 		}
+		if(exc) throw new InvalidParameter("Invalid parameter: time");
 	}
 	
 }

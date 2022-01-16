@@ -54,7 +54,7 @@ public class ANcybFishData implements DataReceived {
 		
 		this.time = strArr[2];
 		try {
-			CheckInputParameters.CheckMacAddr(time);
+			CheckInputParameters.CheckTime(time);
 		} catch (InvalidParameter e1) {
 			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> Orario");
 		}

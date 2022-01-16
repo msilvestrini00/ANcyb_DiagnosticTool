@@ -22,26 +22,27 @@ import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.DataSaved;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckInputParameters;
+import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 @RestController
 public class ANcybRestController {
 	@Autowired
-	//TODO rinominalo con "service" o un qualcosa di simile
-	private AncybDiagnosticToolService a;
+	private AncybDiagnosticToolService service;
 	private JSONObject j;
 	
 	
 	//TODO TEST
-	String str1 = "a4:cf:12:76:76:95 Ver_G 16:05:45 4334.3060N 1335.1580E 1"; //VerG
-	String str2 = "b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.2360N 7401.2330W 1 10.5"; //VerGT
+	String str1 = "a4:cf:12:76:76:95 Ver_G 16:05:45 4334.3060N 01335.1580E 1"; //VerG
+	String str2 = "b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.2360N 07401.2330W 1 10.5"; //VerGT
+
 	ANcybDataManager ancybDataManager = new ANcybDataManager();
 	ANcybFishData fishdata1;
 	ANcybFishData fishdata2;
-
-
-	
+	ANcybFishData fishdata3;
+	//
 	
 	ArrayList<ANcybFishData> list;	
 	
@@ -58,15 +59,20 @@ public class ANcybRestController {
 		//TODO TEST
 		try {
 			fishdata1 = ancybDataManager.createDataObj(str1);
+			DataSaved.getList().add((ANcybFishData) fishdata1);
 			fishdata2 = ancybDataManager.createDataObj(str2);
+			DataSaved.getList().add((ANcybFishData) fishdata2);
 		} catch (MqttStringMismatch e) {
+			//System.err.println("Exception: " + e);
+			e.printStackTrace();
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
+		//
 		
 		try {	
 			CheckInputParameters.CheckMacAddr(macAddr);
 		
-			j = a.getForecastByRealTime(macAddr).toJSON();
+			j = service.getForecastByRealTime(macAddr).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
 		} catch (InvalidParameter | FilterFailure | VersionMismatch e) {
@@ -92,16 +98,21 @@ public class ANcybRestController {
 		//TODO TEST
 		try {
 			fishdata1 = ancybDataManager.createDataObj(str1);
+			DataSaved.getList().add((ANcybFishData) fishdata1);
 			fishdata2 = ancybDataManager.createDataObj(str2);
+			DataSaved.getList().add((ANcybFishData) fishdata2);
 		} catch (MqttStringMismatch e) {
+			//System.err.println("Exception: " + e);
+			e.printStackTrace();
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
+		//
 		
 		
 		try {
 			CheckInputParameters.CheckForecastFilterParameters(macAddr, date, hour);
 			
-			j = a.getForecastBySelectedTime(macAddr, date, hour).toJSON();
+			j = service.getForecastBySelectedTime(macAddr, date, hour).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
 		}catch (InvalidParameter | FilterFailure | VersionMismatch e) {
@@ -118,15 +129,20 @@ public class ANcybRestController {
 		//TODO TEST
 		try {
 			fishdata1 = ancybDataManager.createDataObj(str1);
+			DataSaved.getList().add((ANcybFishData) fishdata1);
 			fishdata2 = ancybDataManager.createDataObj(str2);
+			DataSaved.getList().add((ANcybFishData) fishdata2);
 		} catch (MqttStringMismatch e) {
+			//System.err.println("Exception: " + e);
+			e.printStackTrace();
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
+		//
 		
 		try {
 			CheckInputParameters.CheckForecastStatsParameters(macAddr, days);
 			
-			j = a.getForecastStats(macAddr, days);	
+			j = service.getForecastStats(macAddr, days);	
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
 		} catch (InvalidParameter | FilterFailure | StatsFailure | VersionMismatch e) {
@@ -157,7 +173,7 @@ public class ANcybRestController {
 		j = null;
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
-			j = a.getLatestPositionByMac(macAddr).toJSON();
+			j = service.getLatestPositionByMac(macAddr).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 		} catch (VersionMismatch | FilterFailure | InvalidParameter e) {
 			System.err.println("Exception: " + e);
@@ -185,7 +201,7 @@ public class ANcybRestController {
 		
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
-			ArrayList<ANcybFishData> historyFishData = a.getAllResultsByMac(macAddr);
+			ArrayList<ANcybFishData> historyFishData = service.getAllResultsByMac(macAddr);
 			Collection<ANcybFishData> collANcyb = historyFishData;
 			return new ResponseEntity<>( collANcyb, HttpStatus.OK);
 		} catch (FilterFailure | InvalidParameter e) {
@@ -214,8 +230,8 @@ public class ANcybRestController {
 				
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
-			ArrayList<ANcybFishData> historyFishData = a.getAllResultsByMac(macAddr);
-			j = a.getFishStats(historyFishData);
+			ArrayList<ANcybFishData> historyFishData = service.getAllResultsByMac(macAddr);
+			j = service.getFishStats(historyFishData);
 			return new ResponseEntity<>( j.toMap() , HttpStatus.OK);
 		} catch (VersionMismatch | FilterFailure | JSONException | StatsFailure | InvalidParameter e) {
 			System.err.println("Exception: " + e);
