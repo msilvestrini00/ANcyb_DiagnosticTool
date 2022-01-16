@@ -17,20 +17,31 @@ import org.springframework.web.server.ResponseStatusException;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
+import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
-import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerGT;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckInputParameters;
-import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 @RestController
 public class ANcybRestController {
 	@Autowired
-	
+	//TODO rinominalo con "service" o un qualcosa di simile
 	private AncybDiagnosticToolService a;
 	private JSONObject j;
+	
+	
+	//TODO TEST
+	String str1 = "a4:cf:12:76:76:95 Ver_G 16:05:45 4334.3060N 1335.1580E 1"; //VerG
+	String str2 = "b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.2360N 7401.2330W 1 10.5"; //VerGT
+	ANcybDataManager ancybDataManager = new ANcybDataManager();
+	ANcybFishData fishdata1;
+	ANcybFishData fishdata2;
+
+
+	
 	
 	ArrayList<ANcybFishData> list;	
 	
@@ -38,13 +49,19 @@ public class ANcybRestController {
 	 * 
 	 * Rotta che restituisce le previsioni meteo in base alla posizione in tempo reale del dispositivo,
 	 * il quale mac è stato inserito come PathVariable
+	 * @throws MqttStringMismatch 
 	 * 
 	 */
 	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
 	public ResponseEntity<Object> getRealTimeForecast(@PathVariable("macAddr") String macAddr) {
 		
-		//TEST
-		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
+		//TODO TEST
+		try {
+			fishdata1 = ancybDataManager.createDataObj(str1);
+			fishdata2 = ancybDataManager.createDataObj(str2);
+		} catch (MqttStringMismatch e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
+		}
 		
 		try {	
 			CheckInputParameters.CheckMacAddr(macAddr);
@@ -72,9 +89,15 @@ public class ANcybRestController {
 	public ResponseEntity<Object> getSelectedTimeForecast(@PathVariable("macAddr") String macAddr, @RequestParam(name = "date") String date, 
 																								   @RequestParam(name = "hour") byte hour) {
 
-		//TEST
-		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
-
+		//TODO TEST
+		try {
+			fishdata1 = ancybDataManager.createDataObj(str1);
+			fishdata2 = ancybDataManager.createDataObj(str2);
+		} catch (MqttStringMismatch e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
+		}
+		
+		
 		try {
 			CheckInputParameters.CheckForecastFilterParameters(macAddr, date, hour);
 			
@@ -92,9 +115,14 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/forecast/stats", method = RequestMethod.POST)
 	public ResponseEntity<Object> getForecastStatistics(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") byte days) {
 		
-		//TEST
-		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
-
+		//TODO TEST
+		try {
+			fishdata1 = ancybDataManager.createDataObj(str1);
+			fishdata2 = ancybDataManager.createDataObj(str2);
+		} catch (MqttStringMismatch e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
+		}
+		
 		try {
 			CheckInputParameters.CheckForecastStatsParameters(macAddr, days);
 			
@@ -118,15 +146,14 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.GET)
 	public ResponseEntity<Object> getLastData(@PathVariable("macAddr") String macAddr) {
 				
-		/*
-		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
-		ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
-		ANcybFishData ancybData3 = new ANcybFishData_VerGT("2022.01.10", "18:26:38", "A4:cf:12:76:76:95", "Ver_GT", 43.670050f, 13.793283f, "NO_signal", 10.5f);
-		ANcybFishData ancybData4 = new ANcybFishData_VerG("2022.01.06", "18:27:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
-		ANcybFishData ancybData5 = new ANcybFishData_VerGT("2022.01.06", "18:28:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "5", 10.5f);
-		ANcybFishData ancybData6 = new ANcybFishData_VerG("2022.01.06", "18:29:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
-		ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
-		*/
+		//TODO TEST
+		try {
+			fishdata1 = ancybDataManager.createDataObj(str1);
+			fishdata2 = ancybDataManager.createDataObj(str2);
+		} catch (MqttStringMismatch e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
+		}
+		
 		j = null;
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
@@ -148,15 +175,14 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/device/filter/all", method = RequestMethod.GET)
 	public ResponseEntity<Object> getAllData(@PathVariable("macAddr") String macAddr) {
 		
-		/*
-		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
-		ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
-		ANcybFishData ancybData3 = new ANcybFishData_VerGT("2022.01.10", "18:26:38", "A4:cf:12:76:76:95", "Ver_GT", 43.670050f, 13.793283f, "NO_signal", 10.5f);
-		ANcybFishData ancybData4 = new ANcybFishData_VerG("2022.01.06", "18:27:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
-		ANcybFishData ancybData5 = new ANcybFishData_VerGT("2022.01.06", "18:28:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "5", 10.5f);
-		ANcybFishData ancybData6 = new ANcybFishData_VerG("2022.01.06", "18:29:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
-		ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
-		*/
+		//TODO TEST
+		try {
+			fishdata1 = ancybDataManager.createDataObj(str1);
+			fishdata2 = ancybDataManager.createDataObj(str2);
+		} catch (MqttStringMismatch e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
+		}
+		
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
 			ArrayList<ANcybFishData> historyFishData = a.getAllResultsByMac(macAddr);
@@ -178,15 +204,14 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/device/stats", method = RequestMethod.GET)
 	public ResponseEntity<Object> getDeviceStats(@PathVariable("macAddr") String macAddr) {
 				
-		/*
-		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
-		ANcybFishData ancybData2 = new ANcybFishData_VerG("2022.01.06", "18:25:52", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
-		ANcybFishData ancybData3 = new ANcybFishData_VerGT("2022.01.10", "18:26:38", "A4:cf:12:76:76:95", "Ver_GT", 43.670050f, 13.793283f, "NO_signal", 10.5f);
-		ANcybFishData ancybData4 = new ANcybFishData_VerG("2022.01.06", "18:27:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
-		ANcybFishData ancybData5 = new ANcybFishData_VerGT("2022.01.06", "18:28:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "5", 10.5f);
-		ANcybFishData ancybData6 = new ANcybFishData_VerG("2022.01.06", "18:29:38", "B4:cf:12:76:76:95", "Ver_G", 44.915f, 15.25f, "NO_signal");
-		ANcybFishData ancybData7 = new ANcybFishData_VerGT("2022.01.06", "18:30:38", "A4:cf:12:76:76:95", "Ver_GT", 44.915f, 15.25f, "NO_signal", 10.5f);
-		*/
+		//TODO TEST
+		try {
+			fishdata1 = ancybDataManager.createDataObj(str1);
+			fishdata2 = ancybDataManager.createDataObj(str2);
+		} catch (MqttStringMismatch e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
+		}
+				
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
 			ArrayList<ANcybFishData> historyFishData = a.getAllResultsByMac(macAddr);

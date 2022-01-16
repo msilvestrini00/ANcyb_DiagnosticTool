@@ -19,8 +19,7 @@ public class ANcybFishData_VerGT extends ANcybFishData_VerG {
 	 * @param qualPos
 	 * @param temp
 	 */
-	//TODO per ora mi servono public, ma alla fine li metto protected in modo che non si possa accedere ai costruttori se non tramite ancybdatamanager
-	public ANcybFishData_VerGT(String date, String time, String macAddr, String ver, float latitude, float longitude,
+	protected ANcybFishData_VerGT(String date, String time, String macAddr, String ver, float latitude, float longitude,
 			String qualPos, float temp) {
 		super(date, time, macAddr, ver, latitude, longitude, qualPos);
 		
@@ -32,7 +31,7 @@ public class ANcybFishData_VerGT extends ANcybFishData_VerG {
 	 * @param strArr
 	 * @throws MqttStringMismatch
 	 */
-	ANcybFishData_VerGT(String[] strArr) throws MqttStringMismatch {
+	protected ANcybFishData_VerGT(String[] strArr) throws MqttStringMismatch {
 		
 		super(strArr);
 		

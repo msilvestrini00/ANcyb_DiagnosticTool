@@ -1,7 +1,5 @@
 package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
-import java.util.ArrayList;
-
 import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
@@ -21,9 +19,6 @@ public class ANcybFishData implements DataReceived {
 	private String date;
 	private String ver;
 	private String macAddr;
-	//TODO lascia se non implementi DataSaved altrimenti togli pure
-	public static ArrayList<ANcybFishData> list = new ArrayList<ANcybFishData>();
-
 	
 	/**
 	 * Costruttore di servizio
@@ -32,13 +27,11 @@ public class ANcybFishData implements DataReceived {
 	 * @param macAddr
 	 * @param ver
 	 */
-	//TODO per ora mi servono public, ma alla fine li metto protected in modo che non si possa accedere ai costruttori se non tramite ancybdatamanager
-	public ANcybFishData(String date, String time, String macAddr, String ver) {
+	protected ANcybFishData(String date, String time, String macAddr, String ver) {
 		this.date=date;
 		this.time=time;
 		this.ver=ver;
 		this.macAddr=macAddr;
-		list.add(this);
 	}
 	
 	/**
@@ -46,7 +39,7 @@ public class ANcybFishData implements DataReceived {
 	 * @param strArr
 	 * @throws MqttStringMismatch
 	 */
-	ANcybFishData(String[] strArr) throws MqttStringMismatch {
+	protected ANcybFishData(String[] strArr) throws MqttStringMismatch {
 		
 		this.date = Time.currentDate();
 		
@@ -65,8 +58,6 @@ public class ANcybFishData implements DataReceived {
 		} catch (InvalidParameter e1) {
 			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> Orario");
 		}
-		
-		list.add(this);
 		
 	}
 	

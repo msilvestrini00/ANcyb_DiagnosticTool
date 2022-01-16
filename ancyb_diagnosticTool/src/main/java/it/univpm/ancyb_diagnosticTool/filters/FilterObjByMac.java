@@ -2,6 +2,7 @@ package it.univpm.ancyb_diagnosticTool.filters;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
+import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.DataSaved;
 /**
  * 
  * @author Giacomo Fiara
@@ -33,9 +34,9 @@ public class FilterObjByMac implements FilterInterface {
 	@Override
 	public void computeFilter() throws FilterFailure {
 		
-		for(int i=ANcybFishData.list.size()-1; i>=0; i--) {
-			if(ANcybFishData.list.get(i).getMacAddr().equals(macAddr)) {
-				fishData = ANcybFishData.list.get(i);
+		for(int i=DataSaved.getList().size()-1; i>=0; i--) {
+			if(DataSaved.getList().get(i).getMacAddr().equals(macAddr)) {
+				fishData = DataSaved.getList().get(i);
 			}
 		}
 		if(fishData == null) {

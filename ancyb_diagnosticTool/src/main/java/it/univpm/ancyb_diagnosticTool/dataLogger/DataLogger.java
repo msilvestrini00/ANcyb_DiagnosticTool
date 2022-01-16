@@ -9,8 +9,6 @@ import java.io.PrintWriter;
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;    
 
-//TODO creare superclasse da cui eredita.
-
 public class DataLogger {
 	
 	private String fileName;

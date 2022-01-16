@@ -27,8 +27,7 @@ public class ANcybFishData_VerG extends ANcybFishData {
 	 * @param longitude
 	 * @param qualPos
 	 */
-	//TODO per ora mi servono public, ma alla fine li metto protected in modo che non si possa accedere ai costruttori se non tramite ancybdatamanager
-	public ANcybFishData_VerG(String date, String time, String macAddr, String ver, float latitude, float longitude, String qualPos) {
+	protected ANcybFishData_VerG(String date, String time, String macAddr, String ver, float latitude, float longitude, String qualPos) {
 		super(date, time, macAddr, ver);
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -40,7 +39,7 @@ public class ANcybFishData_VerG extends ANcybFishData {
 	 * @param strArr
 	 * @throws MqttStringMismatch
 	 */
-	ANcybFishData_VerG(String[] strArr) throws MqttStringMismatch {
+	protected ANcybFishData_VerG(String[] strArr) throws MqttStringMismatch {
 		
 		super(strArr);
 		
@@ -60,7 +59,7 @@ public class ANcybFishData_VerG extends ANcybFishData {
 			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> longitudine");
 		}
 		
-		qualPos = strArr[5];
+		this.qualPos = strArr[5];
 		
 	}
 	

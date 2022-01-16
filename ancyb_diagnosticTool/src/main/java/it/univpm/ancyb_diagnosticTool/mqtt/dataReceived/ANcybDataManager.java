@@ -8,8 +8,14 @@ import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
  *
  */
 public class ANcybDataManager {
-	
-	public static ANcybFishData createDataObj(String str) throws MqttStringMismatch {
+
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 * @throws MqttStringMismatch
+	 */
+	public ANcybFishData createDataObj(String str) throws MqttStringMismatch {
 		
 		ANcybFishData ancybData;
 		
