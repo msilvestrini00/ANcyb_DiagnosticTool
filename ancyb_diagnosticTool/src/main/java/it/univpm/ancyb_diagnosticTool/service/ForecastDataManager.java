@@ -35,18 +35,15 @@ public class ForecastDataManager {
 	private String forecastLink = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
 
 	public ForecastDataManager(String macAddr) throws FilterFailure, VersionMismatch {	
-		//TODO cosa c'è di testing qui?
-		//TODO un costruttore può lanciare eccezioni?
-		
+
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
 		filterFishData.computeFilter();
 		ANcybFishData fishData = filterFishData.getFilteredData();
 		CheckVersion.verG(fishData);
 		this.macAddr = macAddr;
 
-		//TEST
-		this.lat = ((ANcybFishData_VerG) fishData).getLatitude(); //dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLat();
-		this.lng = ((ANcybFishData_VerG) fishData).getLongitude(); //dataSim.getDataSim(macAddr, Time.currentDateTime2()).getLng();
+		this.lat = ((ANcybFishData_VerG) fishData).getLatitude(); 
+		this.lng = ((ANcybFishData_VerG) fishData).getLongitude(); 
 	}
 
 	
@@ -64,7 +61,7 @@ public class ForecastDataManager {
 	
 	public String getUrl() throws URLIsNull {	
 		
-		if(this.url == null) throw new URLIsNull("L'URL non è ancora stato creato. Costruire un URL prima di richiederlo.");
+		if(this.url == null) throw new URLIsNull("URL not yet created. Please, build the URL with method 'buildURL()' before claiming it.");
 		
 		return this.url;
 	}

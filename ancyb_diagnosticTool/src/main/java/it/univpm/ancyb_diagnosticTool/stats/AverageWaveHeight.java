@@ -49,13 +49,13 @@ public class AverageWaveHeight implements StatsInterface{
 			sum += list.get(index+i).getWaveHeight();
 		}
 		
-		if(sum == 0) throw new StatsFailure("Errore nel calcolo della statistica. Riprovare");
+		if(sum == 0) throw new StatsFailure("Error during 'AverageWaveHeight' statistic computation. Please retry");
 		this.stats = String.format("%.2f", sum/totalHours);
 	}
 
 	@Override
 	public String getStats() throws StatsFailure {
-		if ( stats == null) throw new StatsFailure("Nessuna statistica elaborata, invocare prima la funzione computeStats()");
+		if ( stats == null) throw new StatsFailure("Statistic 'AverageWaveHeight' not yet computed. Please, first invoke the method 'computeStats()'.");
 		return this.stats;
 	}
 

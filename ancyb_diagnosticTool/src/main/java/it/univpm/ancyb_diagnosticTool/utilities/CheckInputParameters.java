@@ -14,12 +14,12 @@ public class CheckInputParameters {
 		try {
 		CheckMacAddr(macAddr); 
 		} catch(InvalidParameter e) {
-			throw new InvalidParameter("Invalid mac address parameter.");
+			throw new InvalidParameter("Invalid parameter: mac address");
 		}
 		
-		if(CheckDate(date)) throw new InvalidParameter("Invalid date parameter.");
+		if(CheckDate(date)) throw new InvalidParameter("Invalid parameter: date");
 		
-		if(hour < 0 || hour > 23) throw new InvalidParameter("Invalid hour parameter.");
+		if(hour < 0 || hour > 23) throw new InvalidParameter("Invalid parameter: hour");
 	}
 	
 	public static void CheckForecastStatsParameters(String macAddr, byte days) throws InvalidParameter {
@@ -27,22 +27,25 @@ public class CheckInputParameters {
 		try {
 		CheckMacAddr(macAddr); 
 		} catch(InvalidParameter e) {
-			throw new InvalidParameter("Invalid mac address parameter.");
+			throw new InvalidParameter("Invalid parameter: mac address");
 		}
 		
-		if(days < 1 || days > 7) throw new InvalidParameter("Invalid days parameter.");
+		if(days < 1 || days > 7) throw new InvalidParameter("Invalid parameter: days");
 	}
 	
 	public static void CheckMacAddr(String macAddr) throws InvalidParameter{
 		
+		boolean exc = false;
 		String[] tokens = macAddr.split(":");
 		int i;
 
 		for(i = 0; i < tokens.length; i++) {
 			
-			if(tokens[i].length() != 2) throw new InvalidParameter("Invalid mac address parameter.");
+			if(tokens[i].length() != 2) exc = true;
 		}
-		if(i != 6) throw new InvalidParameter("Invalid mac address parameter.");
+		if(i != 6) exc = true;
+		
+		if(exc) throw new InvalidParameter("Invalid parameter: mac address");
 	}
 	
 	private static boolean CheckDate(String date) {
@@ -58,6 +61,8 @@ public class CheckInputParameters {
 		return false;
 	}
 	
+	//TODO fare il messaggio di errore come gli altri metodi?
+	//TODO mettere un flag come in CheckMacAddr?
 	public static void CheckTime(String time) throws InvalidParameter {
 		
 		String[] tokens = time.split(":");

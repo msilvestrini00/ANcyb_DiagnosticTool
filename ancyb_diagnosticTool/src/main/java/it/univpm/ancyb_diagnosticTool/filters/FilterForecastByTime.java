@@ -28,7 +28,7 @@ public class FilterForecastByTime implements FilterInterface {
 	public ForecastObject getFilteredData() throws FilterFailure{	
 		
 		if(filteredForecast == null) {
-			throw new FilterFailure("Nessun filtraggio eseguito, invocare prima la funzione computeFilter()");
+			throw new FilterFailure("Filter not yet computed. Please, first invoke the method 'computeFilter()'.");
 		}
 		return filteredForecast;	
 	}
@@ -46,7 +46,7 @@ public class FilterForecastByTime implements FilterInterface {
 		}
 		
 		if(filteredForecast == null) {
-			throw new FilterFailure("Nessuna previsione trovata per l'orario: " + this.time);
+			throw new FilterFailure("No forecast with time: " + this.time + " has been found.");
 		}
 		
 	}
