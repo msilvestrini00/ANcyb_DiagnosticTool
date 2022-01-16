@@ -52,7 +52,7 @@ public class ForecastObject implements DataReceived{
 		return forecastTime;
 	}
 
-	public void setForecastTime(String forecastTime) {
+	public void setForecastTime(String forecastTime) {	// formato yyyy-MM-dd.HH:00:00+00:00
 		this.forecastTime = forecastTime;
 	}
 	

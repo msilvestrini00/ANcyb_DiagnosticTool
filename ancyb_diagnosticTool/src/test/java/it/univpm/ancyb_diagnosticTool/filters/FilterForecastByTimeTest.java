@@ -2,36 +2,100 @@ package it.univpm.ancyb_diagnosticTool.filters;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
-import it.univpm.ancyb_diagnosticTool.service.ForecastDataManager;
+import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 class FilterForecastByTimeTest {
 
-	
+	static Forecast f;
+
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		
+		ArrayList<ForecastObject> list = new ArrayList<ForecastObject>();
 		
-		
-		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
-		Forecast f = dataManager.getForecast();
+		ForecastObject f1 = new ForecastObject("00:00:00:00:00:00", 0, 0, Time.currentDateTime2(), 0, 0);
+		ForecastObject f2 = new ForecastObject("11:11:11:11:11:11", 0, 0, "2022-01-01T00:00:00+00:00", 0, 0);
 
+		list.add(f1);
+		list.add(f2);
+
+		f = new Forecast(list);
+
+	}
+	
+	
+	void tearDown() {}
+	
+	
+	@Test
+	@DisplayName("Test sul filtro 'FilterForecastByTime' per il tempo reale")
+	void testRealTime() {
+		
+		String s = null;
+		
+		try {
+			
 	    FilterForecastByTime forecastFilter = new FilterForecastByTime(f, Time.currentDateTime2());
 	    forecastFilter.computeFilter();
-		return forecastFilter.getFilteredData();
+	    s = forecastFilter.getFilteredData().getMacAddress();
+		}
 		
-		
-		
-		
+		catch (FilterFailure e ) {
+			System.err.println("Exception: " + e);
+		}
+		assertEquals(s, "00:00:00:00:00:00");
 	}
 	
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	@DisplayName("Test sul filtro 'FilterForecastByTime' per il tempo selezionato (corretto)")
+	void testSelectedTime() {
+		
+		String s = null;
+		
+		try {
+			
+	    FilterForecastByTime forecastFilter = new FilterForecastByTime(f, "2022-01-01T00:00:00+00:00");
+	    forecastFilter.computeFilter();
+	    s = forecastFilter.getFilteredData().getMacAddress();
+		}
+		
+		catch (FilterFailure e ) {
+			System.err.println("Exception: " + e);
+		}
+		assertEquals(s, "11:11:11:11:11:11");
+	}
+	
+	@Test
+	@DisplayName("Test sul filtro 'FilterForecastByTime' per il tempo selezionato (fallimentare, per generare l'eccezione)")
+	void testSelectedTimeFail() {
+		
+		String s = null;
+		boolean flag = false;
+		
+		try {
+			
+	    FilterForecastByTime forecastFilter = new FilterForecastByTime(f, "2022-01-20T00:00:00+00:00");
+	    forecastFilter.computeFilter();
+	    s = forecastFilter.getFilteredData().getMacAddress();
+		}
+		
+		catch (FilterFailure e ) {
+			System.err.println("Exception: " + e);
+			flag = true;
+		}
+		
+		if(!flag) fail("Eccezione non lanciata!");
+		
 	}
 
 }
