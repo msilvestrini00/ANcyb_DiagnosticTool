@@ -39,6 +39,7 @@ public class ANcybFishData_VerGT extends ANcybFishData_VerG {
 		try {
 			this.temp = Float.parseFloat(temperatureStr);
 		} catch (NullPointerException|NumberFormatException e){
+			System.err.println("Deep exception: " + e);
 			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> temperatura");
 		}
 		

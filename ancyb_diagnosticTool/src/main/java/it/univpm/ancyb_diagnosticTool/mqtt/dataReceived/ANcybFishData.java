@@ -47,6 +47,7 @@ public class ANcybFishData implements DataReceived {
 		try {
 			CheckInputParameters.CheckMacAddr(this.macAddr);
 		} catch (InvalidParameter e) {
+			System.err.println("Deep exception: " + e);
 			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> Mac Address");
 		}
 		
@@ -55,7 +56,8 @@ public class ANcybFishData implements DataReceived {
 		this.time = strArr[2];
 		try {
 			CheckInputParameters.CheckTime(time);
-		} catch (InvalidParameter e1) {
+		} catch (InvalidParameter e) {
+			System.err.println("Deep exception: " + e);
 			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> Orario");
 		}
 		
