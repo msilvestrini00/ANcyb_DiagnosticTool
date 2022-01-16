@@ -12,8 +12,6 @@ import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.dataLogger.DataLogger;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
-import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
-import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.DataSaved;
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 

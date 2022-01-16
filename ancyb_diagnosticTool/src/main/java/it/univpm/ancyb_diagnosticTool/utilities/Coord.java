@@ -9,73 +9,74 @@ import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
 public class Coord {
 	
 	/**
-	 * questa fuzione controlla che la coordinata sia una latitudine GMS:
-	 * ovvero gradi, decimi e secondi
+	 * questa fuzione controlla che la coordinata sia una latitudine DMM:
+	 * ovvero gradi e minuti e decimi di minuti
 	 * @param str
 	 * @throws WrongCoordFormat
 	 */
 	static public void checkIsLat(String str) throws WrongCoordFormat {
 		int i;
 		if(str.length()!=10)
-			throw new WrongCoordFormat("Latitudine: numero caratteri non corrispondente");
+			throw new WrongCoordFormat("Latitude -> number of characters not matching");
 		if(str.charAt(4)!='.')
-			throw new WrongCoordFormat("Latitudine: non presente la virgola tra primi e secondi");
+			throw new WrongCoordFormat("Latitude -> there is no point between minutes and tenths of minutes");
 		if( str.charAt(9) !='N'&& str.charAt(9) !='S' )
-			throw new WrongCoordFormat("Latitudine: non presente il riferimento N/S");
+			throw new WrongCoordFormat("Latitude -> there isn't the reference N/S");
 		for(i = 0; i<4; i++) {
 			if(!Character.isDigit(str.charAt(i)))
-				throw new WrongCoordFormat("Latitudine: presenti dei caratteri non ammessi");
+				throw new WrongCoordFormat("Latitude -> there are non-numeric characters that are not allowed");
 		}
 		for(i = 5; i < 9; i++) {
 			if(!Character.isDigit(str.charAt(i))) 
-				throw new WrongCoordFormat("Latitudine: presenti dei caratteri non ammessi");
+				throw new WrongCoordFormat("Latitude -> there are non-numeric characters that are not allowed");
 		}
 	}
 	
 	/**
-	 * questa fuzione controlla che la coordinata sia una longitudine GMS:
-	 * ovvero gradi, decimi e secondi 
+	 * questa fuzione controlla che la coordinata sia una longitudine DMM:
+	 * ovvero gradi e minuti decimali
 	 * @param str
 	 * @throws WrongCoordFormat
 	 */
 	static public void checkIsLon(String str) throws WrongCoordFormat {
 		int i;
 		if(str.length()!=11)
-			throw new WrongCoordFormat("Longitudine: numero caratteri non corrispondente");
+			throw new WrongCoordFormat("Longitude -> number of characters not matching");
 		if(str.charAt(5)!='.')
-			throw new WrongCoordFormat("Longitudine: non presente la virgola tra primi e secondi");
+			throw new WrongCoordFormat("Longitude -> there is no point between minutes and tenths of minutes");
 		if( str.charAt(10) !='W'&& str.charAt(10) !='E' )
-			throw new WrongCoordFormat("Longitudine: non presente il riferimento E/W");
+			throw new WrongCoordFormat("Longitude -> there isn't the reference E/W");
 		for(i = 0; i<5; i++) {
 			if(!Character.isDigit(str.charAt(i)))
-				throw new WrongCoordFormat("Longitudine: presenti dei caratteri non ammessi");
+				throw new WrongCoordFormat("Longitude -> there are non-numeric characters that are not allowed");
 		}
 		for(i = 6; i < 10; i++) {
 			if(!Character.isDigit(str.charAt(i)))
-				throw new WrongCoordFormat("Longitudine: presenti dei caratteri non ammessi");
+				throw new WrongCoordFormat("Longitudine -> there are non-numeric characters that are not allowed");
 		}
 	}
 	
 	/**
-	 * questa funzione converte la latitudine in GMS (in gradi, minuti e secondi)
-	 * in GD (gradi decimali)
+	 * questa funzione converte la latitudine in DMM (in gradi e minuti decimali)
+	 * in DD (gradi decimali)
 	 * @param str
 	 * @return
 	 * @throws WrongCoordFormat
 	 */
 	static public float latGMSstringToGDfloat(String str) throws WrongCoordFormat {
 		
-		String g = str.substring(0, 2);
-		String m = str.substring(2, 4);
-		String s = str.substring(5, 9);
-		float gg,mm,ssss;
+		String gg = str.substring(0, 2);
+		String mm = str.substring(2, 4);
+		String dddd = str.substring(5, 9);
+		
+		float g,m,d;
 		int sign=1;
 		
-		gg = Float.parseFloat(g);
-		mm = Float.parseFloat(m);
-		ssss = Float.parseFloat(s);
+		g = Float.parseFloat(gg);
+		m = Float.parseFloat(mm);
+		d = Float.parseFloat(dddd);
 
-		float lat = gg+mm/60+ssss/3600;
+		float lat = g + m/60 + (d/60)/10000;
 		
 		if(lat >= 0 && lat <= 90) {
 			if(str.charAt(9)=='S') sign = -1;
@@ -83,40 +84,41 @@ public class Coord {
 			return lat;
 		}
 		else {
-			throw new WrongCoordFormat("Latitudine non compresa tra i -90° e 90°");
+			throw new WrongCoordFormat("Latitude -> angle not included between -90° and 90°");
 		}
 		
 	}
 
 	
 	/**
-	 * questa funzione converte la longitudine in GMS (in gradi, minuti e secondi)
-	 * in GD (gradi decimali)
+	 * questa funzione converte la longitudine in DMM (in gradi e minuti decimali)
+	 * in DD (gradi decimali)
 	 * @param str
 	 * @return
 	 * @throws WrongCoordFormat
 	 */
 	static public float lonGMSstringToGDfloat(String str) throws WrongCoordFormat {
 		
-		String g = str.substring(0, 3);
-		String m = str.substring(3, 5);
-		String s = str.substring(6, 10);
-		float ggg,mm,ssss;
+		String ggg = str.substring(0, 3);
+		String mm = str.substring(3, 5);
+		String dddd = str.substring(6, 10);
+		
+		float g,m,d;
 		int sign = 1;
 		
-		ggg = Float.parseFloat(g);
-		mm = Float.parseFloat(m);
-		ssss = Float.parseFloat(s);
+		g = Float.parseFloat(ggg);
+		m = Float.parseFloat(mm);
+		d = Float.parseFloat(dddd);
 		
-		float lon = ggg+mm/60+ssss/3600;
+		float lon = g + m/60 + (d/60)/10000;
 		
-		if(lon >= 0 && lon <= 90) {
+		if(lon >= 0 && lon <= 180) {
 			if(str.charAt(10)=='W') sign = -1;
 			lon = sign*lon;
 			return lon;
 		}
 		else {
-			throw new WrongCoordFormat("Longitudine non compresa tra i -180° e 180°");
+			throw new WrongCoordFormat("Longitude -> angle not included between -180° and 180°");
 		}
 		
 	}	
