@@ -9,7 +9,7 @@ import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
 public class CheckInputParameters {
 
 	
-	public static void CheckForecastFilterParameters(String macAddr, String date, int hour) throws InvalidParameter {
+	public static void CheckForecastFilterParameters(String macAddr, String date, byte hour) throws InvalidParameter {
 		
 		try {
 		CheckMacAddr(macAddr); 
@@ -22,8 +22,7 @@ public class CheckInputParameters {
 		if(hour < 0 || hour > 23) throw new InvalidParameter("Invalid hour parameter.");
 	}
 	
-	
-	public static void CheckForecastStatsParameters(String macAddr, int days) throws InvalidParameter {
+	public static void CheckForecastStatsParameters(String macAddr, byte days) throws InvalidParameter {
 		
 		try {
 		CheckMacAddr(macAddr); 
@@ -33,7 +32,6 @@ public class CheckInputParameters {
 		
 		if(days < 1 || days > 7) throw new InvalidParameter("Invalid days parameter.");
 	}
-	
 	
 	public static void CheckMacAddr(String macAddr) throws InvalidParameter{
 		
@@ -46,7 +44,6 @@ public class CheckInputParameters {
 		}
 		if(i != 6) throw new InvalidParameter("Invalid mac address parameter.");
 	}
-	
 	
 	private static boolean CheckDate(String date) {
 		
@@ -75,4 +72,5 @@ public class CheckInputParameters {
 			  }  
 		}
 	}
+	
 }

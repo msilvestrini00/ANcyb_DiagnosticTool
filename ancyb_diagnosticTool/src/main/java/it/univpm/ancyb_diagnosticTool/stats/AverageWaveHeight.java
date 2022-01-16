@@ -14,13 +14,9 @@ public class AverageWaveHeight implements StatsInterface{
 	private int days;
 	private String stats = null;
 
-	
-	public AverageWaveHeight(Forecast forecastForStats, int days) {
-		
+	public AverageWaveHeight(Forecast forecastForStats, byte days) {
 		this.forecastForStats = forecastForStats;
 		this.days = days;
-
-
 	}
 	
 	@Override
@@ -29,7 +25,7 @@ public class AverageWaveHeight implements StatsInterface{
 	}
 
 	@Override
-	public void computeStats() throws StatsFailure{	// TODO creare un metodo apposito? se sì, dove metterlo?
+	public void computeStats() throws StatsFailure{	
 
 		ArrayList<ForecastObject> list = forecastForStats.getForecastList();
 
@@ -57,9 +53,6 @@ public class AverageWaveHeight implements StatsInterface{
 		this.stats = String.format("%.2f", sum/totalHours);
 	}
 
-	
-	
-	
 	@Override
 	public String getStats() throws StatsFailure {
 		if ( stats == null) throw new StatsFailure("Nessuna statistica elaborata, invocare prima la funzione computeStats()");

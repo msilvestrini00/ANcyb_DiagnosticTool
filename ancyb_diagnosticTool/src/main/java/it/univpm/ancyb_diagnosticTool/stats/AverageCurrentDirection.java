@@ -15,14 +15,10 @@ public class AverageCurrentDirection implements StatsInterface{
 	private String stats = null;
 
 	
-	public AverageCurrentDirection(Forecast forecastForStats, int days) {
-		
+	public AverageCurrentDirection(Forecast forecastForStats, byte days) {
 		this.forecastForStats = forecastForStats;
 		this.days = days;
-
-
 	}
-	
 	
 	@Override
 	public Object getDataForStats() {
@@ -30,13 +26,12 @@ public class AverageCurrentDirection implements StatsInterface{
 	}
 
 	@Override
-	public void computeStats() throws StatsFailure{	// TODO creare un metodo apposito? se sì, dove metterlo?
+	public void computeStats() throws StatsFailure{	
 
 		ArrayList<ForecastObject> list = forecastForStats.getForecastList();
 
 		float sum = 0;
 		int totalHours = days*24;
-
 		int index = 0;
 		
 		//prendo i valori dell'elemento del tempo corrente
@@ -59,14 +54,10 @@ public class AverageCurrentDirection implements StatsInterface{
 		this.stats = String.format("%.2f", sum/totalHours);
 	}
 
-	
-	
-	
 	@Override
 	public String getStats() throws StatsFailure {
 		if ( stats == null) throw new StatsFailure("Nessuna statistica elaborata, invocare prima la funzione computeStats()");
 		return this.stats;
 	}
-
-
+	
 }
