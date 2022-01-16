@@ -5,11 +5,10 @@ import java.util.ArrayList;
 
 public class Forecast {
 
-	ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
+	private ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
 	
 	
 	public Forecast(ArrayList<ForecastObject> forecastList) {
-		
 		this.forecastList = forecastList;
 	}
 	
@@ -17,8 +16,7 @@ public class Forecast {
 		return this.forecastList;
 	}
 	
-	public int getForecastLength() {
-		
+	public long getForecastLength() {
 		return this.forecastList.size();
 	}
 	
@@ -26,9 +24,7 @@ public class Forecast {
 		forecastList.add(obj);
 	}
 	
-	
 	public ForecastObject getForecastObject(int index) {
-		
 		return this.forecastList.get(index);
 	}
 	

@@ -70,7 +70,7 @@ public class ANcybRestController {
 	
 	@RequestMapping(value = "/{macAddr}/forecast/filter", method = RequestMethod.POST)
 	public ResponseEntity<Object> getSelectedTimeForecast(@PathVariable("macAddr") String macAddr, @RequestParam(name = "date") String date, 
-																								   @RequestParam(name = "hour") int hour) {
+																								   @RequestParam(name = "hour") byte hour) {
 
 		//TEST
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);
@@ -90,7 +90,7 @@ public class ANcybRestController {
 	
 	
 	@RequestMapping(value = "/{macAddr}/forecast/stats", method = RequestMethod.POST)
-	public ResponseEntity<Object> getForecastStatistics(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") int days) {
+	public ResponseEntity<Object> getForecastStatistics(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") byte days) {
 		
 		//TEST
 		ANcybFishData ancybData1 = new ANcybFishData_VerGT(Time.currentDate(), Time.currentTime2(), "A4:cf:12:76:76:95", "Ver_GT", 43.684017f, 13.354755f, "3", 10.5f);

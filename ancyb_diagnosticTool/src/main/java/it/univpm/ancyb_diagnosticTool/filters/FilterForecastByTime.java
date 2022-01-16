@@ -36,17 +36,15 @@ public class FilterForecastByTime implements FilterInterface {
 
 	@Override
 	public void computeFilter() throws FilterFailure {
-		
-		//for(int i=0; i<forecastToFilter.getForecastLength(); i++) {
-		
+				
 		for(ForecastObject fobj : forecastToFilter.getForecastList()) {
 					
 			if(fobj.getForecastTime().equals(this.time)) {
 				this.filteredForecast = fobj;
 				break;
 			}
-			else continue;
 		}
+		
 		if(filteredForecast == null) {
 			throw new FilterFailure("Nessuna previsione trovata per l'orario: " + this.time);
 		}

@@ -32,9 +32,11 @@ public class ForecastDataManager {
 	private String url = null;
 	private String data;
 	private String apiKey = "4380b6f80amshdae4ed371f74652p1857c6jsn3c4a8bf96244";
-	private String uri = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
+	private String forecastLink = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
 
-	public ForecastDataManager(String macAddr) throws FilterFailure, VersionMismatch {
+	public ForecastDataManager(String macAddr) throws FilterFailure, VersionMismatch {	
+		//TODO cosa c'è di testing qui?
+		//TODO un costruttore può lanciare eccezioni?
 		
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
 		filterFishData.computeFilter();
@@ -51,7 +53,6 @@ public class ForecastDataManager {
 	public Forecast getForecast() throws FilterFailure, VersionMismatch {
 		
 		//definisco l'oggetto per cui ricavo le coordinate per elaborare i dati
-		
 		Forecast forecast;
 		
 		this.buildUrl();		
@@ -69,7 +70,7 @@ public class ForecastDataManager {
 	}
 	
 	public void buildUrl() {
-		this.url = uri + apiKey + "&lat=" + this.lat + "&lng=" + this.lng;		
+		this.url = forecastLink + apiKey + "&lat=" + this.lat + "&lng=" + this.lng;		
 	}
 	
 	
@@ -126,9 +127,7 @@ public class ForecastDataManager {
 		
 	      //Estracting waveHeight and currentDirection JSON arrays and time JSON object from hours JSON array 
 	      for(Object hoursElement : hoursArray) {
-	      
-	      //for (int i=0;i<hoursArray.length();i++){ 
-	    
+	      	    
 	    	  //Converting the hours JSON array to string
 	    	  String hoursArrayElementString = hoursElement.toString();
 	    	  
@@ -152,11 +151,8 @@ public class ForecastDataManager {
 	          
 	          //Adding the created object in the ArrayList of the 'Forecast' object
 	          f.addToForecast(fobj);
-	          
 	      }
-	      
 	      return f;
-	      
 	}
 	
   	private float extractSgSourceFromJSONArray(JSONArray array) {	
@@ -174,15 +170,11 @@ public class ForecastDataManager {
   				data = dataObject.getFloat("value");
   			}
   			else continue;
-      
+  		}
+  		return data;		
   	}
-  			
-  	return data;		
-  }
 	
-  	
-	public JSONObject createForecastStatsDataJSONObject (Forecast forecast, int days) {
-		
+	public JSONObject createForecastStatsDataJSONObject (Forecast forecast, byte days) {
 		
         JSONObject jo = new JSONObject();
         JSONObject out = new JSONObject();

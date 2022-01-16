@@ -52,7 +52,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 
 	@Override
-	public ForecastObject getForecastBySelectedTime(String macAddr, String date, int hour)
+	public ForecastObject getForecastBySelectedTime(String macAddr, String date, byte hour)
 			throws FilterFailure, VersionMismatch {
 		
 		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
@@ -64,22 +64,20 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 	
 	@Override
-	public JSONObject getForecastStats(String macAddr, int days) throws StatsFailure, VersionMismatch, FilterFailure {
+	public JSONObject getForecastStats(String macAddr, byte days) throws StatsFailure, VersionMismatch, FilterFailure {
 		
 		//inizializzo gli elementi che mi servono
 		JSONObject statsValueObject = new JSONObject();
 		JSONObject statsValueObject2 = new JSONObject();
 		JSONArray statsResultsArray = new JSONArray();
-		JSONObject output = new JSONObject();	//TODO capire perchè se uso statsResults per far ritornare l'oggetto mi da che è null
+		JSONObject output = new JSONObject();	
 
-		
 		//creo l'oggetto coi dati e lo metto nell'array finale
 		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
 		Forecast f = dataManager.getForecast();
-		
 		statsResultsArray.put(dataManager.createForecastStatsDataJSONObject(f, days));
 		
-		// prendo i valori delle stts e li metto in un rray che me li raggruppa
+		// prendo i valori delle stts e li metto in un JSONObject che me li raggruppa
 	    AverageWaveHeight avgWaveHeight = new AverageWaveHeight(f, days);
 	    avgWaveHeight.computeStats();
 	    statsValueObject.put("Wave Height", avgWaveHeight.getStats());
@@ -88,12 +86,13 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	    avgCurrentDirection.computeStats();
 	    statsValueObject.put("Current Direction", avgCurrentDirection.getStats());
 		
-	    //metto l'array dei valori in un oggetto per poterlo nominare
+	    //metto l'oggetto coi dati delle stats in un oggetto
 	    statsValueObject2.put("Stats values", statsValueObject);
 	    
+	    //metto l'oggetto creato nell'array finale
 	    statsResultsArray.put(statsValueObject2);
 
-	    //metto quest'ultimo oggetto nell'array finale
+	    //metto l'array in un oggetto per darlo in uscita
 	    output.put("Stats", statsResultsArray);
 	    		
 		return output;

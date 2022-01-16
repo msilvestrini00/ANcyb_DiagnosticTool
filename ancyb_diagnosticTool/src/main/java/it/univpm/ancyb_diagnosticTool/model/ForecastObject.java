@@ -6,12 +6,12 @@ import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 
 public class ForecastObject implements DataReceived{
 
-	String forecastTime;
-	String macAddress;
-	float waveHeight;
-	float currentDirection;
-	float latitude;
-	float longitude;
+	private String forecastTime;
+	private String macAddress;
+	private float waveHeight;
+	private float currentDirection;
+	private float latitude;
+	private float longitude;
 	
 	public ForecastObject(String macAddress, float latitude, float longitude, String forecastTime, float waveHeight, float currentDirection) {
 		
@@ -62,10 +62,10 @@ public class ForecastObject implements DataReceived{
 
 	public void setTime(String time) {
 		
-		String firsthalf = forecastTime.substring(0, 10);
-		String secondhalf = forecastTime.substring(19, 25);
+		String firstHalf = forecastTime.substring(0, 10);
+		String secondHalf = forecastTime.substring(19, 25);
 
-		this.forecastTime = firsthalf + time + secondhalf;
+		this.forecastTime = firstHalf + time + secondHalf;
 	}
 
 	public String getDate() { // formato yyyy.mm.dd
@@ -76,10 +76,10 @@ public class ForecastObject implements DataReceived{
 		
 		String date2 = date.replace('.', '-');
 		
-		String firsthalf = forecastTime.substring(0, 10);
-		String secondhalf = forecastTime.substring(19, 25);
+		String firstHalf = forecastTime.substring(0, 10);
+		String secondHalf = forecastTime.substring(19, 25);
 
-		this.forecastTime = firsthalf + date2 + secondhalf;
+		this.forecastTime = firstHalf + date2 + secondHalf;
 	}
 	
 	public float getWaveHeight() {
@@ -98,7 +98,6 @@ public class ForecastObject implements DataReceived{
 		this.currentDirection = currentDirection;
 	}
 
-	
     public JSONObject toJSON() {
 
         JSONObject jo = new JSONObject();
@@ -113,18 +112,14 @@ public class ForecastObject implements DataReceived{
         return jo;
     }
 
-	
     public String toString() {
     	
 		return "macAddr: " 		  	  + this.getMacAddress() 		+ "\n" + 
 			   "Latitude: " 		  + this.getLatitude() 	 		+ "\n" + 
 			   "Longitude: " 		  + this.getLongitude()  		+ "\n" + 
-			   "time: " 		  	  + this.getForecastTime() 		 		+ "\n" + 
+			   "time: " 		  	  + this.getForecastTime() 		+ "\n" + 
 			   "waveHeight: " 	  	  + this.getWaveHeight() 		+ "\n" + 
 			   "currentDirection: "   + this.getCurrentDirection();
 	}
 
-
-
-	
 }

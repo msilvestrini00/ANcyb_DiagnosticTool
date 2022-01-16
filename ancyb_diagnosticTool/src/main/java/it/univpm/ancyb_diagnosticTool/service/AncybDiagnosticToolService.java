@@ -23,7 +23,7 @@ public interface AncybDiagnosticToolService {
 	 * @throws FilterFailure
 	 * @throws VersionMismatch
 	 */
-	public abstract ForecastObject getForecastByRealTime(String macAddr) throws FilterFailure, VersionMismatch;				
+	public ForecastObject getForecastByRealTime(String macAddr) throws FilterFailure, VersionMismatch;				
 	
 	/**
 	 * Metodo che riceve il mac address, crea l'oggetto forecast e restituisce 
@@ -33,7 +33,7 @@ public interface AncybDiagnosticToolService {
 	 * @throws FilterFailure
 	 * @throws VersionMismatch
 	 */
-	public abstract ForecastObject getForecastBySelectedTime(String macAddr, String date, int hour) throws FilterFailure, VersionMismatch;				
+	public ForecastObject getForecastBySelectedTime(String macAddr, String date, byte hour) throws FilterFailure, VersionMismatch;				
 
 	/**
 	 * Metodo che restituisce un JSONObject contenente le stats
@@ -42,7 +42,7 @@ public interface AncybDiagnosticToolService {
 	 * @throws FilterFailure
 	 * @throws VersionMismatch
 	 */
-	public abstract JSONObject getForecastStats(String macAddr, int days) throws StatsFailure, VersionMismatch, FilterFailure;				
+	public JSONObject getForecastStats(String macAddr, byte days) throws StatsFailure, VersionMismatch, FilterFailure;				
 
 	/**
 	 * 
