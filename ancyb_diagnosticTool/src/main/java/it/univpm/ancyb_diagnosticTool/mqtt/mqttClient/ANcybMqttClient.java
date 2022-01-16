@@ -107,7 +107,6 @@ public class ANcybMqttClient {
     		System.out.println(msg.getId() + " -> " + str);
     		try {
     			DataReceived data = ancybDataManager.createDataObj(str);
-    			DataSaved.getList().add((ANcybFishData) data);
     			dataLog.write(data);
     		} catch(MqttStringMismatch | ArrayIndexOutOfBoundsException e) {
     			System.err.println("Exception:" + e);

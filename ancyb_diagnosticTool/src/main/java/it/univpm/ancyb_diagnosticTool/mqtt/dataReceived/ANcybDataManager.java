@@ -29,6 +29,7 @@ public class ANcybDataManager {
 				throw new MqttStringMismatch("Stringa corrispondente alla Ver_G ma presenta un numero di elementi incompatibile");
 			
 			ancybData = new ANcybFishData_VerG(strArr);
+			DataSaved.getList().add(ancybData);
 			break;
 		
 		case "Ver_GT":
@@ -36,7 +37,8 @@ public class ANcybDataManager {
 			if(strArr.length!=7)
 				throw new MqttStringMismatch("Stringa corrispondente alla Ver_GT ma presenta un numero di elementi incompatibile");
 			
-			ancybData = new ANcybFishData_VerGT(strArr);			
+			ancybData = new ANcybFishData_VerGT(strArr);
+			DataSaved.getList().add(ancybData);
 			break;
 			
 		//nel caso avessi una versione con sensore di pressione ("P"), o altre ...
