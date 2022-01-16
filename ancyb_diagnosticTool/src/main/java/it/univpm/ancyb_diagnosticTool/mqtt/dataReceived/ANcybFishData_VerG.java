@@ -48,6 +48,7 @@ public class ANcybFishData_VerG extends ANcybFishData {
 			Coord.checkIsLat(latitudeStr);
 			this.latitude = Coord.latGMSstringToGDfloat(latitudeStr);
 		} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
+			System.err.println("Deep exception: " + e);
 			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> latitudine");
 		}
 	
@@ -56,6 +57,7 @@ public class ANcybFishData_VerG extends ANcybFishData {
 			Coord.checkIsLon(longitudeStr);
 			this.longitude = Coord.lonGMSstringToGDfloat(longitudeStr);
 		} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
+			System.err.println("Deep exception: " + e);
 			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> longitudine");
 		}
 		
