@@ -63,8 +63,7 @@ public class Coord {
 	 * @return
 	 * @throws WrongCoordFormat
 	 */
-	static public float latGMSstringToGDfloat(String str) throws WrongCoordFormat {
-		
+	static public float latDMMstringToDDfloat(String str) throws WrongCoordFormat {
 		String gg = str.substring(0, 2);
 		String mm = str.substring(2, 4);
 		String dddd = str.substring(5, 9);
@@ -86,7 +85,6 @@ public class Coord {
 		else {
 			throw new WrongCoordFormat("Latitude -> angle not included between -90° and 90°");
 		}
-		
 	}
 
 	
@@ -97,8 +95,7 @@ public class Coord {
 	 * @return
 	 * @throws WrongCoordFormat
 	 */
-	static public float lonGMSstringToGDfloat(String str) throws WrongCoordFormat {
-		
+	static public float lonDMMstringToDDfloat(String str) throws WrongCoordFormat {
 		String ggg = str.substring(0, 3);
 		String mm = str.substring(3, 5);
 		String dddd = str.substring(6, 10);
@@ -120,7 +117,6 @@ public class Coord {
 		else {
 			throw new WrongCoordFormat("Longitude -> angle not included between -180° and 180°");
 		}
-		
 	}	
 	
 	/**
@@ -132,7 +128,7 @@ public class Coord {
 	 */
 	static public double disgeod(float[] f1, float[] f2) {
 		
-		//Definisce le costanti e le variabili
+		// Definisce le costanti e le variabili
 		double R = 6371;
 		double pi = 3.1415927;
 		double latA_rad, latB_rad;

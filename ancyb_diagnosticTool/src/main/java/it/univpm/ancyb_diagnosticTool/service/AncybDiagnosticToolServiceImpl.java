@@ -192,7 +192,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 			averageTemperatureFish.computeStats();
 			statsResults.put("Average temperature", averageTemperatureFish.getStats());
 		}
-		if(statsResults == null) throw new StatsFailure("Nessuna statistica computabile per questo dispositivo.");
+		if(statsResults == null) throw new StatsFailure("No stats to compute for this device.");
 		return statsResults;
 	}
 

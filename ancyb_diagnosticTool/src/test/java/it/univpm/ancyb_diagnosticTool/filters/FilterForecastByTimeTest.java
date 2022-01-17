@@ -1,6 +1,8 @@
 package it.univpm.ancyb_diagnosticTool.filters;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -9,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
-import it.univpm.ancyb_diagnosticTool.Exception.ForecastBuildingFailure;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
@@ -17,6 +18,8 @@ import it.univpm.ancyb_diagnosticTool.utilities.Time;
 class FilterForecastByTimeTest {
 
 	static Forecast f;
+	@SuppressWarnings("unused")
+	private String s;
 
 	@BeforeAll
 	static void setUp() throws Exception {
@@ -81,7 +84,7 @@ class FilterForecastByTimeTest {
 
 			FilterForecastByTime forecastFilter = new FilterForecastByTime(f, "2022-01-20T00:00:00+00:00");
 			forecastFilter.computeFilter();
-			String s = forecastFilter.getFilteredData().getMacAddress();
+			s = forecastFilter.getFilteredData().getMacAddress();
 
 	    });
 

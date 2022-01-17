@@ -15,13 +15,13 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerGT;
 public class CheckVersion {
 	
 	public static void verG(ANcybFishData fishData) throws VersionMismatch {
-		if (!((fishData instanceof ANcybFishData_VerG)||(fishData instanceof ANcybFishData_VerG)))
+		if (!((fishData instanceof ANcybFishData_VerG)||(fishData instanceof ANcybFishData_VerGT)))
 			throw new VersionMismatch("L'oggetto non è dotato della Versione Software 'G' o 'GX'.");
 	}
 	
 	public static void verG(ArrayList<ANcybFishData> fishDataList) throws VersionMismatch {
 		for(ANcybFishData fishData : fishDataList) {
-			if (!((fishData instanceof ANcybFishData_VerG)||(fishData instanceof ANcybFishData_VerG)))
+			if (!((fishData instanceof ANcybFishData_VerG)||(fishData instanceof ANcybFishData_VerGT)))
 				throw new VersionMismatch("L'oggetto non è dotato della Versione Software 'G' o 'GX'.");
 
 		}
@@ -34,8 +34,8 @@ public class CheckVersion {
 	
 	public static void verGT(ArrayList<ANcybFishData> fishDataList) throws VersionMismatch {
 		for(ANcybFishData fishData : fishDataList) {
-			if (!((fishData instanceof ANcybFishData_VerGT)||(fishData instanceof ANcybFishData_VerGT)))
-				throw new VersionMismatch("L'oggetto non è dotato della Versione Software 'G' o 'GX'.");
+			if (!(fishData instanceof ANcybFishData_VerGT))
+				throw new VersionMismatch("L'oggetto non è dotato della Versione Software 'GT'.");
 
 		}
 	}
