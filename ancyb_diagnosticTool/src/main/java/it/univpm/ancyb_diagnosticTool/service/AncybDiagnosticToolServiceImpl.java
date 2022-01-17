@@ -132,7 +132,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		Forecast f = dataManager.getForecast();
 		statsResultsArray.put(dataManager.createForecastStatsDataJSONObject(f, days));
 		
-		// prendo i valori delle stts e li metto in un JSONObject che me li raggruppa
+		// prendo i valori delle stats e li metto in un JSONObject che me li raggruppa
 	    AverageWaveHeight avgWaveHeight = new AverageWaveHeight(f, days);
 	    avgWaveHeight.computeStats();
 	    statsValueObject.put("Wave Height", avgWaveHeight.getStats());
