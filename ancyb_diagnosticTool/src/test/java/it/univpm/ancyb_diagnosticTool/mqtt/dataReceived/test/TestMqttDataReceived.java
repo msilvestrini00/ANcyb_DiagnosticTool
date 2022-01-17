@@ -1,6 +1,8 @@
 package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+
+//import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
