@@ -32,11 +32,13 @@ class ForecastDataManagerTest {
 	
 	static Forecast f = new Forecast(null);
 
+	@SuppressWarnings("unused")
+	private static ANcybFishData fishdata1;
+
 	@BeforeAll
 	static void setUp() throws Exception {
 		
 		ANcybDataManager ancybDataManager = new ANcybDataManager();
-		ANcybFishData fishdata1;
 		fishdata1 = ancybDataManager.createDataObj("00:00:00:00:00:00 Ver_G 16:05:45 4334.3060N 01335.1580E 1");
 
 	}
