@@ -26,10 +26,31 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckInputParameters;
 
+/*
+ * Classe che gestisce le chiamate effettuate al Server dall'utente.
+ * Le rotte disponibili sono di due tipi: 
+ * - le prime tre riguardano il servizio di previsione metereologica marittima (in particolare fornendo dati sull'altezza delle onde e la direzione della corrente)
+ * - le altre tre sono rivolte alla diagnostica del dispositivo
+ * 
+ * @author Giacomo Fiara
+ * @author Manuele Silvestrini
+ * @version 1.0
+ */
 @RestController
 public class ANcybRestController {
 	@Autowired
+	
+	/*
+	 * Definizione dell'interfaccia della classe dei servizi,
+	 * tramite la quale utilizzo i metodi principali dell'applicativo.
+	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService
+	 */
 	private AncybDiagnosticToolService service;
+	
+	/*
+	 * JSONObject generico utilizzato per veicolare l'output di ciascuna rotta 
+	 */
 	private JSONObject j;
 	
 	
@@ -47,9 +68,15 @@ public class ANcybRestController {
 	
 	/**
 	 * 
-	 * Rotta che restituisce le previsioni meteo in base alla posizione in tempo reale del dispositivo,
-	 * il quale mac è stato inserito come PathVariable
-	 * @throws MqttStringMismatch 
+	 * Rotta che restituisce la situazione meteorologica del dispositivo selezionato in tempo reale.
+	 * 
+	 * @param macAddr Indirizzo mac tramite il quale seleziono un dispositivo, ricavandone le coordinate. 
+	 * @return Oggetto JSON sulla previsione oraria corrente in base alle coordinate ricavate.
+	 * @throws InvalidParameter
+	 * @throws VersionMismatch
+	 * @throws FilterFailure
+	 * @throws ForecastBuildingFailure
+	 * @see it.univpm.ancyb_diagnosticTool.service#AncybDiagnosticToolServiceImpl#getForecastByRealTime(String macAddr)
 	 * 
 	 */
 	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
@@ -68,26 +95,37 @@ public class ANcybRestController {
 		
 		try {	
 			CheckInputParameters.CheckMacAddr(macAddr);
-		
 			j = service.getForecastByRealTime(macAddr).toJSON();
-			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
-		} catch (InvalidParameter | FilterFailure | VersionMismatch | ForecastBuildingFailure e) {
+		} catch (InvalidParameter | VersionMismatch | FilterFailure  | ForecastBuildingFailure e) {
 			System.err.println("Exception: " + e);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);	
 		}
-		
+		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 	}
 	
 	
 	/**
 	 * 
-	 * Rotta che restituisce le previsioni meteo in base all'orario inserito come parametro 
-	 * (parametro 'date' in formato "yyy-mm-dd" e parametro 'hour' in formato numero intero, da 0 a 23)
+
+	 * (parametro 'date'  e parametro 'hour' in formato numero intero, da 0 a 23)
 	 *  e alla posizione del dispositivo, il quale mac è stato inserito come PathVariable
 	 * 
 	 */
-	
+	/**
+	 * 
+	 * Rotta che restituisce le previsioni meteorologiche sulla posizione corrente del dispositivo selezionato, in base alla data e l'orario inseriti come parametri.
+	 * 
+	 * @param date Parametro sulla data in formato "yyy-mm-dd" (sono disponibili previsioni fino a 9 giorni successivi).
+	 * @param hour Parametro sull'ora in formato numero intero, da 0 a 23.
+	 * @return Oggetto JSON sulla previsione oraria selezionata in base alle coordinate ricavate.
+	 * @throws InvalidParameter
+	 * @throws VersionMismatch
+	 * @throws FilterFailure
+	 * @throws ForecastBuildingFailure
+	 * @see it.univpm.ancyb_diagnosticTool.service#AncybDiagnosticToolServiceImpl#getForecastBySelectedTime(String macAddr)
+	 * 
+	 */
 	@RequestMapping(value = "/{macAddr}/forecast/filter", method = RequestMethod.POST)
 	public ResponseEntity<Object> getSelectedTimeForecast(@PathVariable("macAddr") String macAddr, @RequestParam(name = "date") String date, 
 																								   @RequestParam(name = "hour") byte hour) {
@@ -103,18 +141,15 @@ public class ANcybRestController {
 		}
 		//
 		
-		
 		try {
 			CheckInputParameters.CheckForecastFilterParameters(macAddr, date, hour);
-			
 			j = service.getForecastBySelectedTime(macAddr, date, hour).toJSON();
-			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
 		}catch (InvalidParameter | FilterFailure | VersionMismatch | ForecastBuildingFailure e) {
 			System.err.println("Exception: " + e);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
-		
+		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 	}
 	
 	
@@ -134,15 +169,13 @@ public class ANcybRestController {
 		
 		try {
 			CheckInputParameters.CheckForecastStatsParameters(macAddr, days);
-			
 			j = service.getForecastStats(macAddr, days);	
-			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
 		} catch (InvalidParameter | FilterFailure | StatsFailure | VersionMismatch | ForecastBuildingFailure e) {
 			System.err.println("Exception: " + e);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
-			
+		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 	}
 		
 
