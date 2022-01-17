@@ -115,7 +115,7 @@ public class ANcybRestController {
 	 * @throws VersionMismatch
 	 * @throws FilterFailure
 	 * @throws ForecastBuildingFailure
-	 * @see it.univpm.ancyb_diagnosticTool.service#AncybDiagnosticToolServiceImpl#getForecastBySelectedTime(String macAddr)
+	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl#getForecastBySelectedTime(String macAddr)
 	 * 
 	 */
 	@RequestMapping(value = "/{macAddr}/forecast/filter", method = RequestMethod.POST)

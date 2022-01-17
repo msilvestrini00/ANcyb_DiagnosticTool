@@ -24,23 +24,41 @@ import it.univpm.ancyb_diagnosticTool.stats.AverageTemperatureFish;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.IsVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
-
-/**
+ 
+/*
+ * Classe di servizio per gestire le operazioni sulle previsioni orarie e i dati ricevuti dal dispositivo.
+ * Viene implementata l'apposita interfaccia.
  * 
- * @author Giacomo Fiara, Manuele Silvestrini
- *
+ * @implements AncybDiagnosticToolService
+ * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService
+ * 
+ * @author Fiara Giacomo
+ * @author Silvestrini Manuele
  */
 @Service
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
+	/*
+	 * Oggetto JSON utilizzato per veicolare in uscita le statistiche create, senza creare più istanze inutilmente.
+	 */
 	private JSONObject statsResults;
 
-	/*
-	 * METODO NUOVO (senza filtro e eccezione relativa, esportati in ancybRestController)
+	/**
+	 * Metodo che:
+	 * - riceve l'indirizzo mac
+	 * - chiama L'API esterna
+	 * - crea l'oggetto Forecast coi dati ricevuti
+	 * - filtra i ForecastObject in base alla data e l'ora correnti
+	 * - restituisce il ForecastObject trovato.
+	 * 
+	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate per l'API esterna.
+	 * @return Il ForecastObject relativo alla data e l'ora correnti.
+	 * @throws FilterFailure
+	 * @throws VersionMismatch
+	 * @throws ForecastBuildingFailure
+	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.controller.ANcybRestController#getRealTimeForecast(String macAddr)
 	 */
-
-	//TODO i concetti di filtri e stats costruiti in questo modo vanno bene?
-
 	@Override
 	public ForecastObject getForecastByRealTime(String macAddr) throws FilterFailure, VersionMismatch, ForecastBuildingFailure {
 		
@@ -52,6 +70,24 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		return forecastFilter.getFilteredData();
 	}
 
+	/**
+	 * Metodo che:
+	 * - riceve l'indirizzo mac, la data e l'ora
+	 * - chiama L'API esterna
+	 * - crea l'oggetto Forecast coi dati ricevuti
+	 * - filtra i ForecastObject in base alla data e ora inserite
+	 * - restituisce il ForecastObject trovato.
+	 * 
+	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate per l'API esterna.
+	 * @param date La data di cui si vuole ottenere la previsione.
+	 * @param hour L'ora di cui si vuole ottenere la previsione.
+	 * @return Il ForecastObject riguardante la data e l'ora inserite.
+	 * @throws FilterFailure
+	 * @throws VersionMismatch
+	 * @throws ForecastBuildingFailure
+	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.controller.ANcybRestController#getSelectedTimeForecast(String macAddr, String date, byte hour)
+	 */
 	@Override
 	public ForecastObject getForecastBySelectedTime(String macAddr, String date, byte hour) throws FilterFailure, VersionMismatch, ForecastBuildingFailure {
 		
@@ -63,6 +99,25 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 		return forecastFilter.getFilteredData();
 	}
 	
+	/**
+	 * Metodo che:
+	 * - riceve l'indirizzo mac e i giorni per cui si estendono le statistiche
+	 * - chiama L'API esterna coi dati ricevuti
+	 * - crea l'oggetto Forecast coi dati ricevuti
+	 * - esegue le statistiche sulle previsioni
+	 * - crea un oggetto JSON completo di tutte le informazioni
+	 * - restituisce l'oggetto JSON.
+	 * 
+	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate per l'API esterna.
+	 * @param days Numero di giorni per cui si vuole estendere le statistiche (a partire dal giorno corrente).
+	 * @return L'oggetto JSON che contiene le statistiche.
+	 * @throws StatsFailure
+	 * @throws FilterFailure
+	 * @throws VersionMismatch
+	 * @throws ForecastBuildingFailure
+	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.controller.ANcybRestController#getSelectedTimeForecast(String macAddr, String date, byte hour)
+	 */
 	@Override
 	public JSONObject getForecastStats(String macAddr, byte days) throws StatsFailure, VersionMismatch, FilterFailure, ForecastBuildingFailure {
 		
