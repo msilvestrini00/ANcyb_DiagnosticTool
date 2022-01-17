@@ -29,7 +29,7 @@ public class FilterListByMac implements FilterInterface {
 	@Override
 	public ArrayList<ANcybFishData> getFilteredData() throws FilterFailure {	
 		if(filteredFishDataList.size()==0) {
-			throw new FilterFailure("Nessun 'ArrayList<ANcybFishData>' filtrato, invocare prima la funzione computeFilter()");
+			throw new FilterFailure("No 'ArrayList<ANcybFishData>' filtered --> before 'getFilteredData()' you need to invoke 'computeFilter()'");
 		}
 		return filteredFishDataList;	
 	}
@@ -37,13 +37,13 @@ public class FilterListByMac implements FilterInterface {
 	@Override
 	public void computeFilter() throws FilterFailure {
 
-		for(int i=DataSaved.getList().size()-1; i>=0; i--) {
+		for(int i=0; i<DataSaved.getList().size()-1; i++) {
 			if(DataSaved.getList().get(i).getMacAddr().equals(macAddr)) {
 				filteredFishDataList.add(DataSaved.getList().get(i));
 			}
 		}
 		if(filteredFishDataList.size()==0) {
-			throw new FilterFailure("Nessun elemento di posizione trovato nel database con questo mac address: " + macAddr);
+			throw new FilterFailure("No position element found in 'DataSaved' arrayList --> No devices with the following MAC address: " + macAddr);
 		}
 		
 	}
