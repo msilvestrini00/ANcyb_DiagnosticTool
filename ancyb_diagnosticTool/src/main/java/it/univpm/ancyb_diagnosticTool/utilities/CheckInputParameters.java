@@ -26,7 +26,7 @@ public class CheckInputParameters {
 			throw new InvalidParameter("Invalid parameter: mac address");
 		}
 		
-		if(days < 1 || days > 7) throw new InvalidParameter("Invalid parameter: days");
+		if(days < 1 || days > 9) throw new InvalidParameter("Invalid parameter: days");
 	}
 	
 	public static void CheckMacAddr(String macAddr) throws InvalidParameter{

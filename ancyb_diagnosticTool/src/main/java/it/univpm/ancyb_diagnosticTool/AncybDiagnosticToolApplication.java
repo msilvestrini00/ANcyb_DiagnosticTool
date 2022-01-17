@@ -6,8 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient;
 
-//import it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient;
+//import it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient;	//TODO  eliminare?
 
+/*
+ * Classe di bootstrap
+ * 
+ * @author Giacomo Fiara
+ * @author Manuele Silvestrini
+ */
 @SpringBootApplication
 public class AncybDiagnosticToolApplication {
 
@@ -18,5 +24,4 @@ public class AncybDiagnosticToolApplication {
 		ANcybMqttClient mqttClient = new ANcybMqttClient();
 		
 	}
-
 }
