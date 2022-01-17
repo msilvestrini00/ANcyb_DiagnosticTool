@@ -74,32 +74,39 @@ class ForecastDataManagerTest {
 
 	}
 	
+	
 	@Test
 	@DisplayName("Test sul metodo 'buildForecast()' (fallimentare : causa eccezione per cui non viene trovato il JSONArray 'hours')")
 	void test2() {
 		
-		try {
-			
+	    Exception exception = assertThrows(ForecastBuildingFailure.class, () -> {
+
 			ForecastDataManager dataManager = new ForecastDataManager("00:00:00:00:00:00");
 			f = dataManager.buildForecast(data.replace("hours", "hour"));
-		}
-		catch (VersionMismatch | ForecastBuildingFailure | FilterFailure  e) {
-			System.err.println("Exception: " + e);
-		}
+
+	    });
+
+	    String expectedMessage = "'hours' JSONArray not found. Please retry.";
+	    String actualMessage = exception.getMessage();
+
+	    assertTrue(actualMessage.contains(expectedMessage));
 	}
 	
 	@Test
 	@DisplayName("Test sul metodo 'buildForecast()' (fallimentare : causa eccezione per cui l'estrazione dei dati dalla sorgente 'sg' fallisce")
 	void test3() {
 		
-		try {
+	    Exception exception = assertThrows(ForecastBuildingFailure.class, () -> {
 			
 			ForecastDataManager dataManager = new ForecastDataManager("00:00:00:00:00:00");
 			f = dataManager.buildForecast(data.replace("sg", "gg"));
-		}
-		catch (VersionMismatch | ForecastBuildingFailure | FilterFailure  e) {
-			System.err.println("Exception: " + e);
-		}
+			
+	    });
+
+	    String expectedMessage = "The extraction of the 'sg' source's data has gone wrong. Please retry.";
+	    String actualMessage = exception.getMessage();
+
+	    assertTrue(actualMessage.contains(expectedMessage));
 	}
 	
 }

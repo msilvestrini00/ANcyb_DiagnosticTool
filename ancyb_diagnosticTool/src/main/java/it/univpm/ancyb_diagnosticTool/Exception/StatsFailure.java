@@ -1,5 +1,11 @@
 package it.univpm.ancyb_diagnosticTool.Exception;
 
+/**
+ * Eccezione utile per segnalare un malfunzionamento generico delle statistiche.
+ * 
+ * @author Giacomo Fiara
+ * @author Manuele Silvestrini
+ */
 public class StatsFailure extends Exception {
 
 	/**
@@ -11,6 +17,9 @@ public class StatsFailure extends Exception {
 		super();
 	}
 	
+	/*
+	 * @param msg Messaggio di errore per specificare il problema verificatosi.
+	 */
 	public StatsFailure(String msg) {
 		super(msg);
 	}
