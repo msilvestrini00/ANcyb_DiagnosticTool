@@ -4,6 +4,19 @@ import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 
+/*
+ * Classe che descrive il modello della previsione meteorologica oraria,
+ * i quali dati si basano sulla chiamata all'API esterna 'Storm Glass'.
+ * Questi oggetti verranno contenuti in un ArrayList appartenente all'oggetto Forecast.
+ * 
+ * @implements DataReceived
+ * Link all'API esterna: https://rapidapi.com/ManniskaMaskin/api/storm-glass/
+ * 
+ * @see it.univpm.ancyb_diagnosticTool.model.Forecast
+ * 
+ * @author Giacomo Fiara
+ * @author Manuele Silvestrini
+ */
 public class ForecastObject implements DataReceived{
 
 	private String forecastTime;
@@ -13,6 +26,16 @@ public class ForecastObject implements DataReceived{
 	private float latitude;
 	private float longitude;
 	
+	/*
+	 * Costruttore 
+	 * 
+	 * @param macAddress Indirizzo mac la quale posizione è stata utilizzata per ricevere le previsioni meteorologiche.
+	 * @param latitude Latitudine del dispositivo.
+	 * @param longitude Longitudine del dispositivo.
+	 * @param forecastTime Data e ora della previsione, nel formato nativo dell'API esterna.
+	 * @param waveHeight Valore dell'altezza delle onde (in metri) di una data previsione oraria.
+	 * @param currentDirection Valore della direzione della corrente (in gradi) di una data previsione oraria.
+	 */
 	public ForecastObject(String macAddress, float latitude, float longitude, String forecastTime, float waveHeight, float currentDirection) {
 		
 		this.forecastTime = forecastTime;
@@ -21,45 +44,46 @@ public class ForecastObject implements DataReceived{
 		this.longitude = longitude;
 		this.waveHeight = waveHeight;
 		this.currentDirection = currentDirection;
-		
 	}
 
+	/*
+	 * @return L'indirizzo mac del dispositivo.
+	 */
 	public String getMacAddress() {
 		return macAddress;
 	}
 
-	public void setMacAddress(String macAddress) {
-		this.macAddress = macAddress;
-	}
-	
+	/*
+	 * @return La latitudine del dispositivo.
+	 */
 	public float getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(float latitude) {
-		this.latitude = latitude;
-	}
-
+	/*
+	 * @return La longitudine del dispositivo.
+	 */
 	public float getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(float longitude) {
-		this.longitude = longitude;
-	}
-	
+	/*
+	 * @return L'ora e la data della previsione nel formato nativo dell'API esterna.
+	 */
 	public String getForecastTime() {
 		return forecastTime;
 	}
 
-	public void setForecastTime(String forecastTime) {	// formato yyyy-MM-dd.HH:00:00+00:00
-		this.forecastTime = forecastTime;
-	}
-	
-	public String getTime() { // formato hh:mm:ss
+	/*
+	 * @return L'orario della previsione nel formato 'HH:mm:ss'.
+	 */
+	public String getTime() { 
 		return forecastTime.substring(10, 18);
 	}
 
+	/*
+	 * @param L'orario che si vuole modificare della previsione.
+	 */
 	public void setTime(String time) {
 		
 		String firstHalf = forecastTime.substring(0, 10);
@@ -68,10 +92,16 @@ public class ForecastObject implements DataReceived{
 		this.forecastTime = firstHalf + time + secondHalf;
 	}
 
-	public String getDate() { // formato yyyy.mm.dd
+	/*
+	 * @return La data della previsione nel formato 'yyyy.MM.dd'.
+	 */
+	public String getDate() { 
 		return forecastTime.substring(0,10).replace('-', '.');
 	}
 
+	/*
+	 * @param La data che si vuole modificare della previsione.
+	 */
 	public void setDate(String date) {
 		
 		String date2 = date.replace('.', '-');
@@ -82,22 +112,24 @@ public class ForecastObject implements DataReceived{
 		this.forecastTime = firstHalf + date2 + secondHalf;
 	}
 	
+	/*
+	 * @return L'altezza delle onde della previsione.
+	 */
 	public float getWaveHeight() {
 		return waveHeight;
 	}
 
-	public void setWaveHeight(float waveHeight) {
-		this.waveHeight = waveHeight;
-	}
-
+	/*
+	 * @return La direzione della corrente marittima della previsione.
+	 */
 	public float getCurrentDirection() {
 		return currentDirection;
 	}
 
-	public void setCurrentDirection(float currentDirection) {
-		this.currentDirection = currentDirection;
-	}
-
+	/*
+	 * Metodo che converte il ForecastObject in oggetto JSON.
+	 * @return L'oggetto JSON con le informazioni sulla previsione oraria.
+	 */
     public JSONObject toJSON() {
 
         JSONObject jo = new JSONObject();
@@ -112,6 +144,10 @@ public class ForecastObject implements DataReceived{
         return jo;
     }
 
+    /*
+     * Metodo che restituisce il toString della previsione oraria.
+     * @return La stringa con le informazioni sulla previsione oraria.
+     */
     public String toString() {
     	
 		return "macAddr: " 		  	  + this.getMacAddress() 		+ "\n" + 

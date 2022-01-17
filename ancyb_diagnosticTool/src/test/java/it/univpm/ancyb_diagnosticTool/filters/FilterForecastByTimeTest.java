@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.ForecastBuildingFailure;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
@@ -75,25 +76,19 @@ class FilterForecastByTimeTest {
 	@Test
 	@DisplayName("Test sul filtro 'FilterForecastByTime' per il tempo selezionato (fallimentare, per generare l'eccezione)")
 	void testSelectedTimeFail() {
-		
-		String s = null;
-		boolean flag = false;
-		
-		try {
-			
-	    FilterForecastByTime forecastFilter = new FilterForecastByTime(f, "2022-01-20T00:00:00+00:00");
-	    forecastFilter.computeFilter();
-	    s = forecastFilter.getFilteredData().getMacAddress();
-		}
-		
-		catch (FilterFailure e ) {
-			System.err.println("Exception: " + e);
-			flag = true;
-		}
-		
-		assertEquals(s, null);
-		if(!flag) fail("Eccezione non lanciata!");
-		
+				
+	    Exception exception = assertThrows(FilterFailure.class, () -> {
+
+			FilterForecastByTime forecastFilter = new FilterForecastByTime(f, "2022-01-20T00:00:00+00:00");
+			forecastFilter.computeFilter();
+			String s = forecastFilter.getFilteredData().getMacAddress();
+
+	    });
+
+	    String expectedMessage = "No forecast with time: 2022-01-20T00:00:00+00:00 has been found.";
+	    String actualMessage = exception.getMessage();
+
+	    assertTrue(actualMessage.contains(expectedMessage));
 	}
 
 }

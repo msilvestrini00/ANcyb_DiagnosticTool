@@ -34,7 +34,6 @@ import it.univpm.ancyb_diagnosticTool.utilities.CheckInputParameters;
  * 
  * @author Giacomo Fiara
  * @author Manuele Silvestrini
- * @version 1.0
  */
 @RestController
 public class ANcybRestController {
@@ -104,17 +103,10 @@ public class ANcybRestController {
 		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 	}
 	
-	
 	/**
 	 * 
-
-	 * (parametro 'date'  e parametro 'hour' in formato numero intero, da 0 a 23)
-	 *  e alla posizione del dispositivo, il quale mac è stato inserito come PathVariable
-	 * 
-	 */
-	/**
-	 * 
-	 * Rotta che restituisce le previsioni meteorologiche sulla posizione corrente del dispositivo selezionato, in base alla data e l'orario inseriti come parametri.
+	 * Rotta che restituisce le previsioni meteorologiche sulla posizione corrente del dispositivo selezionato, 
+	 * in base alla data e l'orario inseriti come parametri.
 	 * 
 	 * @param date Parametro sulla data in formato "yyy-mm-dd" (sono disponibili previsioni fino a 9 giorni successivi).
 	 * @param hour Parametro sull'ora in formato numero intero, da 0 a 23.
@@ -129,7 +121,6 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/forecast/filter", method = RequestMethod.POST)
 	public ResponseEntity<Object> getSelectedTimeForecast(@PathVariable("macAddr") String macAddr, @RequestParam(name = "date") String date, 
 																								   @RequestParam(name = "hour") byte hour) {
-
 		//TODO TEST
 		try {
 			fishdata1 = ancybDataManager.createDataObj(str1);
@@ -152,7 +143,21 @@ public class ANcybRestController {
 		return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 	}
 	
-	
+	/**
+	 * 
+	 * Rotta che restituisce i valori medi delle previsioni meteorologiche sulla posizione corrente del dispositivo selezionato, 
+	 * dall'ora e il giorno corrente fino al numero dei giorni prossimi inserito come parametro.
+	 * 
+	 * @param days Parametro sul numero dei giorni per cui si vuole estendere la statistica (sono disponibili previsioni fino a 9 giorni successivi).
+	 * @return Oggetto JSON sulle statistiche di previsione meteorologica in base alle coordinate ricavate.
+	 * @throws InvalidParameter
+	 * @throws VersionMismatch
+	 * @throws FilterFailure
+	 * @throws StatsFailure
+	 * @throws ForecastBuildingFailure
+	 * @see it.univpm.ancyb_diagnosticTool.service#AncybDiagnosticToolServiceImpl#getForecastStats(String macAddr, int days)
+	 * 
+	 */
 	@RequestMapping(value = "/{macAddr}/forecast/stats", method = RequestMethod.POST)
 	public ResponseEntity<Object> getForecastStatistics(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") byte days) {
 		
