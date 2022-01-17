@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ class FilterForecastByTimeTest {
 	static Forecast f;
 
 	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
+	static void setUp() throws Exception {
 		
 		ArrayList<ForecastObject> list = new ArrayList<ForecastObject>();
 		
@@ -33,9 +32,7 @@ class FilterForecastByTimeTest {
 
 	}
 	
-	
 	void tearDown() {}
-	
 	
 	@Test
 	@DisplayName("Test sul filtro 'FilterForecastByTime' per il tempo reale")
@@ -94,6 +91,7 @@ class FilterForecastByTimeTest {
 			flag = true;
 		}
 		
+		assertEquals(s, null);
 		if(!flag) fail("Eccezione non lanciata!");
 		
 	}

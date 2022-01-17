@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.ForecastBuildingFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
@@ -71,7 +72,7 @@ public class ANcybRestController {
 			j = service.getForecastByRealTime(macAddr).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
-		} catch (InvalidParameter | FilterFailure | VersionMismatch e) {
+		} catch (InvalidParameter | FilterFailure | VersionMismatch | ForecastBuildingFailure e) {
 			System.err.println("Exception: " + e);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);	
 		}
@@ -109,7 +110,7 @@ public class ANcybRestController {
 			j = service.getForecastBySelectedTime(macAddr, date, hour).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
-		}catch (InvalidParameter | FilterFailure | VersionMismatch e) {
+		}catch (InvalidParameter | FilterFailure | VersionMismatch | ForecastBuildingFailure e) {
 			System.err.println("Exception: " + e);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
@@ -137,7 +138,7 @@ public class ANcybRestController {
 			j = service.getForecastStats(macAddr, days);	
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
 
-		} catch (InvalidParameter | FilterFailure | StatsFailure | VersionMismatch e) {
+		} catch (InvalidParameter | FilterFailure | StatsFailure | VersionMismatch | ForecastBuildingFailure e) {
 			System.err.println("Exception: " + e);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}

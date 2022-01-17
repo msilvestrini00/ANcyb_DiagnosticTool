@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.ForecastBuildingFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
@@ -23,7 +24,7 @@ public interface AncybDiagnosticToolService {
 	 * @throws FilterFailure
 	 * @throws VersionMismatch
 	 */
-	public ForecastObject getForecastByRealTime(String macAddr) throws FilterFailure, VersionMismatch;				
+	public ForecastObject getForecastByRealTime(String macAddr) throws FilterFailure, VersionMismatch, ForecastBuildingFailure;				
 	
 	/**
 	 * Metodo che riceve il mac address, crea l'oggetto forecast e restituisce 
@@ -33,7 +34,7 @@ public interface AncybDiagnosticToolService {
 	 * @throws FilterFailure
 	 * @throws VersionMismatch
 	 */
-	public ForecastObject getForecastBySelectedTime(String macAddr, String date, byte hour) throws FilterFailure, VersionMismatch;				
+	public ForecastObject getForecastBySelectedTime(String macAddr, String date, byte hour) throws FilterFailure, VersionMismatch, ForecastBuildingFailure;				
 
 	/**
 	 * Metodo che restituisce un JSONObject contenente le stats
@@ -42,7 +43,7 @@ public interface AncybDiagnosticToolService {
 	 * @throws FilterFailure
 	 * @throws VersionMismatch
 	 */
-	public JSONObject getForecastStats(String macAddr, byte days) throws StatsFailure, VersionMismatch, FilterFailure;				
+	public JSONObject getForecastStats(String macAddr, byte days) throws StatsFailure, VersionMismatch, FilterFailure, ForecastBuildingFailure;				
 
 	/**
 	 * 

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.ForecastBuildingFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.filters.FilterForecastByTime;
@@ -41,7 +42,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	//TODO i concetti di filtri e stats costruiti in questo modo vanno bene?
 
 	@Override
-	public ForecastObject getForecastByRealTime(String macAddr) throws FilterFailure, VersionMismatch {
+	public ForecastObject getForecastByRealTime(String macAddr) throws FilterFailure, VersionMismatch, ForecastBuildingFailure {
 		
 		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
 		Forecast f = dataManager.getForecast();
@@ -52,8 +53,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 
 	@Override
-	public ForecastObject getForecastBySelectedTime(String macAddr, String date, byte hour)
-			throws FilterFailure, VersionMismatch {
+	public ForecastObject getForecastBySelectedTime(String macAddr, String date, byte hour) throws FilterFailure, VersionMismatch, ForecastBuildingFailure {
 		
 		ForecastDataManager dataManager = new ForecastDataManager(macAddr);
 		Forecast f = dataManager.getForecast();
@@ -64,7 +64,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 	
 	@Override
-	public JSONObject getForecastStats(String macAddr, byte days) throws StatsFailure, VersionMismatch, FilterFailure {
+	public JSONObject getForecastStats(String macAddr, byte days) throws StatsFailure, VersionMismatch, FilterFailure, ForecastBuildingFailure {
 		
 		//inizializzo gli elementi che mi servono
 		JSONObject statsValueObject = new JSONObject();

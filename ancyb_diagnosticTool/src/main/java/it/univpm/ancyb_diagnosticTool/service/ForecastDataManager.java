@@ -9,9 +9,11 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
+import it.univpm.ancyb_diagnosticTool.Exception.ForecastBuildingFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.URLIsNull;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac;
@@ -47,14 +49,14 @@ public class ForecastDataManager {
 	}
 
 	
-	public Forecast getForecast() throws FilterFailure, VersionMismatch {
+	public Forecast getForecast() throws FilterFailure, VersionMismatch, ForecastBuildingFailure {
 		
 		//definisco l'oggetto per cui ricavo le coordinate per elaborare i dati
 		Forecast forecast;
 		
 		this.buildUrl();		
 		this.downloadJSONData();
-		forecast = this.buildForecast();
+		forecast = this.buildForecast(this.data);
 
 		return forecast;
 	}
@@ -108,7 +110,7 @@ public class ForecastDataManager {
 	}
 
 	
-	public Forecast buildForecast() {
+	public Forecast buildForecast(String input) throws ForecastBuildingFailure{
 				  
 		  //Defining the ArrayList used by the object 'Forecast'
 		  ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
@@ -117,12 +119,19 @@ public class ForecastDataManager {
 		  Forecast f = new Forecast(forecastList);
 		
 	      //Converting jsonData string into JSON object  
-	      JSONObject jsnobject1 = new JSONObject(this.data);	
+	      JSONObject jsnobject1 = new JSONObject(input);	
 		
 	      //Getting hours JSON array from the JSON object  
-	      JSONArray hoursArray = jsnobject1.getJSONArray("hours"); 
+	      JSONArray hoursArray = null;
+	      
+	      try { 
+	      hoursArray= jsnobject1.getJSONArray("hours");
+	      }
+	      catch(JSONException e) {
+	      throw new ForecastBuildingFailure("'hours' JSONArray not found. Please retry.");
+	      }
 		
-	      //Estracting waveHeight and currentDirection JSON arrays and time JSON object from hours JSON array 
+	      //Extracting waveHeight and currentDirection JSON arrays and time JSON object from hours JSON array 
 	      for(Object hoursElement : hoursArray) {
 	      	    
 	    	  //Converting the hours JSON array to string
@@ -139,16 +148,18 @@ public class ForecastDataManager {
 	          float waveHeight = extractSgSourceFromJSONArray(waveHeightArray);
 	          float currentDirection = extractSgSourceFromJSONArray(currentDirectionArray);
 	          
+	          if(waveHeight == 0.00 && currentDirection == 0.00) throw new ForecastBuildingFailure("The extraction of the 'sg' source's data has gone wrong. Please retry.");
+
 	          //Getting the time JSON object as string
 	          String time = jsnobject2.getString("time"); 
 
 	          //Defining a ForecastObject in which put all the data
-	          ForecastObject fobj = new ForecastObject(this.macAddr, this.lat, this.lng, 
-						   time, waveHeight, currentDirection);
+	          ForecastObject fobj = new ForecastObject(this.macAddr, this.lat, this.lng, time, waveHeight, currentDirection);
 	          
 	          //Adding the created object in the ArrayList of the 'Forecast' object
 	          f.addToForecast(fobj);
 	      }
+	      
 	      return f;
 	}
 	
