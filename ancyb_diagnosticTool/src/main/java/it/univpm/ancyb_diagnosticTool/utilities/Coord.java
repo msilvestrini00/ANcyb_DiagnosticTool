@@ -17,18 +17,18 @@ public class Coord {
 	static public void checkIsLat(String str) throws WrongCoordFormat {
 		int i;
 		if(str.length()!=10)
-			throw new WrongCoordFormat("Latitude -> number of characters not matching");
+			throw new WrongCoordFormat("WrongCoordFormat(Latitude) -> number of characters not matching");
 		if(str.charAt(4)!='.')
-			throw new WrongCoordFormat("Latitude -> there is no point between minutes and tenths of minutes");
+			throw new WrongCoordFormat("WrongCoordFormat(Latitude) -> there is no point between minutes and tenths of minutes");
 		if( str.charAt(9) !='N'&& str.charAt(9) !='S' )
-			throw new WrongCoordFormat("Latitude -> there isn't the reference N/S");
+			throw new WrongCoordFormat("WrongCoordFormat(Latitude) -> there isn't the reference N/S");
 		for(i = 0; i<4; i++) {
 			if(!Character.isDigit(str.charAt(i)))
-				throw new WrongCoordFormat("Latitude -> there are non-numeric characters that are not allowed");
+				throw new WrongCoordFormat("WrongCoordFormat(Latitude) -> there are non-numeric characters that are not allowed");
 		}
 		for(i = 5; i < 9; i++) {
 			if(!Character.isDigit(str.charAt(i))) 
-				throw new WrongCoordFormat("Latitude -> there are non-numeric characters that are not allowed");
+				throw new WrongCoordFormat("WrongCoordFormat(Latitude) -> there are non-numeric characters that are not allowed");
 		}
 	}
 	
@@ -41,18 +41,18 @@ public class Coord {
 	static public void checkIsLon(String str) throws WrongCoordFormat {
 		int i;
 		if(str.length()!=11)
-			throw new WrongCoordFormat("Longitude -> number of characters not matching");
+			throw new WrongCoordFormat("WrongCoordFormat(Longitude) -> number of characters not matching");
 		if(str.charAt(5)!='.')
-			throw new WrongCoordFormat("Longitude -> there is no point between minutes and tenths of minutes");
+			throw new WrongCoordFormat("WrongCoordFormat(Longitude) -> there is no point between minutes and tenths of minutes");
 		if( str.charAt(10) !='W'&& str.charAt(10) !='E' )
-			throw new WrongCoordFormat("Longitude -> there isn't the reference E/W");
+			throw new WrongCoordFormat("WrongCoordFormat(Longitude) -> there isn't the reference E/W");
 		for(i = 0; i<5; i++) {
 			if(!Character.isDigit(str.charAt(i)))
-				throw new WrongCoordFormat("Longitude -> there are non-numeric characters that are not allowed");
+				throw new WrongCoordFormat("WrongCoordFormat(Longitude) -> there are non-numeric characters that are not allowed");
 		}
 		for(i = 6; i < 10; i++) {
 			if(!Character.isDigit(str.charAt(i)))
-				throw new WrongCoordFormat("Longitudine -> there are non-numeric characters that are not allowed");
+				throw new WrongCoordFormat("WrongCoordFormat(Longitudine) -> there are non-numeric characters that are not allowed");
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class Coord {
 			return lat;
 		}
 		else {
-			throw new WrongCoordFormat("Latitude -> angle not included between -90° and 90°");
+			throw new WrongCoordFormat("WrongCoordFormat(Latitude) -> angle not included between -90° and 90°");
 		}
 	}
 
@@ -115,7 +115,7 @@ public class Coord {
 			return lon;
 		}
 		else {
-			throw new WrongCoordFormat("Longitude -> angle not included between -180° and 180°");
+			throw new WrongCoordFormat("WrongCoordFormat(Longitude) -> angle not included between -180° and 180°");
 		}
 	}	
 	

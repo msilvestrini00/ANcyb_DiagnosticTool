@@ -2,7 +2,9 @@ package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
 import org.json.JSONObject;
 
+import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
+import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
 
 public class ANcybFishData_VerGT extends ANcybFishData_VerG {
 
@@ -30,18 +32,15 @@ public class ANcybFishData_VerGT extends ANcybFishData_VerG {
 	 * 
 	 * @param strArr
 	 * @throws MqttStringMismatch
+	 * @throws WrongCoordFormat 
+	 * @throws InvalidParameter 
 	 */
-	protected ANcybFishData_VerGT(String[] strArr) throws MqttStringMismatch {
+	protected ANcybFishData_VerGT(String[] strArr) throws InvalidParameter, WrongCoordFormat {
 		
 		super(strArr);
 		
 		String temperatureStr = strArr[6];
-		try {
-			this.temp = Float.parseFloat(temperatureStr);
-		} catch (NullPointerException|NumberFormatException e){
-			System.err.println("Deep exception: " + e);
-			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> temperatura");
-		}
+		this.temp = Float.parseFloat(temperatureStr);
 		
 	}
 

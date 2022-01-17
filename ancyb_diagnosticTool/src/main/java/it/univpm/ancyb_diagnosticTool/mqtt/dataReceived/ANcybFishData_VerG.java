@@ -2,6 +2,7 @@ package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
 import org.json.JSONObject;
 
+import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
 import it.univpm.ancyb_diagnosticTool.utilities.Coord;
@@ -38,28 +39,21 @@ public class ANcybFishData_VerG extends ANcybFishData {
 	 * Costruttore utilizzato dalla classe "ANcybDataManager".
 	 * @param strArr
 	 * @throws MqttStringMismatch
+	 * @throws InvalidParameter 
+	 * @throws WrongCoordFormat 
 	 */
-	protected ANcybFishData_VerG(String[] strArr) throws MqttStringMismatch {
+	protected ANcybFishData_VerG(String[] strArr) throws InvalidParameter, WrongCoordFormat {
 		
 		super(strArr);
 		
 		String latitudeStr = strArr[3];
-		try {
-			Coord.checkIsLat(latitudeStr);
-			this.latitude = Coord.latDMMstringToDDfloat(latitudeStr);
-		} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
-			System.err.println("Deep exception: " + e);
-			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> latitudine");
-		}
+		
+		Coord.checkIsLat(latitudeStr);
+		this.latitude = Coord.latDMMstringToDDfloat(latitudeStr);
 	
 		String longitudeStr = strArr[4];
-		try {
-			Coord.checkIsLon(longitudeStr);
-			this.longitude = Coord.lonDMMstringToDDfloat(longitudeStr);
-		} catch (WrongCoordFormat|NullPointerException|NumberFormatException e){
-			System.err.println("Deep exception: " + e);
-			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> longitudine");
-		}
+		Coord.checkIsLon(longitudeStr);
+		this.longitude = Coord.lonDMMstringToDDfloat(longitudeStr);
 		
 		this.qualPos = strArr[5];
 		

@@ -1,6 +1,8 @@
 package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
+import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
+import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
 
 /**
  * 
@@ -26,18 +28,28 @@ public class ANcybDataManager {
 		case "Ver_G":
 			
 			if(strArr.length!=6)
-				throw new MqttStringMismatch("Stringa corrispondente alla Ver_G ma presenta un numero di elementi incompatibile");
+				throw new MqttStringMismatch("MqttStringMismatch(Ver_G) --> Stringa corrispondente alla Ver_G ma presenta un numero di elementi incompatibile");
 			
-			ancybData = new ANcybFishData_VerG(strArr);
+			try {
+				ancybData = new ANcybFishData_VerG(strArr);
+			} catch (InvalidParameter|WrongCoordFormat|NullPointerException|NumberFormatException e) {
+				System.err.println("DeepException: " + e);
+				throw new MqttStringMismatch("MqttStringMismatch(Ver_G constructor) --> " + e.getMessage());
+			}
 			DataSaved.getList().add(ancybData);
 			break;
 		
 		case "Ver_GT":
 			
 			if(strArr.length!=7)
-				throw new MqttStringMismatch("Stringa corrispondente alla Ver_GT ma presenta un numero di elementi incompatibile");
+				throw new MqttStringMismatch("MqttStringMismatch(Ver_GT) --> Stringa corrispondente alla Ver_GT ma presenta un numero di elementi incompatibile");
 			
-			ancybData = new ANcybFishData_VerGT(strArr);
+			try {
+				ancybData = new ANcybFishData_VerGT(strArr);
+			} catch (InvalidParameter|WrongCoordFormat|NullPointerException|NumberFormatException e) {
+				System.err.println("DeepException: " + e);
+				throw new MqttStringMismatch("MqttStringMismatch(Ver_GT constructor) --> " + e.getMessage());
+			}
 			DataSaved.getList().add(ancybData);
 			break;
 			
@@ -48,7 +60,7 @@ public class ANcybDataManager {
 			break;
 		*/
 		default:
-			throw new MqttStringMismatch("Dato ricevuto non corrisponde a nessuna versione ''ANcybFishData'' software rilasciata");
+			throw new MqttStringMismatch("MqttStringMismatch() --> Dato ricevuto non corrisponde a nessuna versione ''ANcybFishData'' software rilasciata");
 		}
 		
 		return ancybData;

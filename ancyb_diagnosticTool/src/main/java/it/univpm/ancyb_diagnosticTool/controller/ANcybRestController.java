@@ -37,8 +37,8 @@ import it.univpm.ancyb_diagnosticTool.utilities.CheckInputParameters;
  */
 @RestController
 public class ANcybRestController {
-	@Autowired
 	
+	@Autowired
 	/*
 	 * Definizione dell'interfaccia della classe dei servizi,
 	 * tramite la quale utilizzo i metodi principali dell'applicativo.
@@ -61,7 +61,6 @@ public class ANcybRestController {
 	ANcybFishData fishdata1;
 	ANcybFishData fishdata2;
 	ANcybFishData fishdata3;
-	//
 	
 	ArrayList<ANcybFishData> list;	
 	
@@ -75,8 +74,8 @@ public class ANcybRestController {
 	 * @throws VersionMismatch
 	 * @throws FilterFailure
 	 * @throws ForecastBuildingFailure
-	 * @see it.univpm.ancyb_diagnosticTool.service#AncybDiagnosticToolServiceImpl#getForecastByRealTime(String macAddr)
-	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl#getForecastByRealTime(String macAddr)
+	 * @author Manuele Silvestrini
 	 */
 	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
 	public ResponseEntity<Object> getRealTimeForecast(@PathVariable("macAddr") String macAddr) {
@@ -116,6 +115,7 @@ public class ANcybRestController {
 	 * @throws FilterFailure
 	 * @throws ForecastBuildingFailure
 	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl#getForecastBySelectedTime(String macAddr)
+	 * @author Manuele Silvestrini
 	 * 
 	 */
 	@RequestMapping(value = "/{macAddr}/forecast/filter", method = RequestMethod.POST)

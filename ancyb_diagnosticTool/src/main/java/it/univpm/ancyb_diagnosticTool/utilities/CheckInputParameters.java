@@ -13,18 +13,14 @@ public class CheckInputParameters {
 		
 		CheckMacAddr(macAddr); 
 
-		if(CheckDate(date)) throw new InvalidParameter("Invalid parameter: date");
+		if(CheckDate(date)) throw new InvalidParameter("InvalidParameter(FilterParameters) -> invalid date");
 		
-		if(hour < 0 || hour > 23) throw new InvalidParameter("Invalid parameter: hour");
+		if(hour < 0 || hour > 23) throw new InvalidParameter("Invalid parameter(hour)");
 	}
 	
 	public static void CheckForecastStatsParameters(String macAddr, byte days) throws InvalidParameter {
 		
-		try {
 		CheckMacAddr(macAddr); 
-		} catch(InvalidParameter e) {
-			throw new InvalidParameter("Invalid parameter: mac address");
-		}
 		
 		if(days < 1 || days > 9) throw new InvalidParameter("Invalid parameter: days");
 	}

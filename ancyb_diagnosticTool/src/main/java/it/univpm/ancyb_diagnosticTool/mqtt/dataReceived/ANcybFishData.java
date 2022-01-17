@@ -38,28 +38,19 @@ public class ANcybFishData implements DataReceived {
 	 * 
 	 * @param strArr
 	 * @throws MqttStringMismatch
+	 * @throws InvalidParameter 
 	 */
-	protected ANcybFishData(String[] strArr) throws MqttStringMismatch {
+	protected ANcybFishData(String[] strArr) throws InvalidParameter {
 		
 		this.date = Time.currentDate();
 		
 		this.macAddr = strArr[0];
-		try {
-			CheckInputParameters.CheckMacAddr(this.macAddr);
-		} catch (InvalidParameter e) {
-			System.err.println("Deep exception: " + e);
-			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> Mac Address");
-		}
+		CheckInputParameters.CheckMacAddr(this.macAddr);
 		
 		this.ver = strArr[1];
 		
 		this.time = strArr[2];
-		try {
-			CheckInputParameters.CheckTime(time);
-		} catch (InvalidParameter e) {
-			System.err.println("Deep exception: " + e);
-			throw new MqttStringMismatch("Stringa ricevuta non idonea. Causa -> Orario");
-		}
+		CheckInputParameters.CheckTime(time);
 		
 	}
 	
