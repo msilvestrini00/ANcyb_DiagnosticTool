@@ -23,10 +23,12 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.DataSaved;
 import it.univpm.ancyb_diagnosticTool.stats.AverageTemperatureFish;
 import it.univpm.ancyb_diagnosticTool.stats.GeodeticDistance;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
-/*
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestInstance(Lifecycle.PER_CLASS)
-*/
+
+/**
+ * 
+ * @author Giacomo Fiara
+ *
+ */
 class FishDataManagerTest {
 
 	static ANcybDataManager ancybDataManager;
