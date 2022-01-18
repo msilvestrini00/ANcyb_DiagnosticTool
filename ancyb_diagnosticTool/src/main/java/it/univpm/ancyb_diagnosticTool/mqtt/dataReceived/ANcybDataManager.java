@@ -5,34 +5,41 @@ import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
 
 /**
- *<b>Classe</b> che gestisce le stringhe ricevute dal grazie al subscribe() 
+ * <b>Classe</b> che gestisce le stringhe ricevute dal {@link it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient MQTTclient} grazie al metodo {@link it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient#subscribe(String) subscribe()}.
  * @author Giacomo Fiara
- *
  */
 public class ANcybDataManager {
 
 	/**
-	 * <b>Metodo</b> che restituiscie un oggetto ANcybFishData
-	 * @param str
-	 * @return
+	 * <b>Metodo</b> che restituisce un oggetto {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData}.<br>
+	 * La stringa viene splittata, viene così generato un array di stringhe. Un primo controllo viene effettuato sul secondo elemento, che dovrebbe contenere la specifica sulla versione.<br>
+	 * Successivamente, viene invocato il metodo costruttore adatto a ciascuna versione.
+	 * In caso di corretta creazione dell'istanza, questa viene subito salvata tramite {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.DataSaved#getList() DataSaved.getList().add()}
+	 * 
+	 * @param strReceived è la stringa che si vuole venga elaborata al fine di istanziare nuovi {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData}.
+	 * 
+	 * @return l'istanza {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData} appena creata.
+	 *
 	 * @throws MqttStringMismatch
+	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.DataSaved DataSaved
 	 */
-	public ANcybFishData createDataObj(String str) throws MqttStringMismatch {
+	public ANcybFishData createDataObj(String strReceived) throws MqttStringMismatch {
 		
 		ANcybFishData ancybData;
 		
 		//Separa la stringa dove trova spazi
-		String[] strArr = str.split("\\s+");
+		String[] strArr = strReceived.split("\\s+");
 		
 		switch (strArr[1]) {
 		case "Ver_G":
 			
 			if(strArr.length!=6)
-				throw new MqttStringMismatch("MqttStringMismatch(Ver_G case) --> Stringa corrispondente alla Ver_G ma presenta un numero di elementi incompatibile");
+				throw new MqttStringMismatch("MqttStringMismatch(Ver_G case) --> String contains 'Ver_G' but has an incompatible number of elements");
 			
 			try {
 				ancybData = new ANcybFishData_VerG(strArr);
-			} catch (InvalidParameter|WrongCoordFormat|NullPointerException|NumberFormatException e) {
+			} catch (InvalidParameter|WrongCoordFormat|NullPointerException|NumberFormatException|ArrayIndexOutOfBoundsException e) {
 				System.err.println("Deep Exception: " + e);
 				throw new MqttStringMismatch("MqttStringMismatch(Ver_G constructor) --> " + e.getMessage());
 			}
@@ -42,11 +49,11 @@ public class ANcybDataManager {
 		case "Ver_GT":
 			
 			if(strArr.length!=7)
-				throw new MqttStringMismatch("MqttStringMismatch(Ver_GT case) --> Stringa corrispondente alla Ver_GT ma presenta un numero di elementi incompatibile");
+				throw new MqttStringMismatch("MqttStringMismatch(Ver_GT case) --> String contains 'Ver_GT' but has an incompatible number of elements");
 			
 			try {
 				ancybData = new ANcybFishData_VerGT(strArr);
-			} catch (InvalidParameter|WrongCoordFormat|NullPointerException|NumberFormatException e) {
+			} catch (InvalidParameter|WrongCoordFormat|NullPointerException|NumberFormatException|ArrayIndexOutOfBoundsException e) {
 				System.err.println("Deep Exception: " + e);
 				throw new MqttStringMismatch("MqttStringMismatch(Ver_GT constructor) --> " + e.getMessage());
 			}
@@ -60,7 +67,7 @@ public class ANcybDataManager {
 			break;
 		*/
 		default:
-			throw new MqttStringMismatch("MqttStringMismatch() --> Dato ricevuto non corrisponde a nessuna versione ''ANcybFishData'' software rilasciata");
+			throw new MqttStringMismatch("MqttStringMismatch() --> Data received does not correspond to any 'ANcybFishData' software release.");
 		}
 		
 		return ancybData;

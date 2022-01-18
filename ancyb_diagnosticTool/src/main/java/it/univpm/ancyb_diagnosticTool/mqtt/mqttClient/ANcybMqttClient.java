@@ -52,7 +52,7 @@ public class ANcybMqttClient {
 	 * <b>Costruttore</b> del client. Viene stabilita la connessione con il broker ({@link it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient#getInstance() getInstance()}),
 	 * creato un nuovo datalogger ({@link it.univpm.ancyb_diagnosticTool.dataLogger.DataLogger#DataLogger() DataLogger()}),
 	 * un nuovo manager per la gestione dei dati ricevuti ({@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager#ANcybDataManager() ANcybDataManager()})
-	 * e inizializzato il subsribe al broker (specificando il topic) ({@link it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient#subscribe(String) subscribe(final String topic)}).
+	 * e inizializzato il subsribe al broker (specificando il topic) ({@link it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient#subscribe(String) subscribe(String)}).
 	 * 
 	 * @throws	MqttException
 	 * 
@@ -143,7 +143,7 @@ public class ANcybMqttClient {
 				try {
 					DataReceived data = ancybDataManager.createDataObj(str);
 					dataLog.write(data);
-				} catch(MqttStringMismatch | ArrayIndexOutOfBoundsException e) {
+				} catch(MqttStringMismatch e) {
 					System.err.println("Exception:" + e);
 					System.err.println("MQTT data received from broker isn't valid!");
 					System.err.println("The data was not stored.");

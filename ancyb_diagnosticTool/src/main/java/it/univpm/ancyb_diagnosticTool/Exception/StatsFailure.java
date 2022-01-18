@@ -7,6 +7,9 @@ package it.univpm.ancyb_diagnosticTool.Exception;
  */
 public class StatsFailure extends Exception {
 
+	/**
+	 * serialVersionUID di StatsFailure
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	public StatsFailure() {

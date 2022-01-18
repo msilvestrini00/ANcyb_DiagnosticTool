@@ -2,10 +2,22 @@ package it.univpm.ancyb_diagnosticTool.mqtt.dataReceived;
 
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 
+/**
+ * <b>Classe</b> di test per admin.<br>
+ * @author Giacomo Fiara
+ */
 public class Admin {
 
+	/**
+	 * istanza di tipo {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData}
+	 */
 	private static ANcybFishData fishdata;
 
+	/**
+	 * <b>Metodo</b> che genera 18 istanze note di cui si conoscono le reali posizioni, i risultati dei filstri e le statistiche ottenibili.<br>.<br>
+	 * Gli stessi dati sono riportati nel file di testo MqttStringsFromM5.
+	 * 
+	 */
 	public static void simulateDataReceived() throws MqttStringMismatch {
 		
 		String[] strX = new String[]{
