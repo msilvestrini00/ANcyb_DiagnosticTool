@@ -4,16 +4,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * 
+ * <b>Classe</b> a scopo generico utilizzata per ottenere data e orario correnti in formati differenti.
  * @author Giacomo Fiara
  * @author Manuele Silvestrini
  *
  */
 public class Time {
 	
-	/**
-	 * Questo metodo restituisce in stringa la data e il tempo corrente
-	 * @return
+	/*
+	 * @return Stringa sulla data e ora correnti nel formato "yyyy.MM.dd_HH.mm.ss"
 	 */
 	public static String currentDateTime() {
 		
@@ -21,12 +20,22 @@ public class Time {
 		LocalDateTime now = LocalDateTime.now(); 
 		String currDateTime = dtf.format(now);
 		return currDateTime;
-		
 	}
 	
-	/**
-	 * Questo metodo restituisce in stringa la data corrente
-	 * @return
+	/*
+	 * @return Stringa sulla data e ora correnti nel formato "yyyy-MM-dd.HH:00:00+00:00"
+	 */
+	public static String currentDateTime2() {	
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd.HH:00:00+00:00");
+		LocalDateTime now = LocalDateTime.now(); 
+		String currDateTime = dtf.format(now);
+		String newcurrDateTime = currDateTime.replace('.', 'T');
+		return newcurrDateTime;
+	}
+	
+	/*
+	 * @return Stringa sulla data corrente nel formato "yyyy.MM.dd"
 	 */
 	public static String currentDate() {
 		
@@ -34,12 +43,10 @@ public class Time {
 		LocalDateTime now = LocalDateTime.now(); 
 		String currDate = dtf.format(now);
 		return currDate;
-		
 	}
 	
-	/**
-	 * Questo metodo restituisce in stringa il giorno corrente
-	 * @return
+	/*
+	 * @return Stringa sul giorno corrente nel formato "dd"
 	 */
 	public static String currentDay() {
 		
@@ -47,12 +54,10 @@ public class Time {
 		LocalDateTime now = LocalDateTime.now(); 
 		String currDate = dtf.format(now);
 		return currDate;
-		
 	}
 	
-	/**
-	 * Questo metodo restituisce in stringa il tempo corrente
-	 * @return
+	/*
+	 * @return Stringa sull'orario nel formato "HH.mm.ss"
 	 */
 	public static String currentTime() {
 		
@@ -60,26 +65,17 @@ public class Time {
 		LocalDateTime now = LocalDateTime.now(); 
 		String currTime = dtf.format(now);
 		return currTime;
-		
 	}
 	
+	/*
+	 * @return Stringa sull'orario nel formato "HH:mm:ss"
+	 */
 	public static String currentTime2() {
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now(); 
 		String currTime = dtf.format(now);
 		return currTime;
-		
 	}
 	
-	//format used for filtering ForecastObjects by the time string
-	public static String currentDateTime2() {	//"2022-01-05T00:00:00+00:00"
-		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd.HH:00:00+00:00");
-		LocalDateTime now = LocalDateTime.now(); 
-		String currDateTime = dtf.format(now);
-		String newcurrDateTime = currDateTime.replace('.', 'T');
-		return newcurrDateTime;
-		
-	}
 }

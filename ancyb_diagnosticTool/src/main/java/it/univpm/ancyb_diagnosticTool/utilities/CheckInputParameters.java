@@ -9,7 +9,15 @@ import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
  */
 public class CheckInputParameters {
 
-	
+	/*
+	 * <b>Metodo</b> che controlla i parametri in ingresso durante la chiamata alla rotta '/forecast/filter'.
+	 * @param macAddr Indirizzo mac da controllare.
+	 * @param date Parametro della data da controllare.
+	 * @param hour Parametro delle ore da controllare.
+	 * @throws InvalidParameter
+	 * 
+	 *  @see it.univpm.ancyb_diagnosticTool.controller.ANcybRestController#getSelectedTimeForecast(String, String, byte)
+	 */
 	public static void CheckForecastFilterParameters(String macAddr, String date, byte hour) throws InvalidParameter {
 		
 		CheckMacAddr(macAddr); 
@@ -19,6 +27,14 @@ public class CheckInputParameters {
 		if(hour < 0 || hour > 23) throw new InvalidParameter("InvalidParameter(ForecastFilterParameters) -> invalid hour.");
 	}
 	
+	/*
+	 * <b>Metodo</b> che controlla i parametri in ingresso durante la chiamata alla rotta '/forecast/stats'.
+	 * @param macAddr Indirizzo mac da controllare.
+	 * @param days Parametro dei giorni da controllare.
+	 * @throws InvalidParameter
+	 * 
+	 *  @see it.univpm.ancyb_diagnosticTool.controller.ANcybRestController#getForecastStatistics(String, byte)
+	 */
 	public static void CheckForecastStatsParameters(String macAddr, byte days) throws InvalidParameter {
 		
 		CheckMacAddr(macAddr); 
@@ -26,6 +42,13 @@ public class CheckInputParameters {
 		if(days < 1 || days > 9) throw new InvalidParameter("InvalidParameter(ForecastStatsParameters) -> invalid days.");
 	}
 	
+	/*
+	 * <b>Metodo</b> che controlla l'indirizzo mac immesso.
+	 * @param macAddr Indirizzo mac da controllare.
+	 * @throws InvalidParameter
+	 * 
+	 *  @see it.univpm.ancyb_diagnosticTool.controller.ANcybRestController#getRealTimeForecast(String)
+	 */
 	public static void CheckMacAddr(String macAddr) throws InvalidParameter{
 		
 		boolean exc = false;
@@ -41,6 +64,11 @@ public class CheckInputParameters {
 		if(exc) throw new InvalidParameter("InvalidParameter(CheckMacAddr) -> invalid MAC address.");
 	}
 	
+	/*
+	 * <b>Metodo</b> che controlla la data immessa.
+	 * @param date Parametro della data da controllare.
+	 * @throws InvalidParameter
+	 */
 	private static boolean CheckDate(String date) {
 		
 		String[] tokens = date.split("-");
@@ -54,6 +82,11 @@ public class CheckInputParameters {
 		return false;
 	}
 
+	/*
+	 * <b>Metodo</b> che controlla l'orario immesso.
+	 * @param time Parametro dell'orario da controllare.
+	 * @throws InvalidParameter
+	 */
 	public static void CheckTime(String time) throws InvalidParameter {
 		
 		boolean exc = false;

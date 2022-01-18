@@ -1,6 +1,5 @@
 package it.univpm.ancyb_diagnosticTool.filters;
 
-import java.util.ArrayList;
 
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
