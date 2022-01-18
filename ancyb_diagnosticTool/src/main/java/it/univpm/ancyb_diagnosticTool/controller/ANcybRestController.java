@@ -50,18 +50,7 @@ public class ANcybRestController {
 	 * JSONObject generico utilizzato per veicolare l'output di ciascuna rotta 
 	 */
 	private JSONObject j;
-	
-	/*
-	//TODO TEST
-	String str1 = "a4:cf:12:76:76:95 Ver_G 16:05:45 4334.3060N 01335.1580E 1"; //VerG
-	String str2 = "b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.2360N 07401.2330W 1 10.5"; //VerGT
 
-	ANcybDataManager ancybDataManager = new ANcybDataManager();
-	ANcybFishData fishdata1;
-	ANcybFishData fishdata2;
-	*/
-	ArrayList<ANcybFishData> list;	
-	
 	/**
 	 * 
 	 * <b>Rotta</b> che restituisce la situazione meteorologica del dispositivo selezionato in tempo reale.
@@ -155,28 +144,20 @@ public class ANcybRestController {
 	/**
 	 * Rotta che restituisce l'ultima istanza (e posizione) inviata dal dispositivo
 	 * corrispondente al Mac address inserito come parametro.
-	 * @param macAddr
-	 * @return
+	 * @param macAddr indirizzo Mac del dispositivo interessato.
+	 * @return Oggetto JSON contenente l'ultimo dato {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData} inviato dal dispositivo specificato durante sessione corrente.
 	 * @see it.univpm.ancyb_diagnosticTool.service#AncybDiagnosticToolServiceImpl#getLatestPostionByMac(String macAddr)
 	 * 
 	 */
 	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.POST)
 	public ResponseEntity<Object> getLastData(@PathVariable("macAddr") String macAddr) {
-			/*	
-		//TODO TEST
-		try {
-			fishdata1 = ancybDataManager.createDataObj(str1);
-			fishdata2 = ancybDataManager.createDataObj(str2);
-		} catch (MqttStringMismatch e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
-		}
-		*/
+
 		j = null;
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
-			j = service.getLatestPositionByMac(macAddr).toJSON();
+			j = service.getLatestResultByMac(macAddr).toJSON();
 			return new ResponseEntity<>(j.toMap(), HttpStatus.OK);
-		} catch (VersionMismatch | FilterFailure | InvalidParameter e) {
+		} catch (FilterFailure | InvalidParameter e) {
 			System.err.println("Exception: " + e);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
@@ -186,20 +167,12 @@ public class ANcybRestController {
 	/**
 	 * Rotta che restituisce tutte le istanze (e le posizioni) dei dati inviati dal 
 	 * dispositivo corrispondente al Mac address inserito come parametro.
-	 * @param macAddr
-	 * @return
+	 * @param macAddr indirizzo Mac del dispositivo interessato.
+	 * @return Collezione di tutti i dati inviati dal dispositivo specificato durante sessione corrente.
 	 */
 	@RequestMapping(value = "/{macAddr}/device/filter/all", method = RequestMethod.POST)
 	public ResponseEntity<Object> getAllData(@PathVariable("macAddr") String macAddr) {
-		/*
-		//TODO TEST
-		try {
-			fishdata1 = ancybDataManager.createDataObj(str1);
-			fishdata2 = ancybDataManager.createDataObj(str2);
-		} catch (MqttStringMismatch e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
-		}
-		*/
+
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
 			ArrayList<ANcybFishData> historyFishData = service.getAllResultsByMac(macAddr);
@@ -215,26 +188,17 @@ public class ANcybRestController {
 	/**
 	 * Rotta che restituisce tutte le statistiche disponibili per il dispositivo 
 	 * corrispondente al Mac address inserito come parametro.
-	 * @param macAddr
-	 * @return
+	 * @param macAddr indirizzo Mac del dispositivo interessato.
+	 * @return Oggetto JSON sulle statistiche ricavabili dal dispositivo specificato.
 	 */
 	@RequestMapping(value = "/{macAddr}/device/stats", method = RequestMethod.POST)
 	public ResponseEntity<Object> getDeviceStats(@PathVariable("macAddr") String macAddr) {
-		/*		
-		//TODO TEST
-		try {
-			fishdata1 = ancybDataManager.createDataObj(str1);
-			fishdata2 = ancybDataManager.createDataObj(str2);
-		} catch (MqttStringMismatch e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
-		}
-			*/	
+		
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
-			ArrayList<ANcybFishData> historyFishData = service.getAllResultsByMac(macAddr);
-			j = service.getFishStats(historyFishData);
+			j = service.getFishStats(macAddr);
 			return new ResponseEntity<>( j.toMap() , HttpStatus.OK);
-		} catch (VersionMismatch | FilterFailure | JSONException | StatsFailure | InvalidParameter e) {
+		} catch (FilterFailure | JSONException | StatsFailure | InvalidParameter e) {
 			System.err.println("Exception: " + e);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}

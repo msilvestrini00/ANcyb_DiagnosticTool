@@ -1,6 +1,8 @@
 package it.univpm.ancyb_diagnosticTool.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
@@ -13,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
-import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG;
@@ -91,8 +92,8 @@ class FishDataManagerTest {
 	void testFilterObj() {
 	
 		try {
-			fishdataObt = service.getLatestPositionByMac("a4:cf:12:76:76:95");
-		} catch (VersionMismatch | FilterFailure e) {
+			fishdataObt = service.getLatestResultByMac("a4:cf:12:76:76:95");
+		} catch (FilterFailure e) {
 			e.printStackTrace();
 		}
 		
@@ -110,7 +111,7 @@ class FishDataManagerTest {
 	void testFilterObjException() {
 	
 		Exception exception = assertThrows(FilterFailure.class, () -> {
-			fishdataObt = service.getLatestPositionByMac("d4:cf:12:76:76:95");
+			fishdataObt = service.getLatestResultByMac("d4:cf:12:76:76:95");
 	    });
 		
 		String expectedMessage = "No fishData in 'DataSaved' with the following MAC address";
@@ -173,7 +174,7 @@ class FishDataManagerTest {
 			e.printStackTrace();
 		}
 		
-		assertEquals(0.006407, statsDoubleObt, 0.0001);
+		assertEquals(6.407, statsDoubleObt, 0.1);
 	}
 	
 	@Test

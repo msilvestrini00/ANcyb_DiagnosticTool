@@ -68,32 +68,49 @@ public interface AncybDiagnosticToolService {
 	public JSONObject getForecastStats(String macAddr, byte days) throws StatsFailure, VersionMismatch, FilterFailure, ForecastBuildingFailure;				
 
 	/**
+	 * <b>Intestazione</b> del metodo che restituisce l'ultima istanza di tipo {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData}
+	 *  relativa all'indirizzo Mac desiderato.
+	 *  
+	 * @param macAddr Mac address del dispositivo da cui si vuole ottenere l'ulima istanza tra i dati inviati.
+	 * @return ultima istanza ({@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData}) ricevuta corrispondente al Mac address.
+	 * @throws FilterFailure nel caso la ricerca via Mac address non restituisce alcuna istanza.
 	 * 
-	 * @param macAddr
-	 * @return
-	 * @throws FilterFailure
-	 * @throws VersionMismatch
+	 * @see it.univpm.ancyb_diagnosticTool.filters.FilterListByMac FilterObjByMac
+	 * 
+	 * @author Giacomo Fiara
+	 */
+	ANcybFishData getLatestResultByMac(String macAddr) throws FilterFailure;
+	
+	/**
+	 * <b>Intestazione</b> del metodo che restituisce l'ArrayList di istanze di tipo {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData}
+	 *  relative all'indirizzo Mac desiderato.
+	 *  
+	 * @param macAddr Mac address del dispositivo da cui si vogliono ottenere tutte le istanze dei dati inviati.
+	 * @return ArrayList di tipo {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData} corrispondente al Mac address.
+	 * @throws FilterFailure nel caso non venga trovato alcun elemento desiderato.
+	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.filters.FilterListByMac FilterListByMac
+	 * 
+	 * @author Giacomo Fiara
 	 */
 	ArrayList<ANcybFishData> getAllResultsByMac(String macAddr) throws FilterFailure;
 
 	/**
+	 * <b>Intestazione</b> del metodo che restituisce le statistiche computabili all'ArrayList di ANcybFishData relativo al Mac address specificato.
+	 *  
+	 * @param macAddr indirizzo Mac del dispositivo interessato.
+	 * @return JSONObject contenente tutta la struttura del risultato delle varie statistiche.
+	 * @throws JSONException
+	 * @throws StatsFailure nel caso si verifichimo eccezioni nell'elaborazione delle statistiche e gestione delle versioni.
+	 * @throws FilterFailure nel caso non venga trovato alcun elemento desiderato.
 	 * 
-	 * @param macAddr
-	 * @return
-	 * @throws VersionMismatch
-	 * @throws FilterFailure
-	 */
-	ANcybFishData getLatestPositionByMac(String macAddr) throws VersionMismatch, FilterFailure;
-
-	/**
+	 * @see it.univpm.ancyb_diagnosticTool.filters.FilterListByMac FilterListByMac
+	 * @see it.univpm.ancyb_diagnosticTool.stats.AverageTemperatureFish AverageTemperatureFish
+	 * @see it.univpm.ancyb_diagnosticTool.stats.GodeticDistanec GodeticDistanec
 	 * 
-	 * @param historyFishData
-	 * @return
-	 * @throws StatsFailure 
-	 * @throws JSONException 
-	 * @throws VersionMismatch 
+	 * @author Giacomo Fiara
 	 */
-	public abstract JSONObject getFishStats(ArrayList<ANcybFishData> historyFishData) throws JSONException, StatsFailure, VersionMismatch;
+	public abstract JSONObject getFishStats(String macAddr) throws JSONException, StatsFailure, FilterFailure;
 
 }
 

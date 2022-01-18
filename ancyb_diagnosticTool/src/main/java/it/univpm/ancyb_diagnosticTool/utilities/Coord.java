@@ -89,8 +89,8 @@ public class Coord {
 
 	
 	/**
-	 * questa funzione converte la longitudine in DMM (in gradi e minuti decimali)
-	 * in DD (gradi decimali)
+	 * <b>Metodo</b> che converte la longitudine da fomrato DMM (in gradi e minuti decimali)
+	 * a formato DD (gradi decimali).
 	 * @param str
 	 * @return
 	 * @throws WrongCoordFormat
@@ -120,11 +120,12 @@ public class Coord {
 	}	
 	
 	/**
-	 * Calcolo della distanza geodetica (in km) tra due punti (A e B) della superficie terrestre.
-	 * Lavora esclusivamente con coordinate in gradi decimali
+	 * <b>Metodo</b> che calcola la distanza geodetica (in m) tra due punti (A e B) della superficie terrestre.
+	 * Lavora esclusivamente con coordinate in gradi decimali.
+	 * 
 	 * @param f1 coppia di coordinate del punto A (latitudine e longitudine)
 	 * @param f2 coppia di coordinate del punto B (latitudine e longitudine)
-	 * @return
+	 * @return la distanza in metri tra i due punti
 	 */
 	static public double disgeod(float[] f1, float[] f2) {
 		

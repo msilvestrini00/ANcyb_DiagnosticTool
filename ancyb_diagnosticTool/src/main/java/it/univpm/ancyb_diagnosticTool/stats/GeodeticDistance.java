@@ -39,6 +39,7 @@ public class GeodeticDistance implements StatsInterface {
 			System.err.println("Deep Exception: " + e);
 			throw new StatsFailure("StatsFailure(GeodeticDistance) --> the data for stats do not contain position Infos.");
 		}
+		//TODO da fare la cosa punto a punto dopo aver testato
 		avgMoving = Coord.disgeod( ((ANcybFishData_VerG) dataForStats.get(0)).getCoord(), ((ANcybFishData_VerG) dataForStats.get(dataForStats.size()-1)).getCoord());
 		this.stats = avgMoving + " m";
 	}

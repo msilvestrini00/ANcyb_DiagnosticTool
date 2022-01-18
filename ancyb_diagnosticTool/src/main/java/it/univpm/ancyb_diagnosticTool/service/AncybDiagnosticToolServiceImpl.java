@@ -18,10 +18,9 @@ import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.stats.AverageCurrentDirection;
+import it.univpm.ancyb_diagnosticTool.stats.AverageTemperatureFish;
 import it.univpm.ancyb_diagnosticTool.stats.AverageWaveHeight;
 import it.univpm.ancyb_diagnosticTool.stats.GeodeticDistance;
-import it.univpm.ancyb_diagnosticTool.stats.AverageTemperatureFish;
-import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.IsVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
  
@@ -138,21 +137,30 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 
 	/**
-	 * <b>Metodo</b> che
+	 * <b>Metodo</b> che:</br>
+	 * - riceve l'indirizzo Mac associato al dispositivo di cui si vuol ottenere l'ultima istanza tra tutti i dati inviati durante la sessione;</br>
+	 * - viene filtrato il Mac address e il risultato restituito rappresenta l'istanza desiderata.</br>
 	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac FilterObjByMac
 	 * 
+	 * @author Giacomo Fiara
 	 */
 	@Override
-	public ANcybFishData getLatestPositionByMac(String macAddr) throws VersionMismatch, FilterFailure {
+	public ANcybFishData getLatestResultByMac(String macAddr) throws FilterFailure {
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
 		filterFishData.computeFilter();
 		ANcybFishData fishData = filterFishData.getFilteredData();
-		CheckVersion.verG(fishData);
 		return fishData;
 	}
 
 	/**
+	 * <b>Metodo</b> che:</br>
+	 * - riceve l'indirizzo Mac associato al dispositivo di cui si vuol ottenere tutte le istanze dei dati inviati durante la sessione;</br>
+	 * - viene filtrato il Mac address e il risultato restituito è l'ArrayList delle istanze desiderate.</br>
 	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.filters.FilterListByMac FilterListByMac
+	 * 
+	 * @author Giacomo Fiara
 	 */
 	@Override
 	public ArrayList<ANcybFishData> getAllResultsByMac(String macAddr) throws FilterFailure {
@@ -163,10 +171,26 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 
 	/**
+	 * <b>Metodo</b> che:</br>
+	 * - riceve l'indirizzo Mac associato al dispositivo di cui si vuol ottenere le statiche basate sui relativi dati inviati durante la sessione;</br>
+	 * - viene evocato il metodo {@link it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl#getAllResultsByMac(String) getAllResultsByMac(String macAddr)}
+	 * che restituisce l'Arraylist di {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData} relativo al Mac address desiderato;</br>
+	 * - vengono eseguite le statistiche in base alla versione del device;
+	 * - viene restituito il metadato contenente le varie statistiche.</br>
 	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl#getAllResultsByMac(String) getAllResultsByMac(String)
+	 * @see it.univpm.ancyb_diagnosticTool.stats.GeodeticsDistance GeodeticsDistance
+	 * @see it.univpm.ancyb_diagnosticTool.stats.AverageTemperatureFish AverageTemperatureFish
+	 *
+	 * @author Giacomo Fiara
 	 */
 	@Override
-	public JSONObject getFishStats(ArrayList<ANcybFishData> historyFishData) throws JSONException, StatsFailure, VersionMismatch {
+	public JSONObject getFishStats(String macAddr) throws JSONException, StatsFailure, FilterFailure {
+		
+		ArrayList<ANcybFishData> historyFishData  = new ArrayList<>();
+		historyFishData = getAllResultsByMac(macAddr);
+		JSONObject metadata = new JSONObject();
+		metadata.put("Mac address", macAddr);
 		statsResults = new JSONObject();
 		if(IsVersion.verG(historyFishData)) {
 			GeodeticDistance geodeticDistance = new GeodeticDistance(historyFishData);
@@ -179,7 +203,8 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 			statsResults.put("Average temperature", averageTemperatureFish.getStats());
 		}
 		if(statsResults == null) throw new StatsFailure("StatsFaiure(getFishStats) --> No stats to compute for this device.");
-		return statsResults;
+		metadata.put("Stats results", statsResults);
+		return metadata;
 	}
 
 }
