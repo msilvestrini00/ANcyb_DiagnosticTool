@@ -60,6 +60,7 @@ public class GeodeticDistance implements StatsInterface {
 	@Override
 	public String getStats() throws StatsFailure {
 		if ( stats == null ) throw new StatsFailure("StatsFailure(GeodeticDistance) --> please, first invoke the method 'computeStats()'.");
+		stats = String.format("%.2f", distanceTraveled);
 		return stats;
 	}
 
@@ -83,7 +84,7 @@ public class GeodeticDistance implements StatsInterface {
 			distanceTraveled = distanceTraveled + Coord.disgeod( ((ANcybFishData_VerG) dataForStats.get(i)).getCoord(), ((ANcybFishData_VerG) dataForStats.get(i+1)).getCoord());
 		}
 		*/
-		this.stats = distanceTraveled + " m";
+		stats = distanceTraveled + " m";
 	}
 
 	/**

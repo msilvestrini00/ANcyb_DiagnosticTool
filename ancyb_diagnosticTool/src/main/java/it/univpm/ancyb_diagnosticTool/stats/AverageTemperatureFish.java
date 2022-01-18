@@ -59,6 +59,7 @@ public class AverageTemperatureFish implements StatsInterface {
 	@Override
 	public String getStats() throws StatsFailure {
 		if ( stats == null) throw new StatsFailure("StatsFailure(AverageTemperatureFish) --> please, first invoke the method 'computeStats()'.");
+		stats = String.format("%.2f", avgTemp);
 		return stats;
 	}
 
