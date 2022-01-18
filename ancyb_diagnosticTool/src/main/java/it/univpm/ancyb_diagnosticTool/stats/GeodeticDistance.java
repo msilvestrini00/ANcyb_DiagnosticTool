@@ -83,7 +83,7 @@ public class GeodeticDistance implements StatsInterface {
 			distanceTraveled = distanceTraveled + Coord.disgeod( ((ANcybFishData_VerG) dataForStats.get(i)).getCoord(), ((ANcybFishData_VerG) dataForStats.get(i+1)).getCoord());
 		}
 		*/
-		this.stats = distanceTraveled + " m";
+		this.stats = String.format("%.2f", distanceTraveled) + " m";
 	}
 
 	/**

@@ -81,7 +81,7 @@ public class AverageTemperatureFish implements StatsInterface {
 			sum += ((ANcybFishData_VerGT) fishData).getTemp();
 		}
 		avgTemp = sum/dataForStats.size();
-		stats = avgTemp + " °C";
+		stats = String.format("%.2f", avgTemp) + " °C";
 	}
 
 	/**
