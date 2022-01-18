@@ -2,6 +2,8 @@ package it.univpm.ancyb_diagnosticTool.utilities;
 
 import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
 /**
+ * <b>Classe</b> che gestisce le coordinate ricevute dai dispositivi,
+ * i formati di queste, le conversioni ed eventuali elaborazioni.
  * 
  * @author Giacomo Fiara
  *
@@ -9,9 +11,9 @@ import it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat;
 public class Coord {
 	
 	/**
-	 * questa fuzione controlla che la coordinata sia una latitudine DMM:
-	 * ovvero gradi e minuti e decimi di minuti
-	 * @param str
+	 * <b>Metodo</b> che controlla che la coordinata sia una latitudine DDM:
+	 * ovvero gradi e minuti e decimi di minuti. Ovvero il formato con cui vengono inviate dai dispositivi.
+	 * @param str la coordinata che deve essere controllata.
 	 * @throws WrongCoordFormat
 	 */
 	static public void checkIsLat(String str) throws WrongCoordFormat {
@@ -33,9 +35,9 @@ public class Coord {
 	}
 	
 	/**
-	 * questa fuzione controlla che la coordinata sia una longitudine DMM:
-	 * ovvero gradi e minuti decimali
-	 * @param str
+	 * <b>Metodo</b> che controlla che la coordinata sia una longitudine DDM:
+	 * ovvero gradi e minuti e decimi di minuti. Ovvero il formato con cui vengono inviate dai dispositivi.
+	 * @param str la coordinata che deve essere controllata.
 	 * @throws WrongCoordFormat
 	 */
 	static public void checkIsLon(String str) throws WrongCoordFormat {
@@ -57,13 +59,13 @@ public class Coord {
 	}
 	
 	/**
-	 * questa funzione converte la latitudine in DMM (in gradi e minuti decimali)
-	 * in DD (gradi decimali)
-	 * @param str
-	 * @return
+	 * <b>Metodo</b> che converte la latitudine da formato DDM (in gradi e minuti decimali)
+	 * a formato DD (gradi decimali).
+	 * @param str la coordinata che deve essere convertita.
+	 * @return coordinata in DD di tipo 'float'.
 	 * @throws WrongCoordFormat
 	 */
-	static public float latDMMstringToDDfloat(String str) throws WrongCoordFormat {
+	static public float latDDMstringToDDfloat(String str) throws WrongCoordFormat {
 		String gg = str.substring(0, 2);
 		String mm = str.substring(2, 4);
 		String dddd = str.substring(5, 9);
@@ -89,13 +91,13 @@ public class Coord {
 
 	
 	/**
-	 * <b>Metodo</b> che converte la longitudine da fomrato DMM (in gradi e minuti decimali)
+	 * <b>Metodo</b> che converte la longitudine da formato DDM (in gradi e minuti decimali)
 	 * a formato DD (gradi decimali).
-	 * @param str
-	 * @return
+	 * @param str la coordinata che deve essere convertita.
+	 * @return coordinata in DD di tipo 'float'.
 	 * @throws WrongCoordFormat
 	 */
-	static public float lonDMMstringToDDfloat(String str) throws WrongCoordFormat {
+	static public float lonDDMstringToDDfloat(String str) throws WrongCoordFormat {
 		String ggg = str.substring(0, 3);
 		String mm = str.substring(3, 5);
 		String dddd = str.substring(6, 10);
@@ -121,11 +123,13 @@ public class Coord {
 	
 	/**
 	 * <b>Metodo</b> che calcola la distanza geodetica (in m) tra due punti (A e B) della superficie terrestre.
-	 * Lavora esclusivamente con coordinate in gradi decimali.
+	 * Lavora esclusivamente con coordinate in formato DD (gradi decimali).
 	 * 
 	 * @param f1 coppia di coordinate del punto A (latitudine e longitudine)
 	 * @param f2 coppia di coordinate del punto B (latitudine e longitudine)
 	 * @return la distanza in metri tra i due punti
+	 * 
+	 * @see it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG#getCoord() ANcybFishData_VerG.getCoord()
 	 */
 	static public double disgeod(float[] f1, float[] f2) {
 		
