@@ -35,7 +35,7 @@ public interface AncybDiagnosticToolService {
 	public ForecastObject getForecastByRealTime(String macAddr) throws FilterFailure, VersionMismatch, ForecastBuildingFailure;				
 	
 	/**
-	 * <b>Intestazione</b> del metodo che restituisce il ForecastObject filtrato secondo la data e ora inseriti.
+	 * <b>Intestazione</b> del metodo che restituisce il ForecastObject filtrato secondo la data e l'ora inserite.
 	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate per l'API esterna.
 	 * @param date La data di cui si vuole ottenere la previsione.
 	 * @param hour L'ora di cui si vuole ottenere la previsione.
@@ -51,9 +51,6 @@ public interface AncybDiagnosticToolService {
 	/**
 	 * <b>Intestazione</b> del metodo che restituisce le statistiche sulle previsioni meteorologiche,
 	 * in base al numero di giorni per cui si vuole che esse siano estese.
-	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate.
-	 * @param days Numero di giorni per cui si vuole estendere le statistiche (a partire dal giorno corrente).
-	 * @return L'oggetto JSON che contiene le statistiche.
 	 * 
 	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate per l'API esterna.
 	 * @param days Numero di giorni per cui si vuole estendere le statistiche (a partire dal giorno corrente).

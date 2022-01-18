@@ -26,7 +26,8 @@ import it.univpm.ancyb_diagnosticTool.utilities.Time;
  
 /**
  * <b>Classe</b> di servizio per gestire le operazioni sulle previsioni orarie e i dati ricevuti dal dispositivo.
- * Viene implementata l'apposita interfaccia {@link it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService}.
+ * Viene implementata l'apposita interfaccia 
+ * {@link it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService AncybDiagnosticToolService}.
  * 
  * @implements AncybDiagnosticToolService
  * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService AncybDiagnosticToolService
@@ -90,10 +91,10 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	
 	/**
 	 * <b>Metodo</b> che:</br>
-	 * - riceve l'indirizzo mac e i giorni per cui si estendono le statistiche</br>
+	 * - riceve l'indirizzo mac</br>
 	 * - chiama L'API esterna</br>
 	 * - crea l'oggetto {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast} coi dati ricevuti</br>
-	 * - esegue le statistiche sulle previsioni</br>
+	 * - esegue le statistiche sulle previsioni in base al numero di giorni inserito</br>
 	 * - crea un oggetto JSON completo di tutte le informazioni</br>
 	 * - restituisce l'oggetto JSON.
 	 * 

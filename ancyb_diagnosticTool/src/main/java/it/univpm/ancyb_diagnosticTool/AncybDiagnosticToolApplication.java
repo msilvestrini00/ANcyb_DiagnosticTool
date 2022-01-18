@@ -9,7 +9,7 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.Admin;
 import it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient;
 
 
-/*
+/**
  * <b>Classe</b> di bootstrap
  * 
  * @author Giacomo Fiara

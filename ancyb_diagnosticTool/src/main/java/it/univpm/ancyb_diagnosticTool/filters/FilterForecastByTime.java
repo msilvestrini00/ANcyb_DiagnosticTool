@@ -5,8 +5,13 @@ import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 
-/*
- * <b>Filtro</b> che implementa l'interfaccia {@link it.univpm.ancyb_diagnosticTool.filters.FilterInterface}, usato per trovare un oggetto ForecastObject nel 'contenitore' Forecast
+/**
+ * <b>Filtro</b> che implementa l'interfaccia 
+ * {@link it.univpm.ancyb_diagnosticTool.filters.FilterInterface FilterInterface}, 
+ * usato per trovare un oggetto 
+ * {@link it.univpm.ancyb_diagnosticTool.model.ForecastObject#ForecastObject(String, float, float, String, float, float) ForecastObject} 
+ * nel 'contenitore' 
+ * {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast}
  * il quale dato di tempo corrisponde con quello inserito.
  * 
  * @implements FilterInterface
@@ -20,7 +25,7 @@ public class FilterForecastByTime implements FilterInterface {
 	private String time;
 	private ForecastObject filteredForecast ;
 
-	/*
+	/**
 	 * <b>Costruttore</b> del filtro.
 	 * @param forecastToFilter Oggetto
 	 * {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast}
@@ -35,17 +40,16 @@ public class FilterForecastByTime implements FilterInterface {
 		this.filteredForecast = null;
  }
 
-	/*
-	 * @see it.univpm.ancyb_diagnosticTool.filters.FilterInterface#getDataToFilter()
+	/**
+	 * <b>Metodo</b> che restituisce il dato da filtrare.
 	 */
 	@Override
 	public Forecast getDataToFilter() {
 		return this.forecastToFilter;
 	}
-	
-	/*
-	 * @throws FilterFailure
-	 * @see it.univpm.ancyb_diagnosticTool.filters.FilterInterface#getFilteredData()
+
+	/**
+	 * <b>Metodo</b>  che restituisce il dato filtrato.
 	 */
 	@Override
 	public ForecastObject getFilteredData() throws FilterFailure{	
@@ -56,7 +60,7 @@ public class FilterForecastByTime implements FilterInterface {
 		return filteredForecast;	
 	}
  
-	/*
+	/**
 	 * <b>Metodo</b> che scorre tutti gli elementi dell'ArrayList contenuti nell'oggetto 
 	 * {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast}
 	 * e controlla se il loro tempo coincide con quello inserito nella definizione del costruttore.
@@ -65,7 +69,6 @@ public class FilterForecastByTime implements FilterInterface {
 	 * trovato al costruttore.
 	 * In caso negativo lancia l'eccezione apposita.
 	 * 
-	 * @throws FilterFailure
 	 * @see it.univpm.ancyb_diagnosticTool.filters.FilterInterface#computeFilter()
 	 */
 	@Override

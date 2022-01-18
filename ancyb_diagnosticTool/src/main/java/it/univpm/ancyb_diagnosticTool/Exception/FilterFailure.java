@@ -13,7 +13,7 @@ public class FilterFailure extends Exception {
 		super();
 	}
 	
-	/*
+	/**
 	 * @param msg Messaggio di errore per specificare il problema verificatosi.
 	 */
 	public FilterFailure(String msg) {

@@ -13,7 +13,7 @@ public class InvalidParameter extends Exception {
 		super();
 	}
 	
-	/*
+	/**
 	 * @param msg Messaggio di errore per specificare il problema verificatosi.
 	 */
 	public InvalidParameter(String msg) {

@@ -13,7 +13,7 @@ public class URLIsNull extends Exception {
 		super();
 	}
 
-	/*
+	/**
 	 * @param msg Messaggio di errore per specificare il problema verificatosi.
 	 */
 	public URLIsNull(String msg) {

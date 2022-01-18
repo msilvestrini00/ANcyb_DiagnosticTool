@@ -13,7 +13,7 @@ public class StatsFailure extends Exception {
 		super();
 	}
 	
-	/*
+	/**
 	 * @param msg Messaggio di errore per specificare il problema verificatosi.
 	 */
 	public StatsFailure(String msg) {

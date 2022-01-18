@@ -1,7 +1,8 @@
 package it.univpm.ancyb_diagnosticTool.Exception;
 
 /**
- * <b>Eccezione</b> che segnala un errore durante la costruzione dell'oggetto 'Forecast'.
+ * <b>Eccezione</b> che segnala un errore durante la costruzione dell'oggetto 
+ * {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast}.
  * 
  * @author Manuele Silvestrini
  */
@@ -13,7 +14,7 @@ public class ForecastBuildingFailure extends Exception {
 		super();
 	}
 	
-	/*
+	/**
 	 * @param msg Messaggio di errore per specificare il problema verificatosi.
 	 */
 	public ForecastBuildingFailure(String msg) {
