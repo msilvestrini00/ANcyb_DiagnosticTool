@@ -106,7 +106,7 @@ class ForecastDataManagerTest {
 			
 	    });
 
-	    String expectedMessage = "The extraction of the 'sg' source's data has gone wrong. Please retry.";
+	    String expectedMessage = "the extraction of the 'sg' source's data has gone wrong. Please retry.";
 	    String actualMessage = exception.getMessage();
 
 	    assertTrue(actualMessage.contains(expectedMessage));
