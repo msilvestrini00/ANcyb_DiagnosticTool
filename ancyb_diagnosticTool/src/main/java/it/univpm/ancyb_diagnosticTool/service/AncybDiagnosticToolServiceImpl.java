@@ -27,10 +27,8 @@ import it.univpm.ancyb_diagnosticTool.utilities.Time;
 /**
  * <b>Classe</b> di servizio per gestire le operazioni sulle previsioni orarie e i dati ricevuti dal dispositivo.
  * Viene implementata l'apposita interfaccia 
- * {@link it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService AncybDiagnosticToolService}.
  * 
  * @implements AncybDiagnosticToolService
- * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService AncybDiagnosticToolService
  * 
  * @author Giacomo Fiara
  * @author Manuele Silvestrini
@@ -46,6 +44,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	/**
 	 * <b>Metodo</b> che:</br>
 	 * - riceve l'indirizzo mac</br>
+	 * - riceve l'indirizzo MAC</br>
 	 * - chiama L'API esterna</br>
 	 * - crea l'oggetto {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast} coi dati ricevuti</br>
 	 * - filtra i ForecastObject in base alla data e l'ora correnti</br>
@@ -69,6 +68,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	/**
 	 * <b>Metodo</b> che:</br>
 	 * - riceve l'indirizzo mac</br>
+	 * - riceve l'indirizzo MAC</br>
 	 * - chiama L'API esterna</br>
 	 * - crea l'oggetto {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast} coi dati ricevuti</br>
 	 * - filtra i ForecastObject in base alla data e l'ora inserite</br>
@@ -92,6 +92,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	/**
 	 * <b>Metodo</b> che:</br>
 	 * - riceve l'indirizzo mac</br>
+	 * - riceve l'indirizzo MAC</br>
 	 * - chiama L'API esterna</br>
 	 * - crea l'oggetto {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast} coi dati ricevuti</br>
 	 * - esegue le statistiche sulle previsioni in base al numero di giorni inserito</br>
@@ -141,8 +142,11 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	 * <b>Metodo</b> che:</br>
 	 * - riceve l'indirizzo Mac associato al dispositivo di cui si vuol ottenere l'ultima istanza tra tutti i dati inviati durante la sessione;</br>
 	 * - viene filtrato il Mac address e il risultato restituito rappresenta l'istanza desiderata.</br>
+	 * - riceve l'indirizzo MAC associato al dispositivo di cui si vuol ottenere l'ultima istanza tra tutti i dati inviati durante la sessione;</br>
+	 * - viene filtrato il MAC address e il risultato restituito rappresenta l'istanza desiderata.</br>
 	 * 
 	 * @see it.univpm.ancyb_diagnosticTool.filters.FilterObjByMac FilterObjByMac
+	 * @see it.univpm.ancyb_diagnosticTool.filters.test.FilterObjByMac FilterObjByMac
 	 * 
 	 * @author Giacomo Fiara
 	 */
@@ -158,8 +162,9 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	 * <b>Metodo</b> che:</br>
 	 * - riceve l'indirizzo Mac associato al dispositivo di cui si vuol ottenere tutte le istanze dei dati inviati durante la sessione;</br>
 	 * - viene filtrato il Mac address e il risultato restituito è l'ArrayList delle istanze desiderate.</br>
+	 * - riceve l'indirizzo MAC associato al dispositivo di cui si vuol ottenere tutte le istanze dei dati inviati durante la sessione;</br>
+	 * - viene filtrato il MAC address e il risultato restituito è l'ArrayList delle istanze desiderate.</br>
 	 * 
-	 * @see it.univpm.ancyb_diagnosticTool.filters.FilterListByMac FilterListByMac
 	 * 
 	 * @author Giacomo Fiara
 	 */
@@ -176,10 +181,12 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	 * - riceve l'indirizzo Mac associato al dispositivo di cui si vuol ottenere le statiche basate sui relativi dati inviati durante la sessione;</br>
 	 * - viene evocato il metodo {@link it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl#getAllResultsByMac(String) getAllResultsByMac(String macAddr)}
 	 * che restituisce l'Arraylist di {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData} relativo al Mac address desiderato;</br>
+	 * - riceve l'indirizzo MAC associato al dispositivo di cui si vuol ottenere le statiche basate sui relativi dati inviati durante la sessione;</br>
+	 * - viene evocato il metodo {@link it.univpm.ancyb_diagnosticTool.service.test.AncybDiagnosticToolServiceImpl#getAllResultsByMac(String) getAllResultsByMac(String macAddr)}
+	 * che restituisce l'Arraylist di {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData} relativo al MAC address desiderato;</br>
 	 * - vengono eseguite le statistiche in base alla versione del device;
 	 * - viene restituito il metadato contenente le varie statistiche.</br>
 	 * 
-	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl#getAllResultsByMac(String) getAllResultsByMac(String)
 	 * @see it.univpm.ancyb_diagnosticTool.stats.GeodeticsDistance GeodeticsDistance
 	 * @see it.univpm.ancyb_diagnosticTool.stats.AverageTemperatureFish AverageTemperatureFish
 	 *
