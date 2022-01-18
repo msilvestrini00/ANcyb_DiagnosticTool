@@ -151,7 +151,7 @@ public class Coord {
 		
 		// Calcola la distanza sulla superficie terrestre R = ~6371 km
 		d = p * R;
-		return(d);
+		return(d*1000);
 	}
 	
 }

@@ -40,7 +40,7 @@ public class GeodeticDistance implements StatsInterface {
 			throw new StatsFailure("StatsFailure(GeodeticDistance) --> the data for stats do not contain position Infos.");
 		}
 		avgMoving = Coord.disgeod( ((ANcybFishData_VerG) dataForStats.get(0)).getCoord(), ((ANcybFishData_VerG) dataForStats.get(dataForStats.size()-1)).getCoord());
-		this.stats = avgMoving + " km";
+		this.stats = avgMoving + " m";
 	}
 
 	public double getStatsDouble() throws StatsFailure {
