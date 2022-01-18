@@ -11,8 +11,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class Time {
 	
-	/*
-	 * @return Stringa sulla data e ora correnti nel formato "yyyy.MM.dd_HH.mm.ss"
+	/**
+	 * @return Stringa su data e ora correnti nel formato "yyyy.MM.dd_HH.mm.ss"
 	 */
 	public static String currentDateTime() {
 		
@@ -22,8 +22,8 @@ public class Time {
 		return currDateTime;
 	}
 	
-	/*
-	 * @return Stringa sulla data e ora correnti nel formato "yyyy-MM-dd.HH:00:00+00:00"
+	/**
+	 * @return Stringa su data e ora correnti nel formato "yyyy-MM-dd.HH:00:00+00:00"
 	 */
 	public static String currentDateTime2() {	
 		
@@ -34,7 +34,7 @@ public class Time {
 		return newcurrDateTime;
 	}
 	
-	/*
+	/**
 	 * @return Stringa sulla data corrente nel formato "yyyy.MM.dd"
 	 */
 	public static String currentDate() {
@@ -45,7 +45,7 @@ public class Time {
 		return currDate;
 	}
 	
-	/*
+	/**
 	 * @return Stringa sul giorno corrente nel formato "dd"
 	 */
 	public static String currentDay() {
@@ -56,8 +56,8 @@ public class Time {
 		return currDate;
 	}
 	
-	/*
-	 * @return Stringa sull'orario nel formato "HH.mm.ss"
+	/**
+	 * @return Stringa sull'orario corrente nel formato "HH.mm.ss"
 	 */
 	public static String currentTime() {
 		
@@ -67,8 +67,8 @@ public class Time {
 		return currTime;
 	}
 	
-	/*
-	 * @return Stringa sull'orario nel formato "HH:mm:ss"
+	/**
+	 * @return Stringa sull'orario corrente nel formato "HH:mm:ss"
 	 */
 	public static String currentTime2() {
 		
