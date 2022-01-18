@@ -112,8 +112,9 @@ public class ANcybMqttClient {
         	System.err.println("Server connection lost!");
         	System.err.println("Exception: " + e);
         	System.err.println("Reconnecting...");
+        	//piccolo delay prima di effettuare un nuovo tentativo
         	try {
-				TimeUnit.MILLISECONDS.sleep(100);
+				TimeUnit.MILLISECONDS.sleep(1000);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
@@ -134,23 +135,29 @@ public class ANcybMqttClient {
      * @see it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager ANcybDataManager
      * @see it.univpm.ancyb_diagnosticTool.dataLogger.DataLogger DataLogger
      */
-    public void subscribe(final String topic) throws MqttException {
+    public void subscribe(final String topic) {
     	
     	System.out.println("Subscribe to the MQTT topic:");
 
-    	ANcybMqttClient.getInstance().subscribeWithResponse(topic, (tpic, msg) -> {
-    		String str = new String(msg.getPayload());
-    		System.out.println(msg.getId() + " -> " + str);
-    		try {
-    			DataReceived data = ancybDataManager.createDataObj(str);
-    			dataLog.write(data);
-    		} catch(MqttStringMismatch | ArrayIndexOutOfBoundsException e) {
-    			System.err.println("Exception:" + e);
-    			System.err.println("MQTT data received from broker isn't valid!");
-    			System.err.println("The data was not stored.");
-    		}
-    		
-    	});
+    	try {
+			ANcybMqttClient.getInstance().subscribeWithResponse(topic, (tpic, msg) -> {
+				String str = new String(msg.getPayload());
+				System.out.println(msg.getId() + " -> " + str);
+				try {
+					DataReceived data = ancybDataManager.createDataObj(str);
+					dataLog.write(data);
+				} catch(MqttStringMismatch | ArrayIndexOutOfBoundsException e) {
+					System.err.println("Exception:" + e);
+					System.err.println("MQTT data received from broker isn't valid!");
+					System.err.println("The data was not stored.");
+				}
+				
+			});
+		} catch (MqttException e) {
+			e.printStackTrace();
+			System.err.println("Main Exception: " + e);
+			System.err.println("Please, relaunch the application.");
+		}
     	
     }
 
@@ -167,8 +174,7 @@ public class ANcybMqttClient {
      * @throws	MqttPersistenceException
      * @throws	MqttException
      */
-    public void publish(final String topic, final String payload, int qos, boolean retained)
-    		throws MqttPersistenceException, MqttException {
+    public void publish(final String topic, final String payload, int qos, boolean retained) {
     	
     	MqttMessage mqttMessage = new MqttMessage();
     	mqttMessage.setPayload(payload.getBytes());
@@ -177,7 +183,12 @@ public class ANcybMqttClient {
     	
     	System.out.println("MQTT message initialized");
     	
-    	ANcybMqttClient.getInstance().publish(topic, mqttMessage);
+    	try {
+			ANcybMqttClient.getInstance().publish(topic, mqttMessage);
+		} catch (MqttException e) {
+			e.printStackTrace();
+			System.err.println("Exception: " + e);
+		}
     	
         System.out.println(Time.currentDateTime() + " published >> " + payload);
         
