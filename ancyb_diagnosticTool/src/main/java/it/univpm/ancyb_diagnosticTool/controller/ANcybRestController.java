@@ -18,10 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 import it.univpm.ancyb_diagnosticTool.Exception.FilterFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.ForecastBuildingFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
-import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.Exception.StatsFailure;
 import it.univpm.ancyb_diagnosticTool.Exception.VersionMismatch;
-import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckInputParameters;
@@ -53,7 +51,7 @@ public class ANcybRestController {
 	 */
 	private JSONObject j;
 	
-	
+	/*
 	//TODO TEST
 	String str1 = "a4:cf:12:76:76:95 Ver_G 16:05:45 4334.3060N 01335.1580E 1"; //VerG
 	String str2 = "b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.2360N 07401.2330W 1 10.5"; //VerGT
@@ -61,7 +59,7 @@ public class ANcybRestController {
 	ANcybDataManager ancybDataManager = new ANcybDataManager();
 	ANcybFishData fishdata1;
 	ANcybFishData fishdata2;
-	
+	*/
 	ArrayList<ANcybFishData> list;	
 	
 	/**
@@ -80,18 +78,7 @@ public class ANcybRestController {
 	 */
 	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
 	public ResponseEntity<Object> getRealTimeForecast(@PathVariable("macAddr") String macAddr) {
-		
-		//TODO TEST
-		try {
-			fishdata1 = ancybDataManager.createDataObj(str1);
-			fishdata2 = ancybDataManager.createDataObj(str2);
-		} catch (MqttStringMismatch e) {
-			//System.err.println("Exception: " + e);
-			e.printStackTrace();
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
-		}
-		//
-		
+
 		try {	
 			CheckInputParameters.CheckMacAddr(macAddr);
 			j = service.getForecastByRealTime(macAddr).toJSON();
@@ -122,16 +109,6 @@ public class ANcybRestController {
 	@RequestMapping(value = "/{macAddr}/forecast/filter", method = RequestMethod.POST)
 	public ResponseEntity<Object> getSelectedTimeForecast(@PathVariable("macAddr") String macAddr, @RequestParam(name = "date") String date, 
 																								   @RequestParam(name = "hour") byte hour) {
-		//TODO TEST
-		try {
-			fishdata1 = ancybDataManager.createDataObj(str1);
-			fishdata2 = ancybDataManager.createDataObj(str2);
-		} catch (MqttStringMismatch e) {
-			//System.err.println("Exception: " + e);
-			e.printStackTrace();
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
-		}
-		//
 		
 		try {
 			CheckInputParameters.CheckForecastFilterParameters(macAddr, date, hour);
@@ -162,18 +139,7 @@ public class ANcybRestController {
 	 */
 	@RequestMapping(value = "/{macAddr}/forecast/stats", method = RequestMethod.POST)
 	public ResponseEntity<Object> getForecastStatistics(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") byte days) {
-		
-		//TODO TEST
-		try {
-			fishdata1 = ancybDataManager.createDataObj(str1);
-			fishdata2 = ancybDataManager.createDataObj(str2);
-		} catch (MqttStringMismatch e) {
-			//System.err.println("Exception: " + e);
-			e.printStackTrace();
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
-		}
-		//
-		
+
 		try {
 			CheckInputParameters.CheckForecastStatsParameters(macAddr, days);
 			j = service.getForecastStats(macAddr, days);	
@@ -194,9 +160,9 @@ public class ANcybRestController {
 	 * @see it.univpm.ancyb_diagnosticTool.service#AncybDiagnosticToolServiceImpl#getLatestPostionByMac(String macAddr)
 	 * 
 	 */
-	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.GET)
+	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.POST)
 	public ResponseEntity<Object> getLastData(@PathVariable("macAddr") String macAddr) {
-				
+			/*	
 		//TODO TEST
 		try {
 			fishdata1 = ancybDataManager.createDataObj(str1);
@@ -204,7 +170,7 @@ public class ANcybRestController {
 		} catch (MqttStringMismatch e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
-		
+		*/
 		j = null;
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
@@ -223,9 +189,9 @@ public class ANcybRestController {
 	 * @param macAddr
 	 * @return
 	 */
-	@RequestMapping(value = "/{macAddr}/device/filter/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/{macAddr}/device/filter/all", method = RequestMethod.POST)
 	public ResponseEntity<Object> getAllData(@PathVariable("macAddr") String macAddr) {
-		
+		/*
 		//TODO TEST
 		try {
 			fishdata1 = ancybDataManager.createDataObj(str1);
@@ -233,7 +199,7 @@ public class ANcybRestController {
 		} catch (MqttStringMismatch e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
-		
+		*/
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
 			ArrayList<ANcybFishData> historyFishData = service.getAllResultsByMac(macAddr);
@@ -252,9 +218,9 @@ public class ANcybRestController {
 	 * @param macAddr
 	 * @return
 	 */
-	@RequestMapping(value = "/{macAddr}/device/stats", method = RequestMethod.GET)
+	@RequestMapping(value = "/{macAddr}/device/stats", method = RequestMethod.POST)
 	public ResponseEntity<Object> getDeviceStats(@PathVariable("macAddr") String macAddr) {
-				
+		/*		
 		//TODO TEST
 		try {
 			fishdata1 = ancybDataManager.createDataObj(str1);
@@ -262,7 +228,7 @@ public class ANcybRestController {
 		} catch (MqttStringMismatch e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception: " + e);
 		}
-				
+			*/	
 		try {
 			CheckInputParameters.CheckMacAddr(macAddr);
 			ArrayList<ANcybFishData> historyFishData = service.getAllResultsByMac(macAddr);

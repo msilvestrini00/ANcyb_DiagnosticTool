@@ -25,20 +25,20 @@ import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.IsVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
  
-/*
+/**
  * <b>Classe</b> di servizio per gestire le operazioni sulle previsioni orarie e i dati ricevuti dal dispositivo.
  * Viene implementata l'apposita interfaccia {@link it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService}.
  * 
  * @implements AncybDiagnosticToolService
  * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService AncybDiagnosticToolService
  * 
- * @author Fiara Giacomo
- * @author Silvestrini Manuele
+ * @author Giacomo Fiara
+ * @author Manuele Silvestrini
  */
 @Service
 public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolService {
 
-	/*
+	/**
 	 * Oggetto JSON utilizzato per veicolare in uscita le statistiche create, senza creare più istanze inutilmente.
 	 */
 	private JSONObject statsResults;
@@ -50,12 +50,6 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	 * - crea l'oggetto {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast} coi dati ricevuti</br>
 	 * - filtra i ForecastObject in base alla data e l'ora correnti</br>
 	 * - restituisce il {@link it.univpm.ancyb_diagnosticTool.model.ForecastObject#ForecastObject(String, float, float, String, float, float) ForecastObject} trovato.
-	 * 
-	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate per l'API esterna.
-	 * @return Il ForecastObject relativo alla data e l'ora correnti.
-	 * @throws FilterFailure
-	 * @throws VersionMismatch
-	 * @throws ForecastBuildingFailure
 	 * 
 	 * @see it.univpm.ancyb_diagnosticTool.controller.ANcybRestController#getRealTimeForecast(String macAddr)
 	 * 
@@ -80,14 +74,6 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	 * - filtra i ForecastObject in base alla data e l'ora inserite</br>
 	 * - restituisce il {@link it.univpm.ancyb_diagnosticTool.model.ForecastObject#ForecastObject(String, float, float, String, float, float) ForecastObject} trovato.
 	 * 
-	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate per l'API esterna.
-	 * @param date La data di cui si vuole ottenere la previsione.
-	 * @param hour L'ora di cui si vuole ottenere la previsione.
-	 * @return Il ForecastObject riguardante la data e l'ora inserite.
-	 * @throws FilterFailure
-	 * @throws VersionMismatch
-	 * @throws ForecastBuildingFailure
-	 * 
 	 * @see it.univpm.ancyb_diagnosticTool.controller.ANcybRestController#getSelectedTimeForecast(String macAddr, String date, byte hour)
 	 * 
 	 * @author Manuele Silvestrini
@@ -111,14 +97,6 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	 * - esegue le statistiche sulle previsioni</br>
 	 * - crea un oggetto JSON completo di tutte le informazioni</br>
 	 * - restituisce l'oggetto JSON.
-	 * 
-	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate per l'API esterna.
-	 * @param days Numero di giorni per cui si vuole estendere le statistiche (a partire dal giorno corrente).
-	 * @return L'oggetto JSON che contiene le statistiche.
-	 * @throws StatsFailure
-	 * @throws FilterFailure
-	 * @throws VersionMismatch
-	 * @throws ForecastBuildingFailure
 	 * 
 	 * @see it.univpm.ancyb_diagnosticTool.controller.ANcybRestController#getSelectedTimeForecast(String macAddr, String date, byte hour)
 	 * 
