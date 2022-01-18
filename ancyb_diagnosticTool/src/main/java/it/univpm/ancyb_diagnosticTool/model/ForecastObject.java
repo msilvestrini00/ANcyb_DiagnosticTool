@@ -5,16 +5,15 @@ import org.json.JSONObject;
 import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 
 /*
- * Classe che descrive il modello della previsione meteorologica oraria,
+ * <b>Classe</b> che descrive il modello della previsione meteorologica oraria,
  * i quali dati si basano sulla chiamata all'API esterna 'Storm Glass'.
- * Questi oggetti verranno contenuti in un ArrayList appartenente all'oggetto Forecast.
+ * Questi oggetti verranno contenuti in un ArrayList appartenente all'oggetto {@link Forecast#Forecast(ArrayList) Forecast}. 
  * 
  * @implements DataReceived
  * Link all'API esterna: https://rapidapi.com/ManniskaMaskin/api/storm-glass/
  * 
  * @see it.univpm.ancyb_diagnosticTool.model.Forecast
  * 
- * @author Giacomo Fiara
  * @author Manuele Silvestrini
  */
 public class ForecastObject implements DataReceived{
@@ -27,7 +26,7 @@ public class ForecastObject implements DataReceived{
 	private float longitude;
 	
 	/*
-	 * Costruttore 
+	 * <b>Costruttore</b> 
 	 * 
 	 * @param macAddress Indirizzo mac la quale posizione è stata utilizzata per ricevere le previsioni meteorologiche.
 	 * @param latitude Latitudine del dispositivo.
@@ -127,7 +126,7 @@ public class ForecastObject implements DataReceived{
 	}
 
 	/*
-	 * Metodo che converte il ForecastObject in oggetto JSON.
+	 * <b>Metodo</b> che converte il ForecastObject in oggetto JSON.
 	 * @return L'oggetto JSON con le informazioni sulla previsione oraria.
 	 */
     public JSONObject toJSON() {
@@ -145,7 +144,7 @@ public class ForecastObject implements DataReceived{
     }
 
     /*
-     * Metodo che restituisce il toString della previsione oraria.
+     * <b>Metodo</b> che restituisce il toString della previsione oraria.
      * @return La stringa con le informazioni sulla previsione oraria.
      */
     public String toString() {

@@ -3,9 +3,10 @@ package it.univpm.ancyb_diagnosticTool.utilities;
 import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
 
 /*
+ * <b>Classe</b> a scopo generico, utilizzata per controllare la validità di eventuali parametri d'ingresso.
  * 
+ * @author Manuele Silvestrini
  */
-
 public class CheckInputParameters {
 
 	

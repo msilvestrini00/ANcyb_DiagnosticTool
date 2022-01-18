@@ -27,23 +27,24 @@ import it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckInputParameters;
 
 /*
- * Classe che gestisce le chiamate effettuate al Server dall'utente.
+ * <b>Classe</b> che gestisce le chiamate effettuate al Server dall'utente.
  * Le rotte disponibili sono di due tipi: 
  * - le prime tre riguardano il servizio di previsione metereologica marittima (in particolare fornendo dati sull'altezza delle onde e la direzione della corrente)
- * - le altre tre sono rivolte alla diagnostica del dispositivo
+ * - le altre tre sono rivolte alla diagnostica del dispositivo.
  * 
  * @author Giacomo Fiara
  * @author Manuele Silvestrini
  */
 @RestController
 public class ANcybRestController {
-	
 	@Autowired
+	
 	/*
 	 * Definizione dell'interfaccia della classe dei servizi,
 	 * tramite la quale utilizzo i metodi principali dell'applicativo.
 	 * 
-	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService
+	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolService AncybDiagnosticToolService
+	 * 
 	 */
 	private AncybDiagnosticToolService service;
 	
@@ -60,13 +61,12 @@ public class ANcybRestController {
 	ANcybDataManager ancybDataManager = new ANcybDataManager();
 	ANcybFishData fishdata1;
 	ANcybFishData fishdata2;
-	ANcybFishData fishdata3;
 	
 	ArrayList<ANcybFishData> list;	
 	
 	/**
 	 * 
-	 * Rotta che restituisce la situazione meteorologica del dispositivo selezionato in tempo reale.
+	 * <b>Rotta</b> che restituisce la situazione meteorologica del dispositivo selezionato in tempo reale.
 	 * 
 	 * @param macAddr Indirizzo mac tramite il quale seleziono un dispositivo, ricavandone le coordinate. 
 	 * @return Oggetto JSON sulla previsione oraria corrente in base alle coordinate ricavate.
@@ -74,7 +74,8 @@ public class ANcybRestController {
 	 * @throws VersionMismatch
 	 * @throws FilterFailure
 	 * @throws ForecastBuildingFailure
-	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl#getForecastByRealTime(String macAddr)
+	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl#getForecastByRealTime(String macAddr) 
+	 * 
 	 * @author Manuele Silvestrini
 	 */
 	@RequestMapping(value = "/{macAddr}/forecast", method = RequestMethod.GET)
@@ -104,7 +105,7 @@ public class ANcybRestController {
 	
 	/**
 	 * 
-	 * Rotta che restituisce le previsioni meteorologiche sulla posizione corrente del dispositivo selezionato, 
+	 * <b>Rotta</b> che restituisce le previsioni meteorologiche sulla posizione corrente del dispositivo selezionato, 
 	 * in base alla data e l'orario inseriti come parametri.
 	 * 
 	 * @param date Parametro sulla data in formato "yyy-mm-dd" (sono disponibili previsioni fino a 9 giorni successivi).
@@ -115,8 +116,8 @@ public class ANcybRestController {
 	 * @throws FilterFailure
 	 * @throws ForecastBuildingFailure
 	 * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl#getForecastBySelectedTime(String macAddr)
-	 * @author Manuele Silvestrini
 	 * 
+	 * @author Manuele Silvestrini
 	 */
 	@RequestMapping(value = "/{macAddr}/forecast/filter", method = RequestMethod.POST)
 	public ResponseEntity<Object> getSelectedTimeForecast(@PathVariable("macAddr") String macAddr, @RequestParam(name = "date") String date, 
@@ -145,7 +146,7 @@ public class ANcybRestController {
 	
 	/**
 	 * 
-	 * Rotta che restituisce i valori medi delle previsioni meteorologiche sulla posizione corrente del dispositivo selezionato, 
+	 * <b>Rotta</b> che restituisce i valori medi delle previsioni meteorologiche sulla posizione corrente del dispositivo selezionato, 
 	 * dall'ora e il giorno corrente fino al numero dei giorni prossimi inserito come parametro.
 	 * 
 	 * @param days Parametro sul numero dei giorni per cui si vuole estendere la statistica (sono disponibili previsioni fino a 9 giorni successivi).
@@ -157,6 +158,7 @@ public class ANcybRestController {
 	 * @throws ForecastBuildingFailure
 	 * @see it.univpm.ancyb_diagnosticTool.service#AncybDiagnosticToolServiceImpl#getForecastStats(String macAddr, int days)
 	 * 
+	 * @author Manuele Silvestrini
 	 */
 	@RequestMapping(value = "/{macAddr}/forecast/stats", method = RequestMethod.POST)
 	public ResponseEntity<Object> getForecastStatistics(@PathVariable("macAddr") String macAddr, @RequestParam(name = "days") byte days) {

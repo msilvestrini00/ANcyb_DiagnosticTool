@@ -24,18 +24,33 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData_VerG;
 import it.univpm.ancyb_diagnosticTool.utilities.CheckVersion;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
+/*
+ * <b>Classe</b> che si occupa di gestire le operazioni ad un livello più basso rispetto alla classe dei servizi, 
+ * con riguardo alla chiamata all'API esterna. 
+ * 
+ * @author Manuele Silvestrini
+ */
 public class ForecastDataManager {
 
-	
+	/*
+	 * Definizione degli attributi del costruttore della classe, utili per l'invocazione dei metodi relativi.
+	 */
 	private String macAddr;
 	private float lat;
 	private float lng;
 	
+	/*
+	 * Definizione delle variabili legate alla chiamata all'API esterna.
+	 */
 	private String url = null;
 	private String data;
 	private String apiKey = "4380b6f80amshdae4ed371f74652p1857c6jsn3c4a8bf96244";
 	private String forecastLink = "https://stormglass.p.rapidapi.com/forecast?rapidapi-key=";
 
+	/*
+	 * <b>Costruttore</b> della classe, che riceve l'indirizzo mac e in base ad esso setta le coordinate da utilizzare per la chiamata all'API esterna.
+	 * @param macAddr Indirizzo mac del dispositivo di cui interessano le coordinate.
+	 */
 	public ForecastDataManager(String macAddr) throws FilterFailure, VersionMismatch {	
 
 		FilterObjByMac filterFishData = new FilterObjByMac(macAddr);
@@ -48,10 +63,16 @@ public class ForecastDataManager {
 		this.lng = ((ANcybFishData_VerG) fishData).getLongitude(); 
 	}
 
-	
+	/*
+	 * <b>Metodo</b> complesso che implementa i metodi principali della classe.
+	 * @return L'oggetto {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast}
+	 * con all'interno i dati ricevuti dalla chiamata all'API esterna.
+	 * @throws FilterFailure
+	 * @throws VersionMismatch
+	 * @throws ForecastBuildingFailure
+	 */
 	public Forecast getForecast() throws FilterFailure, VersionMismatch, ForecastBuildingFailure {
 		
-		//definisco l'oggetto per cui ricavo le coordinate per elaborare i dati
 		Forecast forecast;
 		
 		this.buildUrl();		
@@ -61,18 +82,31 @@ public class ForecastDataManager {
 		return forecast;
 	}
 	
+	/*
+	 * @return L'URL creato a seguito dell'invocazione del metodo {@link #getUrl()}.
+	 * @throws URLIsNull
+	 */
 	public String getUrl() throws URLIsNull {	
 		
 		if(this.url == null) throw new URLIsNull("URLIsNull(getUrl) --> URL not yet created. Please, build the URL with method 'buildURL()' before claiming it.");
-		
 		return this.url;
 	}
 	
+	/*
+	 * <b>Metodo</b> che compone le stringhe necessarie per generare l'URL.
+	 * 
+	 * @see #getForecast()
+	 */
 	public void buildUrl() {
 		this.url = forecastLink + apiKey + "&lat=" + this.lat + "&lng=" + this.lng;		
 	}
 	
-	
+	/*
+	 * <b>Metodo</b> che si occupa di effettuare la chiamata all'API esterna per riceverne i dati e restituirli sotto forma di stringa.
+	 * @return La stringa che contiene i dati ricevuti dalla chiamata all'API esterna.
+	 * 
+	 * @see #getForecast()
+	 */
 	public void downloadJSONData() {
 
 		String jsonData = null;
@@ -109,7 +143,23 @@ public class ForecastDataManager {
 		this.data = jsonData;
 	}
 
-	
+	/*
+	 * <b>Metodo</b> che:</br>
+	 * - riceve la stringa dei dati ricevuti dall'API esterna e la elabora</br>
+	 * - ricava i dati di previsione utili</br>
+	 * - inserisce i dati in dei 
+	 * {@link it.univpm.ancyb_diagnosticTool.model.ForecastObject#ForecastObject(String, float, float, String, float, float) ForecastObject}
+	 * che crea</br>
+	 * - inserisce questi oggetti nell'ArrayList di un oggetto 
+	 * {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast}
+	 * che crea.</br>
+	 * 
+	 * @param input Stringa contenente i dati ricevuti dall'API esterna.
+	 * @return L'oggetto {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast} contenente i dati utili.
+	 * @throws ForecastBuildingFailure
+	 * 
+	 * @see #getForecast() 
+	 */
 	public Forecast buildForecast(String input) throws ForecastBuildingFailure{
 				  
 		  //Defining the ArrayList used by the object 'Forecast'
@@ -163,6 +213,13 @@ public class ForecastDataManager {
 	      return f;
 	}
 	
+	/*
+	 * <b>Metodo</b> specifico usato all'interno di {@link #buildForecast(String)}, il quale ricava i dati dalla sorgente nominata 'sg'
+	 * @param array L'array JSON contenente i dati provenienti da più sorgenti.
+	 * @return Il valore relativo alla sorgente 'sg'.
+	 * 
+	 * @see #buildForecast(String)
+	 */
   	private float extractSgSourceFromJSONArray(JSONArray array) {	
   	  
   		float data = 0;
@@ -182,6 +239,15 @@ public class ForecastDataManager {
   		return data;		
   	}
 	
+  	/*
+  	 * <b>Metodo</b> Specifico utilizzato in {@link AncybDiagnosticToolServiceImpl#getForecastStats(String, byte)}
+  	 * che si occupa di creare un oggetto JSON riepilogativo delle informazioni inserite, al momento della richiesta delle statistiche.
+  	 * Questo oggetto sarà integrato in quello da fornire in uscita.
+  	 * 
+  	 * @param forecast L'oggetto {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast} di cui si vogliono le informazioni.
+  	 * @param days Il numero di giorni per cui si estende la statistica.
+  	 * @return L'oggetto JSON riepilogativo.
+  	 */
 	public JSONObject createForecastStatsDataJSONObject (Forecast forecast, byte days) {
 		
         JSONObject jo = new JSONObject();

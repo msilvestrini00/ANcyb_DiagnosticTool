@@ -1,16 +1,12 @@
 package it.univpm.ancyb_diagnosticTool.Exception;
 
 /**
- * Eccezione utile per segnalare un malfunzionamento generico delle statistiche.
+ * <b>Eccezione</b> utile per segnalare un malfunzionamento generico delle statistiche.
  * 
  * @author Giacomo Fiara
- * @author Manuele Silvestrini
  */
 public class StatsFailure extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	public StatsFailure() {

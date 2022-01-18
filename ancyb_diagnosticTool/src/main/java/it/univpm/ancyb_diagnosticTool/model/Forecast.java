@@ -3,27 +3,26 @@ package it.univpm.ancyb_diagnosticTool.model;
 import java.util.ArrayList;
 
 /*
- * Classe che descrive il modello del contenitore di 'oggetti di previsione meteorologica oraria',
+ * <b>Classe</b> che descrive il modello del contenitore di 'oggetti di previsione meteorologica oraria',
  * derivanti da quanto ricevuto dall'API esterna 'Storm Glass'.
  * 
  * Link all'API esterna: https://rapidapi.com/ManniskaMaskin/api/storm-glass/
  * 
  * @see it.univpm.ancyb_diagnosticTool.model.ForecastObject
  * 
- * @author Giacomo Fiara
  * @author Manuele Silvestrini
  */
 public class Forecast {
 
 	/*
-	 * ArrayList che contiene i ForecastObject creati successivamente alla chiamata all'API esterna.
+	 * ArrayList che contiene gli oggetti {@link ForecastObject#ForecastObject(String, float, float, String, float, float) ForecastObject} creati successivamente alla chiamata all'API esterna.
 	 * 
 	 * @see it.univpm.ancyb_diagnosticTool.service.ForecastDataManager#getForecast()
 	 */
 	private ArrayList<ForecastObject> forecastList = new ArrayList<ForecastObject>();
 	
 	/*
-	 * Costruttore a cui viene assegnato l'ArrayList come attributo.
+	 * <b>Costruttore</b> a cui viene assegnato l'ArrayList come attributo.
 	 */
 	public Forecast(ArrayList<ForecastObject> forecastList) {
 		this.forecastList = forecastList;
@@ -44,7 +43,7 @@ public class Forecast {
 	}
 	
 	/*
-	 * Metodo che aggiunge all'ArrayList di Forecast un oggetto ForecastObject.
+	 * <b>Metodo</b> che aggiunge all'ArrayList di Forecast un oggetto ForecastObject.
 	 * @param obj Oggetto ForecastObject da aggiungere all'ArrayList.
 	 */
 	public void addToForecast(ForecastObject obj) {
@@ -52,7 +51,7 @@ public class Forecast {
 	}
 	
 	/*
-	 * Metodo che restituisce un ForecastObject corrispondente all'indice dell'ArrayList immesso.
+	 * <b>Metodo</b> che restituisce un ForecastObject corrispondente all'indice dell'ArrayList immesso.
 	 * @param index Indice del ForecastObject da restituire.
 	 * @return Il ForecastObject con quel determinato indice.
 	 */
@@ -66,14 +65,5 @@ public class Forecast {
 	public String getForecastMacAddr() {
 		return forecastList.get(0).getMacAddress();
 	}
-	
-
-	
-
-	
-	
-	
-	
-	
-	
+		
 }

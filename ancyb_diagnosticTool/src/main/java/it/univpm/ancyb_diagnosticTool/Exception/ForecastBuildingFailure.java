@@ -1,9 +1,8 @@
 package it.univpm.ancyb_diagnosticTool.Exception;
 
 /**
- * Eccezione che segnala un errore durante la costruzione dell'oggetto 'Forecast'.
+ * <b>Eccezione</b> che segnala un errore durante la costruzione dell'oggetto 'Forecast'.
  * 
- * @author Giacomo Fiara
  * @author Manuele Silvestrini
  */
 public class ForecastBuildingFailure extends Exception {

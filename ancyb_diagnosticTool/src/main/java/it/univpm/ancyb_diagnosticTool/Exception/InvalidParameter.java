@@ -1,9 +1,8 @@
 package it.univpm.ancyb_diagnosticTool.Exception;
 
 /**
- * Eccezione che segnala l'invalidità di eventuali parametri in ingresso.
+ * <b>Eccezione</b> che segnala l'invalidità di eventuali parametri in ingresso.
  * 
- * @author Giacomo Fiara
  * @author Manuele Silvestrini
  */
 public class InvalidParameter extends Exception {

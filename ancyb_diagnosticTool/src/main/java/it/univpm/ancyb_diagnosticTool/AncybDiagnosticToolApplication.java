@@ -8,7 +8,7 @@ import it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient;
 
 
 /*
- * Classe di bootstrap
+ * <b>Classe</b> di bootstrap
  * 
  * @author Giacomo Fiara
  * @author Manuele Silvestrini

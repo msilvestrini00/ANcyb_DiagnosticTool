@@ -13,9 +13,9 @@ import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 
 /*
- * Interfaccia di servizio per gestire le operazioni sulle previsioni orarie e i dati ricevuti dal dispositivo.
+ * <b>Interfaccia</b> di servizio per gestire le operazioni sulle previsioni orarie e i dati ricevuti dal dispositivo.
  * 
- * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl
+ * @see it.univpm.ancyb_diagnosticTool.service.AncybDiagnosticToolServiceImpl AncybDiagnosticToolServiceImpl
  * 
  * @author Fiara Giacomo
  * @author Silvestrini Manuele
@@ -23,27 +23,33 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 public interface AncybDiagnosticToolService {
 
 	/*
-	 * Intestazione del metodo che restituisce il ForecastObject in base alla data e l'ora correnti.
+	 * <b>Intestazione</b> del metodo che restituisce il ForecastObject in base alla data e l'ora correnti.
 	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate.
 	 * @return Il ForecastObject relativo alla data e l'ora correnti.
+	 * 
+	 * @author Manuele Silvestrini
 	 */
 	public ForecastObject getForecastByRealTime(String macAddr) throws FilterFailure, VersionMismatch, ForecastBuildingFailure;				
 	
 	/*
-	 * Intestazione del metodo che restituisce il ForecastObject filtrato secondo la data e ora inseriti.
+	 * <b>Intestazione</b> del metodo che restituisce il ForecastObject filtrato secondo la data e ora inseriti.
 	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate.
 	 * @param date La data di cui si vuole ottenere la previsione.
 	 * @param hour L'ora di cui si vuole ottenere la previsione.
 	 * @return Il ForecastObject relativo alla data e l'ora inserite.
+	 * 
+	 * @author Manuele Silvestrini
 	 */
 	public ForecastObject getForecastBySelectedTime(String macAddr, String date, byte hour) throws FilterFailure, VersionMismatch, ForecastBuildingFailure;				
 
 	/*
-	 * Intestazione del metodo che restituisce le statistiche sulle previsioni meteorologiche,
+	 * <b>Intestazione</b> del metodo che restituisce le statistiche sulle previsioni meteorologiche,
 	 * in base al numero di giorni per cui si vuole che esse siano estese.
 	 * @param macAddr Indirizzo mac dal quale ricavo le coordinate.
 	 * @param days Numero di giorni per cui si vuole estendere le statistiche (a partire dal giorno corrente).
 	 * @return L'oggetto JSON che contiene le statistiche.
+	 * 
+	 * @author Manuele Silvestrini
 	 */
 	public JSONObject getForecastStats(String macAddr, byte days) throws StatsFailure, VersionMismatch, FilterFailure, ForecastBuildingFailure;				
 

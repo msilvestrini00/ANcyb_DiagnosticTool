@@ -1,10 +1,9 @@
 package it.univpm.ancyb_diagnosticTool.Exception;
 
 /**
- * Eccezione utile per segnalare un malfunzionamento generico dei filtri.
+ * <b>Eccezione</b> utile per segnalare un malfunzionamento generico dei filtri.
  * 
  * @author Giacomo Fiara
- * @author Manuele Silvestrini
  */
 public class FilterFailure extends Exception {
 
