@@ -8,7 +8,6 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 
 import it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch;
 import it.univpm.ancyb_diagnosticTool.dataLogger.DataLogger;
@@ -56,14 +55,13 @@ public class ANcybMqttClient {
 	 * e inizializzato il subsribe al broker (specificando il topic) ({@link it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient#subscribe(String) subscribe(final String topic)}).
 	 * 
 	 * @throws	MqttException
-	 * @throws	InterruptedException
 	 * 
 	 * @see it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient#getInstance() getInstance()
 	 * @see it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient#ANcybDataManager() ANcybDataManager()
 	 * @see it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient#DataLogger() DataLogger()
 	 * @see it.univpm.ancyb_diagnosticTool.mqtt.mqttClient.ANcybMqttClient#subscribe(String) ANcybMqttClient.subscribe(String)
 	 */
-    public ANcybMqttClient() throws MqttException, InterruptedException {
+    public ANcybMqttClient() throws MqttException {
     	
     	ANcybMqttClient.getInstance();
     	
@@ -129,7 +127,6 @@ public class ANcybMqttClient {
      * {@link it.univpm.ancyb_diagnosticTool.utilities.DataReceived DataReceived} che viene poi scritto sul data logger {@link it.univpm.ancyb_diagnosticTool.dataLogger.DataLogger#write(DataReceived data) write(DataReceived)}.
      * 
      * @param topic è il topic a cui si effettua il subscribe.
-     * @throws MqttException
      * 
      * @see it.univpm.ancyb_diagnosticTool.utilities.DataReceived DataReceived
      * @see it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager ANcybDataManager
@@ -167,12 +164,10 @@ public class ANcybMqttClient {
      * 
      * <b>ATTENZIONE</b> - questo metodo non è stato implementato nell'applicativo.
      * 
-     * @param	topic		è il topic in cui si vuole fare la pubblicazione
-     * @param	payload		è la stringa che si vuole pubblicare sul broker
-     * @param	qos			è il parametro "Quality Of Service" (può essere impostato da 0 a 2)
-     * @param	retained	
-     * @throws	MqttPersistenceException
-     * @throws	MqttException
+     * @param	topic		è il topic in cui si vuole fare la pubblicazione.
+     * @param	payload		è la stringa che si vuole pubblicare sul broker.
+     * @param	qos			è il parametro "Quality Of Service" (può essere impostato da 0 a 2).
+     * @param	retained	è il parametro booleano che permette al messaggio di essere "salvato" dal broker per i client che effettueranno il subscribe al topic successivamente all'invio del messaggio.
      */
     public void publish(final String topic, final String payload, int qos, boolean retained) {
     	
