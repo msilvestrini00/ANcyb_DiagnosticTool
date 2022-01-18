@@ -7,6 +7,9 @@ package it.univpm.ancyb_diagnosticTool.Exception;
  */
 public class FilterFailure extends Exception {
 
+	/**
+	 * serialVersionUID di FilterFailure
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	public FilterFailure() {

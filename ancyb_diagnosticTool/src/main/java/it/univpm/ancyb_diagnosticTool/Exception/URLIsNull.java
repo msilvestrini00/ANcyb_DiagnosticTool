@@ -7,6 +7,9 @@ package it.univpm.ancyb_diagnosticTool.Exception;
  */
 public class URLIsNull extends Exception {
 
+	/**
+	 * serialVersionUID di URLIsNull
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	public URLIsNull() {

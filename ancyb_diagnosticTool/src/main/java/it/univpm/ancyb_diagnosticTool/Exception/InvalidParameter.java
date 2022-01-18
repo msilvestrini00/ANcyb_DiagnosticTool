@@ -7,6 +7,9 @@ package it.univpm.ancyb_diagnosticTool.Exception;
  */
 public class InvalidParameter extends Exception {
 	
+	/**
+	 * serialVersionUID di InvalidParameter
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	public InvalidParameter() {
