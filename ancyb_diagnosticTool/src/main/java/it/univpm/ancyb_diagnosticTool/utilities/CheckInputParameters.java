@@ -2,14 +2,14 @@ package it.univpm.ancyb_diagnosticTool.utilities;
 
 import it.univpm.ancyb_diagnosticTool.Exception.InvalidParameter;
 
-/*
+/**
  * <b>Classe</b> a scopo generico, utilizzata per controllare la validità di eventuali parametri d'ingresso.
  * 
  * @author Manuele Silvestrini
  */
 public class CheckInputParameters {
 
-	/*
+	/**
 	 * <b>Metodo</b> che controlla i parametri in ingresso durante la chiamata alla rotta '/forecast/filter'.
 	 * @param macAddr Indirizzo mac da controllare.
 	 * @param date Parametro della data da controllare.
@@ -26,7 +26,7 @@ public class CheckInputParameters {
 		if(hour < 0 || hour > 23) throw new InvalidParameter("InvalidParameter(ForecastFilterParameters) -> invalid hour.");
 	}
 	
-	/*
+	/**
 	 * <b>Metodo</b> che controlla i parametri in ingresso durante la chiamata alla rotta '/forecast/stats'.
 	 * @param macAddr Indirizzo mac da controllare.
 	 * @param days Parametro dei giorni da controllare.
@@ -41,7 +41,7 @@ public class CheckInputParameters {
 		if(days < 1 || days > 9) throw new InvalidParameter("InvalidParameter(ForecastStatsParameters) -> invalid days.");
 	}
 	
-	/*
+	/**
 	 * <b>Metodo</b> che controlla l'indirizzo mac immesso.
 	 * @param macAddr Indirizzo mac da controllare.
 	 * @throws InvalidParameter
@@ -63,7 +63,7 @@ public class CheckInputParameters {
 		if(exc) throw new InvalidParameter("InvalidParameter(CheckMacAddr) -> invalid MAC address.");
 	}
 	
-	/*
+	/**
 	 * <b>Metodo</b> che controlla la data immessa.
 	 * @param date Parametro della data da controllare.
 	 * @throws InvalidParameter
@@ -82,7 +82,7 @@ public class CheckInputParameters {
 		if(exc) throw new InvalidParameter("InvalidParameter(ForecastFilterParameters) -> invalid date.");
 	}
 
-	/*
+	/**
 	 * <b>Metodo</b> che controlla l'orario immesso.
 	 * @param time Parametro dell'orario da controllare.
 	 * @throws InvalidParameter

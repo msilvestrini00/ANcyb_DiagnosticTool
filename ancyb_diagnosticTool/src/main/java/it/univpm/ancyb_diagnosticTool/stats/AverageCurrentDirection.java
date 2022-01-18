@@ -7,8 +7,9 @@ import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
-/*
- * <b>Statistica</b> che implementa l'interfaccia {@link it.univpm.ancyb_diagnosticTool.stats.StatsInterface}, 
+/**
+ * <b>Statistica</b> che implementa l'interfaccia 
+ * {@link it.univpm.ancyb_diagnosticTool.stats.StatsInterface StatsInterface}, 
  * usata per calcolare il valore medio della direzione della corrente marina.
  * La statistica è calcolata a partire dalla data e ora attuali, fino alla stessa ora di 'days' giorni dopo.
  * 
@@ -23,7 +24,7 @@ public class AverageCurrentDirection implements StatsInterface{
 	private byte days;
 	private String stats = null;
 
-	/*
+	/**
 	 * <b>Costruttore</b> della statistica.
 	 * @param forecastForStats Oggetto
 	 * {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast}
@@ -35,23 +36,22 @@ public class AverageCurrentDirection implements StatsInterface{
 		this.days = days;
 	}
 	
-	/*
-	 * @see it.univpm.ancyb_diagnosticTool.stats.StatsInterface#getDataForStats()
+	/**
+	 * <b>Metodo</b> che restituisce l'oggetto su cui effettuare la statistica.
 	 */
 	@Override
 	public Object getDataForStats() {
 		return this.forecastForStats;
 	}
 
-	/*
+	/**
 	 * <b>Metodo</b> che scorre tutti gli elementi dell'ArrayList contenuti nell'oggetto 
 	 * {@link it.univpm.ancyb_diagnosticTool.model.Forecast#Forecast(ArrayList) Forecast}
-	 * il quale tempo corrisponde con quello corrente, fino alla stessa ora di 'days' giorni successivi.
-	 * Nel mentre, da ogni oggetto viene prelevato il valore di direzione della corrente marina per calcolare la media,
+	 * , selezionando quelli il quale tempo corrisponde con quello corrente, fino alla stessa ora di 'days' giorni successivi.
+	 * Da ognuno di questi 
+	 * {@link it.univpm.ancyb_diagnosticTool.model.ForecastObject#ForecastObject(String, float, float, String, float, float) ForecastObject} 
+	 * viene prelevato il valore di direzione della corrente marina per calcolare la media,
 	 * che infine viene restituita al costruttore.
-	 * 
-	 * @throws StatsFailure
-	 * @see it.univpm.ancyb_diagnosticTool.stats.StatsInterface#computeStats()
 	 */
 	@Override
 	public void computeStats() throws StatsFailure{	
@@ -80,9 +80,8 @@ public class AverageCurrentDirection implements StatsInterface{
 		this.stats = String.format("%.2f", sum/totalHours);
 	}
 	
-	/*
-	 * @throws StatsFailure
-	 * @see it.univpm.ancyb_diagnosticTool.stats.StatsInterface#getStats()
+	/**
+	 * <b>Metodo</b> che restituisce la statistica effettuata.
 	 */
 	@Override
 	public String getStats() throws StatsFailure {
