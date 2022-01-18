@@ -14,6 +14,11 @@ import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybDataManager;
 import it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData;
 import it.univpm.ancyb_diagnosticTool.service.ForecastDataManager;
 
+/**
+ * 
+ * @author Manuele Silvestrini
+ *
+ */
 class ForecastDataManagerTest {
 
 	static String data = "{\"hours\":["

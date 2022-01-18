@@ -16,6 +16,11 @@ import it.univpm.ancyb_diagnosticTool.model.Forecast;
 import it.univpm.ancyb_diagnosticTool.model.ForecastObject;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
+/**
+ * 
+ * @author Manuele Silvestrini
+ *
+ */
 class FilterForecastByTimeTest {
 
 	static Forecast f;
