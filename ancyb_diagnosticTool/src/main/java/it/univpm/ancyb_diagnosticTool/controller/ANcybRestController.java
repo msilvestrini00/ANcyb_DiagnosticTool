@@ -53,7 +53,7 @@ public class ANcybRestController {
 	 * 
 	 * <b>Rotta</b> che restituisce la situazione meteorologica corrente sulla posizione del dispositivo selezionato.
 	 * 
-	 * @param macAddr Indirizzo mac tramite il quale seleziono un dispositivo, ricavandone le coordinate. 
+	 * @param macAddr Indirizzo MAC tramite il quale seleziono un dispositivo, ricavandone le coordinate. 
 	 * @return Oggetto JSON sulla previsione oraria attuale in base alle coordinate ricavate.
 	 * @throws InvalidParameter
 	 * @throws VersionMismatch
@@ -82,7 +82,7 @@ public class ANcybRestController {
 	 * <b>Rotta</b> che restituisce la previsione meteorologica oraria sulla posizione del dispositivo selezionato, 
 	 * in base alla data e l'orario inseriti come parametri.
 	 * 
-	 * @param macAddr Indirizzo mac tramite il quale seleziono un dispositivo, ricavandone le coordinate. 
+	 * @param macAddr Indirizzo MAC tramite il quale seleziono un dispositivo, ricavandone le coordinate. 
 	 * @param date Parametro sulla data in formato "yyy-mm-dd" (sono disponibili previsioni fino a 9 giorni successivi).
 	 * @param hour Parametro sull'ora in formato numero intero, da 0 a 23.
 	 * @return Oggetto JSON sulla previsione oraria selezionata in base alle coordinate ricavate.
@@ -114,7 +114,7 @@ public class ANcybRestController {
 	 * <b>Rotta</b> che restituisce i valori medi delle previsioni meteorologiche sulla posizione del dispositivo selezionato, 
 	 * dall'ora e il giorno corrente fino al numero dei giorni prossimi inserito come parametro.
 	 * 
-	 * @param macAddr Indirizzo mac tramite il quale seleziono un dispositivo, ricavandone le coordinate. 
+	 * @param macAddr Indirizzo MAC tramite il quale seleziono un dispositivo, ricavandone le coordinate. 
 	 * @param days Parametro sul numero dei giorni per cui si vuole estendere la statistica (sono disponibili previsioni fino a 9 giorni successivi).
 	 * @return Oggetto JSON sulle statistiche di previsione meteorologica in base alle coordinate ricavate.
 	 * @throws InvalidParameter
@@ -142,12 +142,13 @@ public class ANcybRestController {
 		
 
 	/**
-	 * Rotta che restituisce l'ultima istanza (e posizione) inviata dal dispositivo
-	 * corrispondente al Mac address inserito come parametro.
-	 * @param macAddr indirizzo Mac del dispositivo interessato.
+	 * <b>Rotta</b> che restituisce l'ultima istanza (e posizione) inviata dal dispositivo
+	 * corrispondente al MAC address inserito come parametro.
+	 * @param macAddr indirizzo MAC del dispositivo interessato.
 	 * @return Oggetto JSON contenente l'ultimo dato {@link it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.ANcybFishData ANcybFishData} inviato dal dispositivo specificato durante sessione corrente.
 	 * @see it.univpm.ancyb_diagnosticTool.service#AncybDiagnosticToolServiceImpl#getLatestPostionByMac(String macAddr)
 	 * 
+	 * @author Giacomo Fiara
 	 */
 	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.POST)
 	public ResponseEntity<Object> getLastData(@PathVariable("macAddr") String macAddr) {
@@ -165,10 +166,12 @@ public class ANcybRestController {
 	}
 
 	/**
-	 * Rotta che restituisce tutte le istanze (e le posizioni) dei dati inviati dal 
-	 * dispositivo corrispondente al Mac address inserito come parametro.
-	 * @param macAddr indirizzo Mac del dispositivo interessato.
+	 * <b>Rotta</b> che restituisce tutte le istanze (e le posizioni) dei dati inviati dal 
+	 * dispositivo corrispondente al MAC address inserito come parametro.
+	 * @param macAddr indirizzo MAC del dispositivo interessato.
 	 * @return Collezione di tutti i dati inviati dal dispositivo specificato durante sessione corrente.
+	 * 
+	 * @author Giacomo Fiara
 	 */
 	@RequestMapping(value = "/{macAddr}/device/filter/all", method = RequestMethod.POST)
 	public ResponseEntity<Object> getAllData(@PathVariable("macAddr") String macAddr) {
@@ -186,10 +189,12 @@ public class ANcybRestController {
 	}
 	
 	/**
-	 * Rotta che restituisce tutte le statistiche disponibili per il dispositivo 
-	 * corrispondente al Mac address inserito come parametro.
-	 * @param macAddr indirizzo Mac del dispositivo interessato.
+	 * <b>Rotta</b> che restituisce tutte le statistiche disponibili per il dispositivo 
+	 * corrispondente al MAC address inserito come parametro.
+	 * @param macAddr indirizzo MAC del dispositivo interessato.
 	 * @return Oggetto JSON sulle statistiche ricavabili dal dispositivo specificato.
+	 * 
+	 * @author Giacomo Fiara
 	 */
 	@RequestMapping(value = "/{macAddr}/device/stats", method = RequestMethod.POST)
 	public ResponseEntity<Object> getDeviceStats(@PathVariable("macAddr") String macAddr) {
