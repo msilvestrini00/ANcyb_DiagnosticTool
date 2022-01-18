@@ -21,8 +21,7 @@ public class CheckInputParameters {
 	public static void CheckForecastFilterParameters(String macAddr, String date, byte hour) throws InvalidParameter {
 		
 		CheckMacAddr(macAddr); 
-
-		if(CheckDate(date)) throw new InvalidParameter("InvalidParameter(ForecastFilterParameters) -> invalid date.");
+		CheckDate(date); 
 		
 		if(hour < 0 || hour > 23) throw new InvalidParameter("InvalidParameter(ForecastFilterParameters) -> invalid hour.");
 	}
@@ -69,17 +68,18 @@ public class CheckInputParameters {
 	 * @param date Parametro della data da controllare.
 	 * @throws InvalidParameter
 	 */
-	private static boolean CheckDate(String date) {
+	private static void CheckDate(String date) throws InvalidParameter{
 		
+		boolean exc = false;
 		String[] tokens = date.split("-");
 		
-		if(tokens.length != 3) return true;
+		if(tokens.length != 3) exc = true;
 
-		if(tokens[0].length() != 4) return true;
-		if(tokens[1].length() != 2) return true;
-		if(tokens[2].length() != 2) return true;
+		if(tokens[0].length() != 4) exc = true;
+		if(tokens[1].length() != 2) exc = true;
+		if(tokens[2].length() != 2) exc = true;
 
-		return false;
+		if(exc) throw new InvalidParameter("InvalidParameter(ForecastFilterParameters) -> invalid date.");
 	}
 
 	/*
