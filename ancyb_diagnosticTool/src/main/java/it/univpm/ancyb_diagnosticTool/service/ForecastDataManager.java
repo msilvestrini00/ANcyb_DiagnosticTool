@@ -63,7 +63,7 @@ public class ForecastDataManager {
 	
 	public String getUrl() throws URLIsNull {	
 		
-		if(this.url == null) throw new URLIsNull("URL not yet created. Please, build the URL with method 'buildURL()' before claiming it.");
+		if(this.url == null) throw new URLIsNull("URLIsNull(getUrl) --> URL not yet created. Please, build the URL with method 'buildURL()' before claiming it.");
 		
 		return this.url;
 	}
@@ -128,7 +128,7 @@ public class ForecastDataManager {
 	      hoursArray= jsnobject1.getJSONArray("hours");
 	      }
 	      catch(JSONException e) {
-	      throw new ForecastBuildingFailure("'hours' JSONArray not found. Please retry.");
+	      throw new ForecastBuildingFailure("ForecastBuildingFailure(buildForecast) --> 'hours' JSONArray not found. Please retry.");
 	      }
 		
 	      //Extracting waveHeight and currentDirection JSON arrays and time JSON object from hours JSON array 
@@ -148,7 +148,7 @@ public class ForecastDataManager {
 	          float waveHeight = extractSgSourceFromJSONArray(waveHeightArray);
 	          float currentDirection = extractSgSourceFromJSONArray(currentDirectionArray);
 	          
-	          if(waveHeight == 0.00 && currentDirection == 0.00) throw new ForecastBuildingFailure("The extraction of the 'sg' source's data has gone wrong. Please retry.");
+	          if(waveHeight == 0.00 && currentDirection == 0.00) throw new ForecastBuildingFailure("ForecastBuildingFailure(buildForecast) --> the extraction of the 'sg' source's data has gone wrong. Please retry.");
 
 	          //Getting the time JSON object as string
 	          String time = jsnobject2.getString("time"); 

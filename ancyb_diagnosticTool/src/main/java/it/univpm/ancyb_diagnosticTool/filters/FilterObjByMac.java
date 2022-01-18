@@ -26,7 +26,7 @@ public class FilterObjByMac implements FilterInterface {
 	@Override
 	public ANcybFishData getFilteredData() throws FilterFailure {
 		if(fishData == null) {
-			throw new FilterFailure("No ANcybFishData filtered --> before 'getFilteredData()' you need to invoke 'computeFilter()'");
+			throw new FilterFailure("FilterFailure(FilterObjByMac) --> please, first invoke the method 'computeFilter()'.");
 		}
 		return fishData;
 	}
@@ -41,7 +41,7 @@ public class FilterObjByMac implements FilterInterface {
 			}
 		}
 		if(fishData == null) {
-			throw new FilterFailure("No position element found in 'DataSaved' arrayList --> No devices with the following MAC address: " + macAddr);
+			throw new FilterFailure("FilterFailure(FilterObjByMac) --> No fishData in 'DataSaved' with the following MAC address: " + macAddr + " has been found.");
 		}
 		
 	}

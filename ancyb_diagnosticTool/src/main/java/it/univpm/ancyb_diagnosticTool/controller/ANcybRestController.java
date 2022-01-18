@@ -189,6 +189,8 @@ public class ANcybRestController {
 	 * corrispondente al Mac address inserito come parametro.
 	 * @param macAddr
 	 * @return
+	 * @see it.univpm.ancyb_diagnosticTool.service#AncybDiagnosticToolServiceImpl#getLatestPostionByMac(String macAddr)
+	 * 
 	 */
 	@RequestMapping(value = "/{macAddr}/device/filter/last", method = RequestMethod.GET)
 	public ResponseEntity<Object> getLastData(@PathVariable("macAddr") String macAddr) {

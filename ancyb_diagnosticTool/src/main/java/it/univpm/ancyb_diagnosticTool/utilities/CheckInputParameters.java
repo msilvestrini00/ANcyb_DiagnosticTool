@@ -13,16 +13,16 @@ public class CheckInputParameters {
 		
 		CheckMacAddr(macAddr); 
 
-		if(CheckDate(date)) throw new InvalidParameter("InvalidParameter(FilterParameters) -> invalid date");
+		if(CheckDate(date)) throw new InvalidParameter("InvalidParameter(ForecastFilterParameters) -> invalid date.");
 		
-		if(hour < 0 || hour > 23) throw new InvalidParameter("Invalid parameter(hour)");
+		if(hour < 0 || hour > 23) throw new InvalidParameter("InvalidParameter(ForecastFilterParameters) -> invalid hour.");
 	}
 	
 	public static void CheckForecastStatsParameters(String macAddr, byte days) throws InvalidParameter {
 		
 		CheckMacAddr(macAddr); 
 		
-		if(days < 1 || days > 9) throw new InvalidParameter("Invalid parameter: days");
+		if(days < 1 || days > 9) throw new InvalidParameter("InvalidParameter(ForecastStatsParameters) -> invalid days.");
 	}
 	
 	public static void CheckMacAddr(String macAddr) throws InvalidParameter{
@@ -37,7 +37,7 @@ public class CheckInputParameters {
 		}
 		if(i != 6) exc = true;
 		
-		if(exc) throw new InvalidParameter("Invalid parameter: mac address");
+		if(exc) throw new InvalidParameter("InvalidParameter(CheckMacAddr) -> invalid MAC address.");
 	}
 	
 	private static boolean CheckDate(String date) {
@@ -67,7 +67,7 @@ public class CheckInputParameters {
 				exc = true;			  
 			}  
 		}
-		if(exc) throw new InvalidParameter("Invalid parameter: time");
+		if(exc) throw new InvalidParameter("InvalidParameter(CheckTime) -> invalid time.");
 	}
 	
 }

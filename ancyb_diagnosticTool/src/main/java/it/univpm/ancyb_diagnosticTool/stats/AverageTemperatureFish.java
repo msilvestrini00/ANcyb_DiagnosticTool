@@ -26,7 +26,7 @@ public class AverageTemperatureFish implements StatsInterface {
 
 	@Override
 	public String getStats() throws StatsFailure {
-		if ( stats == null) throw new StatsFailure("No stat computed --> before 'getStats()' invoke the method 'computeStats()'");
+		if ( stats == null) throw new StatsFailure("StatsFailure(AverageTemperatureFish) --> please, first invoke the method 'computeStats()'.");
 		return stats;
 	}
 
@@ -36,7 +36,7 @@ public class AverageTemperatureFish implements StatsInterface {
 			CheckVersion.verGT(dataForStats);
 		} catch (VersionMismatch e) {
 			System.err.println("Deep Exception: " + e);
-			throw new StatsFailure("Impossible to compute stats --> this collection doesn't contain position data");
+			throw new StatsFailure("StatsFailure(AverageTemperatureFish) --> the data for stats do not contain temperature Infos.");
 		}
 		
 		float sum = 0;
@@ -48,7 +48,7 @@ public class AverageTemperatureFish implements StatsInterface {
 	}
 
 	public float getStatsFloat() throws StatsFailure {
-		if(stats == null) throw new StatsFailure("No stat computed --> before 'getStatsFloat()' invoke the method 'computeStats()'");
+		if(stats == null) throw new StatsFailure("StatsFailure(AverageTemperatureFish) --> please, first invoke the method 'computeStats()'.");
 		return avgTemp;
 	}
 }

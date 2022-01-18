@@ -29,7 +29,7 @@ public class FilterListByMac implements FilterInterface {
 	@Override
 	public ArrayList<ANcybFishData> getFilteredData() throws FilterFailure {	
 		if(filteredFishDataList.size()==0) {
-			throw new FilterFailure("No 'ArrayList<ANcybFishData>' filtered --> before 'getFilteredData()' you need to invoke 'computeFilter()'");
+			throw new FilterFailure("FilterFailure(FilterListByMac) --> please, first invoke the method 'computeFilter()'.");
 		}
 		return filteredFishDataList;	
 	}
@@ -43,7 +43,7 @@ public class FilterListByMac implements FilterInterface {
 			}
 		}
 		if(filteredFishDataList.size()==0) {
-			throw new FilterFailure("No position element found in 'DataSaved' arrayList --> No devices with the following MAC address: " + macAddr);
+			throw new FilterFailure("FilterFailure(FilterListByMac) --> No fishData in 'DataSaved' with the following MAC address: " + macAddr + " has been found.");
 		}
 		
 	}

@@ -48,14 +48,14 @@ public class AverageCurrentDirection implements StatsInterface{
 			sum += list.get(index+i).getCurrentDirection();
 		}
 		
-		if(sum == 0) throw new StatsFailure("Error during 'AverageCurrentDicrection' statistic computation. Please retry");
+		if(sum == 0) throw new StatsFailure("StatsFailure(AverageWaveHeight) --> error during 'AverageCurrentDicrection' statistic computation. Please retry");
 		
 		this.stats = String.format("%.2f", sum/totalHours);
 	}
 
 	@Override
 	public String getStats() throws StatsFailure {
-		if ( stats == null) throw new StatsFailure("Statistic 'AverageCurrentDicrection' not yet computed. Please, first invoke the method 'computeStats()'.");
+		if ( stats == null) throw new StatsFailure("StatsFailure(AverageWaveHeight) --> please, first invoke the method 'computeStats()'.");
 		return this.stats;
 	}
 	

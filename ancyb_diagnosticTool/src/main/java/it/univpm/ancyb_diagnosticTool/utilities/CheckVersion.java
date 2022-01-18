@@ -16,26 +16,26 @@ public class CheckVersion {
 	
 	public static void verG(ANcybFishData fishData) throws VersionMismatch {
 		if (!((fishData instanceof ANcybFishData_VerG)||(fishData instanceof ANcybFishData_VerGT)))
-			throw new VersionMismatch("VersionMismatch --> the device isn't 'G' o 'GX' version software.");
+			throw new VersionMismatch("VersionMismatch(VerG single data) --> the device isn't 'G' o 'GX' version software.");
 	}
 	
 	public static void verG(ArrayList<ANcybFishData> fishDataList) throws VersionMismatch {
 		for(ANcybFishData fishData : fishDataList) {
 			if (!((fishData instanceof ANcybFishData_VerG)||(fishData instanceof ANcybFishData_VerGT)))
-				throw new VersionMismatch("VersionMismatch --> the device isn't 'G' o 'GX' version software.");
+				throw new VersionMismatch("VersionMismatch(VerG ArrayList) --> the device isn't 'G' o 'GX' version software.");
 
 		}
 	}
 	
 	public static void verGT(ANcybFishData fishData) throws VersionMismatch {
 		if (!(fishData instanceof ANcybFishData_VerGT))
-			throw new VersionMismatch("VersionMismatch --> the device isn't 'GT' version software.");
+			throw new VersionMismatch("VersionMismatch(VerGT single data) --> the device isn't 'GT' version software.");
 	}
 	
 	public static void verGT(ArrayList<ANcybFishData> fishDataList) throws VersionMismatch {
 		for(ANcybFishData fishData : fishDataList) {
 			if (!(fishData instanceof ANcybFishData_VerGT))
-				throw new VersionMismatch("VersionMismatch --> the device isn't 'GT' version software.");
+				throw new VersionMismatch("VersionMismatch(VerGT ArrayList) --> the device isn't 'GT' version software.");
 
 		}
 	}

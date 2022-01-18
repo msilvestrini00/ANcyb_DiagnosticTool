@@ -1,8 +1,9 @@
 package it.univpm.ancyb_diagnosticTool.utilities;
 
 /**
+ * <b>Interfaccia</b> che implementa classi di dati utilizzate ricevute dall'applicativo.
  * 
- * @author Giacomo Fiara, Manuele Silvestrini
+ * @author Giacomo Fiara
  *
  */
 public interface DataReceived {

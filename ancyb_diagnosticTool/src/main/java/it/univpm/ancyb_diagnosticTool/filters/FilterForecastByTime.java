@@ -49,7 +49,7 @@ public class FilterForecastByTime implements FilterInterface {
 	public ForecastObject getFilteredData() throws FilterFailure{	
 		
 		if(filteredForecast == null) {
-			throw new FilterFailure("Filter not yet computed. Please, first invoke the method 'computeFilter()'.");
+			throw new FilterFailure("FilterFailure(FilterForecastByTime) --> please, first invoke the method 'computeFilter()'.");
 		}
 		return filteredForecast;	
 	}
@@ -75,7 +75,7 @@ public class FilterForecastByTime implements FilterInterface {
 		}
 		
 		if(filteredForecast == null) {
-			throw new FilterFailure("No forecast with time: " + this.time + " has been found.");
+			throw new FilterFailure("FilterFaiulure(FilterForecastByTime) --> No forecast with time: " + this.time + " has been found.");
 		}
 		
 	}

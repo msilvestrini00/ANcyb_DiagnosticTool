@@ -113,7 +113,7 @@ class FishDataManagerTest {
 			fishdataObt = service.getLatestPositionByMac("d4:cf:12:76:76:95");
 	    });
 		
-		String expectedMessage = "No position element";
+		String expectedMessage = "No fishData in 'DataSaved' with the following MAC address";
 		String actualMessage = exception.getMessage();
 		
 		assertTrue(actualMessage.contains(expectedMessage));
@@ -153,7 +153,7 @@ class FishDataManagerTest {
 		fishListObt = service.getAllResultsByMac("d4:cf:12:76:76:95");
 	    });
 		
-		String expectedMessage = "No position element";
+		String expectedMessage = "FilterFailure(FilterListByMac) --> No fishData in 'DataSaved' with the following MAC address:";
 		String actualMessage = exception.getMessage();
 		
 		assertTrue(actualMessage.contains(expectedMessage));
@@ -191,7 +191,7 @@ class FishDataManagerTest {
 			averageTemperature.computeStats();
 		});
 		
-		String expectedMessage = "Impossible to compute stats";
+		String expectedMessage = "StatsFailure(AverageTemperatureFish) --> the data for stats do not contain temperature Infos.";
 		String actualMessage = exception.getMessage();
 		
 		assertTrue(actualMessage.contains(expectedMessage));

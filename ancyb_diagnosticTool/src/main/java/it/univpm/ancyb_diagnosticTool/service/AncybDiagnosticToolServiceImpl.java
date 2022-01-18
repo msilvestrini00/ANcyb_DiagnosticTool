@@ -154,6 +154,8 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 	}
 
 	/**
+	 * <b>Metodo</b> che
+	 * 
 	 * 
 	 */
 	@Override
@@ -192,7 +194,7 @@ public class AncybDiagnosticToolServiceImpl implements AncybDiagnosticToolServic
 			averageTemperatureFish.computeStats();
 			statsResults.put("Average temperature", averageTemperatureFish.getStats());
 		}
-		if(statsResults == null) throw new StatsFailure("No stats to compute for this device.");
+		if(statsResults == null) throw new StatsFailure("StatsFaiure(getFishStats) --> No stats to compute for this device.");
 		return statsResults;
 	}
 
