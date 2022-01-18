@@ -38,7 +38,7 @@ public class CheckInputParameters {
 		
 		CheckMacAddr(macAddr); 
 		
-		if(days < 1 || days > 9) throw new InvalidParameter("InvalidParameter(ForecastStatsParameters) -> invalid days.");
+		if(days < 1 || days > 7) throw new InvalidParameter("InvalidParameter(ForecastStatsParameters) -> invalid days.");
 	}
 	
 	/**
@@ -78,6 +78,8 @@ public class CheckInputParameters {
 		if(tokens[0].length() != 4) exc = true;
 		if(tokens[1].length() != 2) exc = true;
 		if(tokens[2].length() != 2) exc = true;
+		
+		if(Integer.parseInt(tokens[2]) > (Integer.parseInt(Time.currentDay()) + 7)) exc = true;
 
 		if(exc) throw new InvalidParameter("InvalidParameter(ForecastFilterParameters) -> invalid date.");
 	}
