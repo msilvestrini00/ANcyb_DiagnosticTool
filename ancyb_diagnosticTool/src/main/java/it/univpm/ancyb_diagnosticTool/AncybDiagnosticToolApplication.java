@@ -24,8 +24,7 @@ public class AncybDiagnosticToolApplication {
 		@SuppressWarnings("unused")
 		ANcybMqttClient mqttClient = new ANcybMqttClient();
 		
-		//commentare riga sottostante se non si desidera immettere nel sistema dei dati di prova
-		Admin.simulateDataReceived();
+		Admin.simulateDataReceived(false);
 		
 	}
 }

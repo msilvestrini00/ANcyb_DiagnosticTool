@@ -17,9 +17,12 @@ public class Admin {
 	 * <b>Metodo</b> che genera 18 istanze note di cui si conoscono le reali posizioni, i risultati dei filstri e le statistiche ottenibili.<br>.<br>
 	 * Gli stessi dati sono riportati nel file di testo MqttStringsFromM5.
 	 * 
+	 * @param flag permette di scegliere se attivare o meno la simulazione:<br>
+	 * - <b>TRUE</b> : se si vogliono creare le istanze admin.<br>
+	 * - <b>FALSE</b> : se non si vuole utilizzare il metodo di test.
 	 */
-	public static void simulateDataReceived() throws MqttStringMismatch {
-		
+	public static void simulateDataReceived(boolean flag) throws MqttStringMismatch {
+		if(flag = false) return;
 		String[] strX = new String[]{
 				"a4:cf:12:76:76:95 Ver_G 16:05:45 4334.5102N 01335.2629E 1",
 				"b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.3926N 07401.3875W 1 10.5",
