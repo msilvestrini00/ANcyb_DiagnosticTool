@@ -5,6 +5,44 @@
 
 ## INDICE
 
+* [Introduzione](#intro)
+
+* [Componenti e strumenti utilizzati](#compstrum)
+	* [Robot marino](#robot)
+	* [REST API](#api)
+	* [MQTT](#mqtt)
+	* [Rotte](#rotte)
+	* [Datalogger](#datalogger)
+	* [Interfaccia utente](#interfaccia)
+	
+* [Rotte](#rotte)
+	* [/{macAddr}/forecast](#rotta1)
+	* [/{macAddr}/forecast/filter](#rotta2)
+	* [/{macAddr}/forecast/stats](#rotta3)
+	* [/{macAddr}/device/last](#rotta4)
+	* [/{macAddr}/device/all](#rotta5)
+	* [/{macAddr}/device/stats](#rotta6)
+* [Filtri](#filtri)
+
+* [Stats](#stats)
+
+* [UML](#uml)
+
+* [Dimostrazione di funzionamento](#demo)
+	* [Test amministratore](#testadmin)
+	* [Test real-time](#testrealtime)
+	
+* [Eccezioni](#eccezioni)
+
+* [Test](#test)
+
+* [Sviluppi futuri](#sviluppifuturi)
+
+* [Autori](#autori)
+
+
+
+<a name="intro"></a>
 ## INTRODUZIONE 
 
 ### Contesto
@@ -24,12 +62,14 @@ Il progetto è un'applicazione Springboot scritta in linguaggio **Java**,  che c
 - raccogliere dal web i dati di previsione meteorologica relativi alle coordinate dei dispositivi 
 - rendere disponibile all'utente la visualizzazione di questi dati attraverso varie modalità, permettendo di filtrarli o di eseguire statistiche su di essi.
 
+<a name="compstrum"></a>
 ## COMPONENTI E STRUMENTI UTILIZZATI
 
 Per un'approccio concettuale più concreto, di seguito si descrivono i macroblocchi hardware e software utilizzati durante lo sviluppo del progetto, partendo dalla sorgenti di dati per arrivare all'utente.
 
 ___
 
+<a name="robot"></a>
 ### Robot marino
 
 Per aggiungere un grado di difficoltà al progetto, si è supposto che l'applicativo comunichi con dispositivi appartenenti a tre ipotetiche versioni, che si differenziano leggermente per l'hardware al loro interno.
@@ -49,10 +89,11 @@ Invece, per quanto riguarda i sensori sfruttati:
 
 L'intero hardware è costituito da schede modulabili: questo lo rende estremamente facile da montare e/o intercambiare all'interno dello scomparto del dispositivo.
 
+Infine, il software da implementare nel dispositivo è consultabile a questo [link](/M5Flow_files/ANcyb_firmwareGPSpub(VerG)_micropython.txt).
 
 ___
 
-
+<a name="api"></a>
 ### REST API 
 
 #### Descrizione
@@ -120,6 +161,8 @@ A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti 
 *ATTENZIONE: i metadati riportati sopra dichiarano che le previsioni disponibili si estendono per dieci giorni, ma per motivi di attendibilità nell'applicativo il servizio è stato ristretto a sette.*
 
 ___
+
+<a name="mqtt"></a>
 ### MQTT 
 
 #### Broker
@@ -253,6 +296,7 @@ Di seguito è riportata la gerarchia delle classi.
 
 ___
 
+<a name="datalogger"></a>
 ### DataLogger
 
 I dati ricevuti da MQTT e istanziati correttamente vengono stampati su un file di testo che viene creato ed è associato esclusivamente alla sessione corrente.
@@ -262,6 +306,7 @@ Vedi un esempio di DataLogger [qui](/TestDataLogger/2022.01.19_21.21.01_DataLogg
 
 ___
 
+<a name="interfaccia"></a>
 ### Interfaccia utente 
 
 Il progetto può essere sfruttato tramite un qualsiasi browser, ma in fase di testing e di sviluppo è risultato ottimo l'utilizzo di [Postman](https://www.postman.com/).
@@ -474,7 +519,7 @@ ___
 - [AverageTemperatureFish](#stats3)
 - [GeodeticDistance](#stats4)
 
-
+<a name="filtri"></a>
 ## FILTRI
 
 Nel progetto sono stati implementati dei **filtri**, ovvero delle classi che si occupano di selezionare determinate istanze o variabili all'interno di un insieme noto, a seconda di un determinato parametro di selezione.
@@ -498,7 +543,7 @@ I filtri implementati sono descritti in tabella:
 | <a name="filtro2"></a>`FilterListByMac` | Restituisce una collezione di istanze di dati di bordo in base all'indirizzo MAC  |
 | <a name="filtro3"></a>`FilterObjByMac` | Restituisce l'ultima istanza di dati di bordo in base all'indirizzo MAC |
 
-
+<a name="stats"></a>
 ## STATS
 
 In modo simile ai filtri, l'applicativo sfrutta delle classi per eseguire delle **statistiche** sui dati. 
@@ -569,13 +614,14 @@ Le stats implementate sono descritte in tabella:
 
 ![utilities](/media/images/screen%20UML/utilities.png)
 
-
+<a name="demo"></a>
 ## DIMOSTRAZIONE DI FUNZIONAMENTO 
 
 Basandosi sulla ricezione di dati in real-time, l'applicativo dovrebbe essere testato esclusivamente se si è dotati di un dispositivo ANcybFish.
 
 Per ovviare all'assenza di questo, sono possibli due vie per testare l'applicativo e le sue principali funzionalità.
 
+<a name="testadmin"></a>
 ### Test amministratore
 
 Nel package `DataReceived` è stata implementata la classe `Admin` il cui metodo `simulateDataReceived()` crea 18 istanze tra `ANcybFishData_VerG` e `ANcybFishData_VerGT` provenienti da 3 zone geografiche note (Ancona, Sidney e NewYork) e dispositivi diversi (3 MAC address diversi).
@@ -584,6 +630,7 @@ Il metodo è presente nel `main` e verrà azionato a seconda del `boolean` che v
 
 Per questo, dopo aver avviato l'applicativo è possibile testare le varie rotte del programma e confrontare i risultati ottenuti da filti e stats, con quelli riportati nel file tutorial consultabile [qui](/TutorialANcybDiagnosticToolTest.txt), il tutto senza ricevere altri dati via MQTT. 
 
+<a name="testrealtime"></a>
 ### Test real-time
 
 E' possibile testare l'applicativo in tutte le sue componenti (sia rotte, che lato ricezione MQTT) utilizzando il [client](https://mqtthq.com/client) reso disponibile direttamente dal broker via browser.
@@ -592,7 +639,7 @@ In questo modo sarà possibile far ricevere all'applicazione qualsiasi messaggio
 
 Tutte le informazioni e le istruzioni possono essere consultate [qui](/TutorialANcybDiagnosticToolTest.txt).
 
-
+<a name="eccezioni"></a>
 ## ECCEZIONI
 
 Sono state create una serie di **eccezioni personalizzate** consultabili [qui](/ancyb_diagnosticTool/src/main/java/it/univpm/ancyb_diagnosticTool/Exception/).
@@ -637,8 +684,8 @@ Exception: it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch: MqttStri
 Deep Exception: it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat: WrongCoordFormat(Latitude) -> angle not included between -90° and 90°
 ```
 
-
-## Test 
+<a name="test"></a>
+## TEST 
 
 Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [qui]!!!LLLLIIIIINNNKK!!. Nel dettaglio:
 
@@ -647,8 +694,8 @@ Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [q
 * **Test 3:** `FishDataManagerTest` testa i metodi di `AncybDiagnosticToolServiceImpl` tra cui i filtri !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!!  e le stats !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! sui `ANcybFishData`.
 * **Test 4:** `ForecastDataManagerTest` testa il metodo `BuildForecast` che si occupa di elabora i dati ricevuti dalla chiamata API.
 
-
-## EVENTUALI SVILUPPI FUTURI 
+<a name="sviluppifuturi"></a>
+##SVILUPPI FUTURI 
 
 A causa degli scopi prettamente didattici e le tempistiche relativamente ridotte per un progetto reale di tali dimensioni, 
 il lavoro ha subito varie semplificazioni funzionali che ne giustificano la reale implementazione.
@@ -662,7 +709,7 @@ Di seguito vengono elencate alcune features che avrebbero conferito al lavoro un
     - trasformando l'imput da testuale (inserimento di rotte) a grafico (pulsanti)
 - Implementazione del publish da parte dell'applicativo che potrebbe quindi inviare dei messaggi a specifici topic corrispondenti ai vari dispositivi (vedi [Nota](#subscribe)). Questi messaggi inviati potrebbero, sulla base dei dati meteorologici marini, condizionare il comportamento dei dispositivi in acqua (un esempio potrebbe essere: nel caso venga previsto un forte moto ondoso far emergere il dispositivo).
 
-
+<a name="autori"></a>
 ## AUTORI
 
 Nome | LinkedIn | Contributo | Parti sviluppate 
