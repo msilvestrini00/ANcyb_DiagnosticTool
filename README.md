@@ -211,9 +211,10 @@ Di seguito le configurazioni dei client:
 | keepalive | 60 (*non implementato il publisher*) | 300 |
 | user | *nessun username* | *nessun username* |
 | pass | *nessuna password* | *nessuna password* |
+
 <a name="notaSubscribe"></a>
 **NOTA:** *il publish dell'applicativo non è stato implementato per motivi di sintesi del progetto.
-Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.
+Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.*
 
 ```
 ANcybDiagnosticTool/a4:cf:12:76:76:95
@@ -291,7 +292,7 @@ Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di 
 "b4:cf:12:76:76:95 Ver_GT 16:05:50 101325"
 ```
 
-**NOTA:** *Le coordinate ricevute via stringa sono in formato DDM (gradi e minuti decimali), le conversioni in formato DD vegnono effettuate tramite opportuni metodi implementati dalla classe `Coord`. La conversione in DD è necessario per l'utilizzo dell'API esterna. (!!LIIINKKK!!)*
+**NOTA:** *Le coordinate ricevute via stringa sono in formato DDM (gradi e minuti decimali), le conversioni in formato DD vegnono effettuate tramite opportuni metodi implementati dalla classe `Coord`. La conversione in DD è necessario per l'utilizzo dell'[API](#rest-api) esterna.*
 **NOTA:** *La gestione delle conversioni di tipo o di formato dei dati ricevuti è gestito interamente dai costruttori.*
 
 Di seguito è riportata la gerarchia delle classi.
