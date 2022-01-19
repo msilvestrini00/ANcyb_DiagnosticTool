@@ -130,10 +130,10 @@ Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfr
 | WebSocket Port | 8083 |
 | WebSocket Path | /mqtt |
 
-##### Publish (dispositivi ancyb)
+## Publish (dispositivi ancyb)
 I vari dispositivi sottomarini effettuano regolarmente dei publish al topic "ANcybDiagnosticTool" tramite i quali inviano messaggi che rispettano una certa sintassi compresa poi dell'applicativo che poi effettua l'opportuna modellazione (vedi dataManager).
 
-##### Subscribe (applicativo)
+## Subscribe (applicativo)
 L'applicativo è in costante ascolto grazie al subscribe allo stesso topic "ANcybDiagnosticTool" e così riceve i messaggi pubblicati sul topic da ciascun dispositivo.
 
 Il subscribe viene configurato nel `main` del programma tramite il costruttore del MQTT client.
@@ -164,7 +164,7 @@ Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfrut
 ANcybDiagnosticTool/a4:cf:12:76:76:95
 ```
 
-##### Gestione messaggi MQTT
+### Gestione messaggi MQTT
 
 I messaggi inviati dai dispositivi sottomarini e ricevuti tramite il subscribe dell'applicativo sono stringhe che rispettano una precisa struttura.
 
@@ -440,8 +440,17 @@ ___
 ___
 ## DIMOSTRAZIONE DI FUNZIONAMENTO (JACK)
 
-___
-## TEST (JACK)
+L'applicativo, basandosi sulla ricezione di dati in real-time, doverbbe essere testato esclusivamente se si è dotati di un dispositivo ANcybFish.
+
+Per ovviare all'assenza di questo, sono possibli due vie per testare l'applicativo e le sue principali funzionalità.
+
+##### Test amministratore
+
+Nel package `DataReceived` è stata implementata la classe `Admin` il cui metodo `simulateDataReceived()` crea 18 istanze di `ANcybFishData_VerG` e `ANcybFishData_VerGT` provenienti da 3 zone note (Ancona, Sidney e NewYork) 
+
+
+##### Test real-time
+
 
 
 ___
@@ -487,7 +496,15 @@ Nel caso di classi che avrebbero lanciato molte eccezioni diverse si è optato p
 Exception: it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch: MqttStringMismatch(Ver_GT constructor)
 Deep Exception: it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat: WrongCoordFormat(Latitude) -> angle not included between -90° and 90°
 ```
+___
+## Test (JACK)
 
+Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [qui]!!!LLLLIIIIINNNKK!!. Nel dettaglio:
+
+* **Test 1:** `FilterForecastByTimeTest` testa la relativa classe `FilterForecastByTime` !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! 
+* **Test 2:** `TestMqttDataReceived` testa i vari metodi presenti nel package DataReceived, ovvero chi gestisce le stringhe inviate dai dispositivi e le conseguenti istanze `ANcybFishData`.
+* **Test 3:** `FishDataManagerTest` testa i metodi di `AncybDiagnosticToolServiceImpl` tra cui i filtri !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!!  e le stats !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! sui `ANcybFishData`.
+* **Test 4:** `ForecastDataManagerTest` testa il metodo `BuildForecast` che si occupa di elabora i dati ricevuti dalla chiamata API.
 ___
 ## EVENTUALI SVILUPPI FUTURI (JACK)
 
