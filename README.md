@@ -652,10 +652,10 @@ __
 
 ## AUTORI
 
-Nome | LinkedIn | Contributo
----- | ---- | ----
-[Giacomo Fiara](https://github.com/gfiara) | [Link](https://www.linkedin.com/in/giacomo-fiara-7733b0222/) | 50%
-[Manuele Silvestrini](https://github.com/msilvestrini00) | [Link](https://www.linkedin.com/in/manuele-silvestrini-a195bb222/) | 50%
+Nome | LinkedIn | Contributo | Parti sviluppate 
+---- | ---- | ---- | ------
+[Giacomo Fiara](https://github.com/gfiara) | [Link](https://www.linkedin.com/in/giacomo-fiara-7733b0222/) | 50% | Configurazione dispositivo esterno, MQTT, model, filtri, stats, eccezioni, test, controller, javadoc
+[Manuele Silvestrini](https://github.com/msilvestrini00) | [Link](https://www.linkedin.com/in/manuele-silvestrini-a195bb222/) | 50% | API esterna, model, filtri, stats, eccezioni, test, controller, javadoc
 
 
 
