@@ -134,10 +134,10 @@ Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfr
 | WebSocket Port | 8083 |
 | WebSocket Path | /mqtt |
 
-## Publish (dispositivi ancyb)
+## Dispositivi ANcybFishData
 I vari dispositivi sottomarini effettuano regolarmente dei publish al topic "ANcybDiagnosticTool" tramite i quali inviano messaggi che rispettano una certa sintassi compresa poi dell'applicativo che poi effettua l'opportuna modellazione (vedi dataManager).
 
-## Subscribe (applicativo)
+## Applicativo
 L'applicativo è in costante ascolto grazie al subscribe allo stesso topic "ANcybDiagnosticTool" e così riceve i messaggi pubblicati sul topic da ciascun dispositivo.
 
 Il subscribe viene configurato nel `main` del programma tramite il costruttore del MQTT client.
@@ -161,9 +161,8 @@ Di seguito le configurazioni dei client:
 | keepalive | 60 (*non implementato il publisher*) | 300 |
 | user | *nessun username* | *nessun username* |
 | pass | *nessuna password* | *nessuna password* |
-<a name="notaSubscribe"></a>
-**NOTA:** *il publish dell'applicativo non è stato implementato per motivi di sintesi del progetto.
-Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.
+
+**NOTA:** *il publish dell'applicativo non è stato implementato per motivi di sintesi del progetto. Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.*
 ```
 ANcybDiagnosticTool/a4:cf:12:76:76:95
 ```
