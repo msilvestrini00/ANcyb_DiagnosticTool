@@ -10,7 +10,7 @@ import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;    
 
 /**
- * <b>Classe</bS> che implementa un file di testo che funge da data logger.
+ * <b>Classe</b> che implementa un file di testo che funge da data logger.
  * @author Giacomo Fiara
  *
  */

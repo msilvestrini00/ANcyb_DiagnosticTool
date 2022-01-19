@@ -99,7 +99,7 @@ public class ANcybMqttClient {
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
             options.setConnectionTimeout(30);
-            options.setKeepAliveInterval(15);
+            options.setKeepAliveInterval(60);
 
             if (!instance.isConnected()) {
             	System.out.println("Trying to connect to the server...");
