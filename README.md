@@ -236,13 +236,9 @@ Viene restituita un'istanza di tipo `ANcybFishData`. Da questa superclasse eredi
 **NOTA:** *Le coordinate ricevute via stringa sono in formato DDM (gradi e minuti decimali), le conversioni vegnono effettuate tramite opportuni metodi implementati dalla classe `Coord`*
 **NOTA:** *La gestione delle conversioni di tipo o di formato dei dati ricevuti è gestito interamente dai costruttori.*
 
+Di seguito è riportata la gerarchia delle classi.
 
-Questa struttura dati è modellata in Java 
-
-
-
-
-
+qui metti il link all'immagine.
 ___
 
 ### Interfaccia utente (SILVER)
