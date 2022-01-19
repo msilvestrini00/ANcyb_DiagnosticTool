@@ -60,20 +60,47 @@ Questo servizio si distingue dagli altri simili per la praticità d'uso e l'atte
 
 L'interfaccia utente 
 
+___
 ### SERVIZIO MQTT (JACK)
 
+Lo scambio dei dati tra applicativo e dispositivi avviene tramite protocollo di comunicazione MQTT.
+Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfruttato come broker un server chiamato MQTTHQ  "https://mqtthq.com/": un webserver online pubblico destinato proprio a test di sistemi IoT. Il broker offre inoltre un utile client "https://mqtthq.com/client" integrato che permette di gestire e simulare subscribe e publish (le funzionalità sono meglio descritte tutorial).
+I vari dispositivi sottomarini effettuano regolarmente dei publish al topic "ANcybDiagnosticTool" tramite i quali inviano messaggi che rispettano una certa sintassi compresa poi dell'applicativo che poi effettua l'opportuna modellazione (vedi dataManager).
+L'applicativo è in costante ascolto grazie al subscribe allo stesso topic "ANcybDiagnosticTool" e così riceve i messaggi pubblicati sul topic da ciascun dispositivo.
 
+Di seguito le configurazioni dei client:
+|Proprietà|ancybDiagnostiTool|dipositivi|
+|ClientID|spring-server-ancyb-(data e ora all'avvio)|ancybFish-(MAC address)|
+|keepalive|||
+
+
+**NOTA:** *il publish dell'applicativo non è stato implementato per motivi di sintesi del progetto.
+Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.
+```
+ANcybDiagnosticTool/a4:cf:12:76:76:95
+```
+___
 
 ## ROTTE (SILVER)
 
 ## UML (SILVER)
 
+___
 ## DIMOSTRAZIONE DI FUNZIONAMENTO (JACK)
 
+
+
+___
 ## ECCEZIONI (JACK)
 
+
+
+___
 ## TEST (JACK)
 
+
+
+___
 ## EVENTUALI SVILUPPI FUTURI (JACK)
 
 A causa degli scopi prettamente didattici e le tempistiche relativamente ridotte per un progetto reale di tali dimensioni, 
