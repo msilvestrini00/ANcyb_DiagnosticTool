@@ -274,7 +274,10 @@ Alcune note comuni:
 #### `/{macAddr}/forecast`
 
 ##### Esempio di input
-[SCREEN POSTMAN]
+![rotta1](/media/images/screen%20rotte/rotta1.png)
+
+https://github.com/msilvestrini00/ANcyb_DiagnosticTool/blob/main/media/images/screen%20rotte/rotta1.png
+
 
 #### Dati ricevuti
 [BLOCCO JSON RISULTATO]
