@@ -3,9 +3,9 @@
 # ANCYBERNETICS DIAGNOSTIC TOOL 
 ### *Strumento di diagnostica per dispositivi marini per ricezione dei dati di bordo e valutazione della situazione meteorologica marina*
 
-### INDICE
+### Indice
 
-## INTRODUZIONE 
+## Introduzione
 
 ### Contesto
 
@@ -24,7 +24,7 @@ Il progetto è un'applicazione Springboot scritta in linguaggio **Java**,  che c
 - raccogliere dal web i dati di previsione meteorologica relativi alle coordinate dei dispositivi 
 - rendere disponibile all'utente la visualizzazione di questi dati attraverso varie modalità, permettendo di filtrarli o di eseguire statistiche su di essi.
 
-## COMPONENTI E STRUMENTI UTILIZZATI
+## Componenti e strumenti utilizzati
 
 Per un'approccio concettuale più concreto, di seguito si descrivono i macroblocchi hardware e software utilizzati durante lo sviluppo del progetto, partendo dalla sorgenti di dati per arrivare all'utente.
 
@@ -54,7 +54,7 @@ L'intero hardware è costituito da schede modulabili: questo lo rende estremamen
 ___
 
 
-### REST API (SILVER)
+### REST API
 
 ##### Descrizione
 
@@ -120,7 +120,7 @@ A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti 
 *ATTENZIONE: i metadati riportati sopra dichiarano che le previsioni disponibili si estendono per dieci giorni, ma per motivi di attendibilità nell'applicativo il servizio è stato ristretto a sette.*
 
 ___
-### MQTT (JACK)
+### MQTT
 
 ##### Broker
 Lo scambio dei dati tra applicativo e dispositivi avviene tramite protocollo di comunicazione **MQTT**.
@@ -245,7 +245,7 @@ Di seguito è riportata la gerarchia delle classi.
 
 !!qui metti il link all'immagine!!
 
-### DataLogger
+### Data-logger
 
 I dati ricevuti da MQTT e istanziati correttamente vengono stampati su un file di testo che viene creato ed è associato esclusivamente alla sessione corrente.
 La gestione di ciò è destinata alla classe `DataLogger`.
@@ -254,14 +254,14 @@ Vedi un esempio di DataLogger qui. (!!!LLLIIIINNNKKK!!!)
 
 ___
 
-### Interfaccia utente (SILVER)
+### Interfaccia utente
 
 Il progetto può essere sfruttato tramite un qualsiasi browser, ma in fase di testing e di sviluppo è risultato ottimo l'utilizzo di [Postman](https://www.postman.com/).
 Quest'ultimo è uno strumento di testing di API che possiede numerose features, tra cui la possibilità di salvare le rotte chiamate e di tabulare i dati in ricezione.
 Pertanto, almeno in una fase primaria è consigliato l'utilizzo di questo software.
 
 ___
-## ROTTE 
+## Rotte 
 
 Di seguito sono elencate le rotte disponibili corredate delle relative descrizioni.
 Alcune note comuni:
@@ -461,7 +461,7 @@ ___
 
 ___
 
-## FILTRI
+## Filtri
 
 Nel progetto sono stati implementati dei **filtri**, ovvero delle classi che si occupano di selezionare determinate istanze o variabili all'interno di un insieme noto, a seconda di un determinato parametro di selezione.
 Queste classi sono risultate estremamente utili dal punto di vista pratico, in quanto utilizzati in molteplici contesti (a parte nella stesura delle rotte apposite).
@@ -486,7 +486,7 @@ I filtri implementati sono descritti in tabella:
 
 ___
 
-## STATS 
+## Statistiche
 
 In modo simile ai filtri, l'applicativo sfrutta delle classi per eseguire delle **statistiche** sui dati. 
 Esse consistono nel prelevare determinate istanze per crearne altre, le quali contengono dei valori medi: grazie a questo meccanismo, il cliente ha la capacità di monitorare l'andamento di determinate grandezze, che siano relative al passato (dati di bordo) o al futuro (previsione meteo).
@@ -512,12 +512,12 @@ Le stats implementate sono descritte in tabella:
 ___
 
 
-## UML (SILVER)
+## UML
 
 
 
 ___
-## DIMOSTRAZIONE DI FUNZIONAMENTO (JACK)
+## Dimostrazione funzionamento
 
 Basandosi sulla ricezione di dati in real-time, l'applicativo dovrebbe essere testato esclusivamente se si è dotati di un dispositivo ANcybFish.
 
@@ -540,7 +540,7 @@ In questo modo sarà possibile far ricevere all'applicazione qualsiasi messaggio
 Tutte le informazioni e le istruzioni possono essere consultate qui !LLIINNKK!.
 
 ___
-## ECCEZIONI (JACK)
+## Eccezioni
 
 Sono state create una serie di **eccezioni personalizzate** consultabili [qui]!!!LIIINKK!!!.
 <a name = "WrongCoordFormatException"></a>
@@ -585,8 +585,7 @@ Exception: it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch: MqttStri
 Deep Exception: it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat: WrongCoordFormat(Latitude) -> angle not included between -90° and 90°
 ```
 ___
-## Test (JACK)
-
+## Test
 Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [qui]!!!LLLLIIIIINNNKK!!. Nel dettaglio:
 
 * **Test 1:** `FilterForecastByTimeTest` testa la relativa classe `FilterForecastByTime` !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! 
@@ -594,7 +593,7 @@ Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [q
 * **Test 3:** `FishDataManagerTest` testa i metodi di `AncybDiagnosticToolServiceImpl` tra cui i filtri !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!!  e le stats !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! sui `ANcybFishData`.
 * **Test 4:** `ForecastDataManagerTest` testa il metodo `BuildForecast` che si occupa di elabora i dati ricevuti dalla chiamata API.
 ___
-## EVENTUALI SVILUPPI FUTURI (JACK)
+## Eventuali sviluppi futuri
 
 A causa degli scopi prettamente didattici e le tempistiche relativamente ridotte per un progetto reale di tali dimensioni, 
 il lavoro ha subito varie semplificazioni funzionali che ne giustificano la reale implementazione.
