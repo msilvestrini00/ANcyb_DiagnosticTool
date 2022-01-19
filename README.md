@@ -249,7 +249,7 @@ Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di 
 
 Di seguito è riportata la gerarchia delle classi.
 
-![eredita](ANcyb_DiagnosticTool/media/images/Eredità_ANcybFishData.png)
+![eredita](/media/images/Eredità_ANcybFishData.png)
 
 ___
 
