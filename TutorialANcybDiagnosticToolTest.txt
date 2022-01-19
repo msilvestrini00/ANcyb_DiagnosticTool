@@ -55,7 +55,7 @@ b4:cf:12:76:76:95 - DAVANTI NEW YORK 	40,523183		-74,02314	-->		4031.3910N 07401
 c4:cf:12:76:76:95 - DAVANTI SIDNEY		-34,01626		151,845730	-->		3400.9756S 15150.7438E		
 
 > Risultati (stats sul gps) attesi (utilizzare un qualsiasi calcolatore online di distanza geodetica ed eseguire la somma punto per punto per ogni dispositivo)
-(I risultati potrebbero differi di qualche metro a causa delle varie approssimazioni e modelli usati).
+(I risultati potrebbero differire di qualche metro a causa delle varie approssimazioni e modelli usati).
 (Si ricorda che la distanza geodetica effettuata dall'applicativo utilizza un modello della Terra sferico).
 a4:cf:12:76:76:95	-->		10,02 m
 b4:cf:12:76:76:95   -->		3.27 m
