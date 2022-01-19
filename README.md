@@ -40,6 +40,7 @@ Tutti i robot sono composti principalmente da:
 Il dispositivo è dotato di un microcontrollore ESP32, il quale viene programmato tramite [MicroPython](https://micropython.org/).
 
 Invece, per quanto riguarda i sensori sfruttati:
+
 | Versione | Sensoristica  |
 | ------ | ------ |
 | ANcybFish Ver_G  | GPS         |
@@ -73,6 +74,10 @@ Dopo essersi iscritti al sito si riceve l'API key, tramite la quale è possibile
 Latitudine e longitudine vanno scritte in formato **Gradi decimali (DDD)**: un esempio è ` 41.890218, 12.492434 `
 
 Una volta richiamata la rotta, si riceve una struttura di oggetti JSON che contengono i dati meteorologici.
+
+**Per gli scopi del progetto sono stati utilizzati i seguenti dati:**
+- Direzione della corrente marina
+- Altezza delle onde
 
 ##### Metadati
 
@@ -258,15 +263,57 @@ Alcune note comuni:
 
 | | Tipo | Rotta | Descrizione
 ----- | ------------ | -------------------- | ----------------------
-1 | ` GET ` | `/tweet/metadata` | restituisce un JSONObject contenente le informazioni relative ai tipi di dato visualizzabili
-2 | ` POST ` | `/tweet/get/{method}` | consente di fare la ricerca e salvare i dati e restituisce un messaggio di avvenuto salvataggio
-3 | ` POST ` | `/tweet/data` | restituisce un JSONObject contenente i dati relativi ai tweet precedentemente salvati
-4 | ` POST ` | `/tweet/filter/day` | restituisce un JSONObject contenente i tweet postati nel giorno inserito
-5 | ` POST ` | `/tweet/filter/geo` | restituisce un JSONObject contenente i tweet postati dal luogo inserito
-6 | ` POST ` | `/tweet/stats/day` | restituisce una HashMap con il numero di tweet postati nel giorno inserito e nei due precedenti
+1 | ` GET ` | `/{macAddr}/forecast` | restituisce la situazione meteo sulla posizione del dispositivo
+2 | ` POST ` | `/{macAddr}/forecast/filter` | restituisce la previsione meteo oraria selezionata sulla posizione del dispositivo.
+3 | ` POST ` | `/{macAddr}/forecast/stats` | restituisce le statistiche meteorologiche sulla posizione del dispositivo.
+4 | ` POST ` | `/{macAddr}/device/last` | restituisce l'ultima istanza di dati di bordo inviati dal dispositivo.
+5 | ` POST ` | `/{macAddr}/device/all` | restituisce lo storico delle istanze di dati di bordo inviati dal dispositivo.
+6 | ` POST ` | `/{macAddr}/device/stats` | restituisce tutte le statistiche disponibili sui dati di bordo del dispositivo.
+
+
+#### `/{macAddr}/forecast`
+
+##### Esempio di input
+[SCREEN POSTMAN]
+
+#### Dati ricevuti
+[BLOCCO JSON RISULTATO]
+
+___
+#### `/{macAddr}/forecast/filter`
+
+##### Parametri
+
+| Parametri | Formato | Descrizione |
+|---------- | ------  | ------  |
+| ` | Formato |
+
+___
+#### `/{macAddr}/forecast/stats`
+
+___
+#### `/{macAddr}/device/last`
+
+___
+#### `/{macAddr}/device/all`
+
+___
+#### `/{macAddr}/device/stats`
+___
+
 
 ___
 
+## FILTRI
+
+(tabella con filtri + descriizone (lascia descrizione vuota x jack)
+
+## STATS
+
+(tabella con stats + descriizone (lascia descrizione vuota x jack)
+
+
+___
 ## UML (SILVER)
 
 ___
