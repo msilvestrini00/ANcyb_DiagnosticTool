@@ -111,8 +111,9 @@ A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti 
         "start": "2022-01-19 00:00"
     }
 ```
-
 [FARE IL CODE BLOCK SCROLLABILE?]
+
+*ATTENZIONE: i metadati riportati sopra dichiarano che le previsioni disponibili si estendono per dieci giorni, ma per motivi di attendibilità dei dati il servizio è stato ristretto a sette.*
 
 ___
 ### SERVIZIO MQTT (JACK)
@@ -144,6 +145,22 @@ Pertanto, almeno in una fase primaria è consigliato l'utilizzo di questo softwa
 ___
 
 ## ROTTE (SILVER)
+
+Di seguito sono elencate le rotte disponibili corredate delle relative descrizioni.
+Alcune note comuni:
+- Per ovvi motivi progettuali, le rotte sono fortemente legate ai robot marini. Per questo motivo esse si basano sull'indirizzo MAC del dispositivo selezionato.
+- Al fine di normalizzare i dati in uscita dall'applicativo, tutte le rotte restituiscono un oggetto JSON.
+
+| | Tipo | Rotta | Descrizione
+----- | ------------ | -------------------- | ----------------------
+1 | ` GET ` | `/tweet/metadata` | restituisce un JSONObject contenente le informazioni relative ai tipi di dato visualizzabili
+2 | ` POST ` | `/tweet/get/{method}` | consente di fare la ricerca e salvare i dati e restituisce un messaggio di avvenuto salvataggio
+3 | ` POST ` | `/tweet/data` | restituisce un JSONObject contenente i dati relativi ai tweet precedentemente salvati
+4 | ` POST ` | `/tweet/filter/day` | restituisce un JSONObject contenente i tweet postati nel giorno inserito
+5 | ` POST ` | `/tweet/filter/geo` | restituisce un JSONObject contenente i tweet postati dal luogo inserito
+6 | ` POST ` | `/tweet/stats/day` | restituisce una HashMap con il numero di tweet postati nel giorno inserito e nei due precedenti
+
+___
 
 ## UML (SILVER)
 
