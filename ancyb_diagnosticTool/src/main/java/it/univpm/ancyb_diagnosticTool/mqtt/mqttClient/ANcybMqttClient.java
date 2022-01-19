@@ -16,7 +16,7 @@ import it.univpm.ancyb_diagnosticTool.utilities.DataReceived;
 import it.univpm.ancyb_diagnosticTool.utilities.Time;
 
 /**
- * Classe che implementa i vari metodi per creare e gestire un MQTT client
+ * <b>Classe</b> che implementa i vari metodi per creare e gestire un MQTT client
  * 
  * @author Giacomo Fiara
  *
