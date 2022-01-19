@@ -258,7 +258,7 @@ ___
 I dati ricevuti da MQTT e istanziati correttamente vengono stampati su un file di testo che viene creato ed è associato esclusivamente alla sessione corrente.
 La gestione di ciò è destinata alla classe `DataLogger`.
 
-Vedi un esempio di DataLogger [qui](/TutorialANcybDiagnosticToolTest.txt).
+Vedi un esempio di DataLogger [qui](/TestDataLogger/2022.01.19_21.21.01_DataLogger.txt).
 
 ___
 
@@ -582,7 +582,7 @@ Nel package `DataReceived` è stata implementata la classe `Admin` il cui metodo
 
 Il metodo è presente nel `main` e verrà azionato a seconda del `boolean` che viene passato come parametro.
 
-Per questo, dopo aver avviato l'applicativo è possibile testare le varie rotte del programma e confrontare i risultati ottenuti da filti e stats, con quelli riportati nel file tutorial consultabile qui !!LLLLLLLIIIIIIIIINKKKKK!!, il tutto senza ricevere altri dati via MQTT. 
+Per questo, dopo aver avviato l'applicativo è possibile testare le varie rotte del programma e confrontare i risultati ottenuti da filti e stats, con quelli riportati nel file tutorial consultabile [qui](/TutorialANcybDiagnosticToolTest.txt), il tutto senza ricevere altri dati via MQTT. 
 
 ### Test real-time
 
@@ -590,12 +590,12 @@ E' possibile testare l'applicativo in tutte le sue componenti (sia rotte, che la
 
 In questo modo sarà possibile far ricevere all'applicazione qualsiasi messaggio desiderato, così da testare anche eccezioni e funzionalità in tempo reale.
 
-Tutte le informazioni e le istruzioni possono essere consultate qui !LLIINNKK!.
+Tutte le informazioni e le istruzioni possono essere consultate [qui](/TutorialANcybDiagnosticToolTest.txt).
 
 
 ## ECCEZIONI
 
-Sono state create una serie di **eccezioni personalizzate** consultabili [qui]!!!LIIINKK!!!.
+Sono state create una serie di **eccezioni personalizzate** consultabili [qui](/ancyb_diagnosticTool/src/main/java/it/univpm/ancyb_diagnosticTool/Exception/).
 
 * **WrongCoordFormat**: lanciata se è impossibile convertire una coordinata dal formato DDM al formato DD, viene visualizzato un messaggio diverso
 ```
