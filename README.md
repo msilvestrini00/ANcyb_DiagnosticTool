@@ -269,14 +269,14 @@ Alcune note comuni:
 | | Tipo | Rotta | Descrizione
 ----- | ------------ | -------------------- | ----------------------
 1 | ` GET ` | [`/{macAddr}/forecast`](#rotta1) | restituisce la situazione meteo sulla posizione del dispositivo
-2 | ` POST ` | `/{macAddr}/forecast/filter` | restituisce la previsione meteo oraria selezionata sulla posizione del dispositivo.
-3 | ` POST ` | `/{macAddr}/forecast/stats` | restituisce le statistiche meteorologiche sulla posizione del dispositivo.
-4 | ` POST ` | `/{macAddr}/device/last` | restituisce l'ultima istanza di dati di bordo inviati dal dispositivo.
-5 | ` POST ` | `/{macAddr}/device/all` | restituisce lo storico delle istanze di dati di bordo inviati dal dispositivo.
-6 | ` POST ` | `/{macAddr}/device/stats` | restituisce tutte le statistiche disponibili sui dati di bordo del dispositivo.
+2 | ` POST ` | [`/{macAddr}/forecast/filter`](#rotta2) | restituisce la previsione meteo oraria selezionata sulla posizione del dispositivo.
+3 | ` POST ` | [`/{macAddr}/forecast/stats`](#rotta3) | restituisce le statistiche meteorologiche sulla posizione del dispositivo.
+4 | ` POST ` | [`/{macAddr}/device/last`](#rotta4) | restituisce l'ultima istanza di dati di bordo inviati dal dispositivo.
+5 | ` POST ` | [`/{macAddr}/device/all`](#rotta5) | restituisce lo storico delle istanze di dati di bordo inviati dal dispositivo.
+6 | ` POST ` | [`/{macAddr}/device/stats`](#rotta6) | restituisce tutte le statistiche disponibili sui dati di bordo del dispositivo.
 
 <a name="rotta1"></a>
-### */{macAddr}/forecast*
+### 1. */{macAddr}/forecast*
 
 #### Esempio di input
 ![rotta1](/media/images/screen%20rotte/rotta1.png)
@@ -294,9 +294,10 @@ Alcune note comuni:
 }
 ```
 
-
+*NOTA:* La rotta utilizza il filtro [FilterForecastByTime](#filtro1)
 ___
-### */{macAddr}/forecast/filter*
+<a name="rotta2"></a>
+### 2. */{macAddr}/forecast/filter*
 
 #### Esempio di input
 ![rotta2](/media/images/screen%20rotte/rotta2.png)
@@ -314,7 +315,8 @@ ___
 }
 ```
 ___
-### */{macAddr}/forecast/stats*
+<a name="rotta3"></a>
+### 3. */{macAddr}/forecast/stats*
 
 #### Esempio di input
 ![rotta3](/media/images/screen%20rotte/rotta3.png)
@@ -343,7 +345,8 @@ ___
 }
 ```
 ___
-### */{macAddr}/device/last*
+<a name="rotta4"></a>
+### 4. */{macAddr}/device/last*
 
 #### Esempio di input
 ![rotta4](/media/images/screen%20rotte/rotta4.png)
@@ -363,7 +366,8 @@ ___
 ```
 
 ___
-### */{macAddr}/device/all*
+<a name="rotta5"></a>
+### 5. */{macAddr}/device/all*
 
 #### Esempio di input
 ![rotta5](/media/images/screen%20rotte/rotta5.png)
@@ -405,7 +409,8 @@ ___
 ```
 
 ___
-### */{macAddr}/device/stats*
+<a name="rotta6"></a>
+### 6. */{macAddr}/device/stats*
 
 #### Esempio di input
 ![rotta6](/media/images/screen%20rotte/rotta6.png)
@@ -422,16 +427,58 @@ ___
 ```
 ___
 
-___
-
-
 ## FILTRI (SILVER)
 
+Nel progetto sono stati implementati dei **filtri**, ovvero delle classi che si occupano di selezionare determinate istanze o variabili all'interno di un insieme noto, a seconda di un determinato parametro di selezione.
+Queste classi sono risultate estremamente utili dal punto di vista pratico, in quanto utilizzati in molteplici contesti (a parte nella stesura delle rotte apposite).
+
+
+Come mostrato nell'UML `LINK ALL'UMLllllllll`, i filtri implementano un'interfaccia chiamata `FilterInterface` suddivisa in tre metodi, che compongono la loro struttura generica:
+
+| Tipo |  Metodo |  Descrizione |
+| ---   |   ---  | ---- |
+|  `Object` | `getDataToFilter()` | Restituisce il dato da filtrare |
+|  `void` | `computeFilter()` | Contiene il codice di filtraggio |
+| ` Object` | `getFilteredData()` | Restituisce il dato filtrato. |
+
+
+I filtri implementati sono descritti in tabella:
+
+| Filtro |  Descrizione |
+| ---  | ---- |
+| <a name="filtro1"></a> `FilterForecastByTime` | Restituisce l'istanza di previsione meteo a seconda del tempo inserito |
+| `FilterListByMac` | Restituisce una collezione di istanze di dati di bordo in base all'indirizzo MAC  |
+| `FilterObjByMac` | Restituisce l'ultima istanza di dati di bordo in base all'indirizzo MAC |
+
+METTI LINK DA ROTTE A QUI
 
 ___
 
 ## STATS (SILVER)
 
+In modo simile ai filtri, l'applicativo sfrutta delle classi per eseguire delle **statistiche** sui dati. 
+Esse consistono nel prelevare determinate istanze per crearne altre, le quali contengono dei valori medi: grazie a questo meccanismo, il cliente ha la capacità di monitorare l'andamento di determinate grandezze, che siano relative al passato (dati di bordo) o al futuro (previsione meteo).
+
+Anche le statistiche implementano un'interfaccia (`StatsInterface`), che si divide in tre metodi:
+
+| Tipo |  Metodo |  Descrizione |
+| ---   |   ---  | ---- |
+|  `Object` | `getDataForStats()` | Restituisce l'istanza su cui effettuare la statistica |
+|  `void` | `computeStats()` | Contiene il codice di elaborazione della statistica |
+| ` String` | `getStats()` | Restituisce la statistica effettuata |
+
+
+Le stats implementate sono descritte in tabella:
+
+| Filtro |  Descrizione |
+| ---  | ---- |
+| `AverageCurrentDirection` | Restituisce la direzione della corrente marina media, effettuata sulle istanze di previsione selezionate |
+| `AverageWaveHeight` | Restituisce l'altezza delle onde media, effettuata sulle istanze di previsione selezionate |
+| `AverageTemperatureFish` | Restituisce la temperatura media del dispositivo, effettuata sulle istanze di dati di bordo selezionate |
+| `GeodeticDistance` | Restituisce la distanza geodetica percorsa del dispositivo, effettuata sulle istanze di dati di bordo selezionate |
+
+
+METTI I LINK DELLE STATS A QUI
 
 ___
 
