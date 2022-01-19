@@ -519,23 +519,30 @@ ___
 ___
 ## DIMOSTRAZIONE DI FUNZIONAMENTO (JACK)
 
-L'applicativo, basandosi sulla ricezione di dati in real-time, doverbbe essere testato esclusivamente se si è dotati di un dispositivo ANcybFish.
+Basandosi sulla ricezione di dati in real-time, l'applicativo dovrebbe essere testato esclusivamente se si è dotati di un dispositivo ANcybFish.
 
 Per ovviare all'assenza di questo, sono possibli due vie per testare l'applicativo e le sue principali funzionalità.
 
 ##### Test amministratore
 
-Nel package `DataReceived` è stata implementata la classe `Admin` il cui metodo `simulateDataReceived()` crea 18 istanze di `ANcybFishData_VerG` e `ANcybFishData_VerGT` provenienti da 3 zone note (Ancona, Sidney e NewYork) 
+Nel package `DataReceived` è stata implementata la classe `Admin` il cui metodo `simulateDataReceived()` crea 18 istanze tra `ANcybFishData_VerG` e `ANcybFishData_VerGT` provenienti da 3 zone geografiche note (Ancona, Sidney e NewYork) e dispositivi diversi (3 MAC address diversi).
 
+Il metodo è presente nel `main` e verrà azionato a seconda del `boolean` che viene passato come parametro.
+
+Per questo, dopo aver avviato l'applicativo è possibile testare le varie rotte del programma e confrontare i risultati ottenuti da filti e stats, con quelli riportati nel file tutorial consultabile qui !!LLLLLLLIIIIIIIIINKKKKK!!, il tutto senza ricevere altri dati via MQTT. 
 
 ##### Test real-time
 
+E' possibile testare l'applicativo in tutte le sue componenti (sia rotte, che lato ricezione MQTT) utilizzando il [client](https://mqtthq.com/client) reso disponibile direttamente dal broker via browser.
 
+In questo modo sarà possibile far ricevere all'applicazione qualsiasi messaggio desiderato, così da testare anche eccezioni e funzionalità in tempo reale.
+
+Tutte le informazioni e le istruzioni possono essere consultate qui !LLIINNKK!.
 
 ___
 ## ECCEZIONI (JACK)
 
-Sono state create una serie di **eccezioni personalizzate** consultabili [qui](!!!LIIINKK!!!).
+Sono state create una serie di **eccezioni personalizzate** consultabili [qui]!!!LIIINKK!!!.
 
 * **WrongCoordFormat**: lanciata se è impossibile convertire una coordinata dal formato DDM al formato DD, viene visualizzato un messaggio diverso
 ```
