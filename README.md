@@ -657,37 +657,36 @@ WrongCoordFormat(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
 MqttStringMismatch(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-<br/>
+
 * **FilterFailure**: lanciata se avvengono errori nell'elaborazioni con i [filtri]. (#filtri)
 ```
 FilterFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-<br/>
+
 * **StatsFailure**: lanciata se avvengono errori nell'elaborazioni con le [statistiche](#stats).
 ```
 StatsFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-<br/>
+
 * **VersionMismatch**: lanciata per segnalare situazioni in cui la versione di un'istanza non coincide con quella attesa.
 ```
 VersionMismatch(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-<br/>
+
 * **URLIsNull**: lanciata per segnalare che l'URL non è stato generato, quindi è nullo.
 ```
 URLIsNull(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-<br/>
+
 * **InvalidParameter**: lanciata se eventuali parametri in ingresso risultano invalidi.
 ```
 InvalidParameter(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-<br/>
+
 * **ForecastBuildingFailure**: lanciata se avviene un errore durante la costruzione di un oggetto `Forecast`.
 ```
 ForecastBuildingFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-<br/>
 
 Nel caso di classi che avrebbero lanciato molte eccezioni diverse si è optato per creare delle macro eccezioni (come in [MqttStringMismatch](#MqttStringMismatch)) che le potessero racchiudere in un un'unica. In tali casi verrà mostrato un messaggio del tipo
 ```
@@ -718,7 +717,7 @@ Di seguito vengono elencate alcune features che avrebbero conferito al lavoro un
     - integrando Google Maps per visualizzare graficamente la posizione dei dispositivi
     - visualizzando i dati descritti sopra in un'unica schermata
     - trasformando l'imput da testuale (inserimento di rotte) a grafico (pulsanti)
-- Implementazione del publish da parte dell'applicativo che potrebbe quindi inviare dei messaggi a specifici topic corrispondenti ai vari dispositivi (vedi [Nota](#subscribe)). Questi messaggi inviati potrebbero, sulla base dei dati meteorologici marini, condizionare il comportamento dei dispositivi in acqua (un esempio potrebbe essere: nel caso venga previsto un forte moto ondoso far emergere il dispositivo).
+- Implementazione del publish da parte dell'applicativo che potrebbe quindi inviare dei messaggi a specifici topic corrispondenti ai vari dispositivi (vedi [Nota](#notaSubscribe)). Questi messaggi inviati potrebbero, sulla base dei dati meteorologici marini, condizionare il comportamento dei dispositivi in acqua (un esempio potrebbe essere: nel caso venga previsto un forte moto ondoso far emergere il dispositivo).
 
 <a name="autori"></a>
 ## AUTORI
