@@ -173,7 +173,7 @@ I messaggi inviati dai dispositivi sottomarini e ricevuti tramite il subscribe d
 
 Ciascuna stringa è composta da sottostringhe intervallate da spazi, ogni componente determina le caratteristiche del dispositivo che invia il messaggio o i dati provenienti dalla sensoristica.
 
-**Esempio** di messaggio ricevuto da un ANcybFish Ver_G.
+**Esempio** *di messaggio ricevuto da un ANcybFish Ver_G.*
 ```java
 "a4:cf:c2:7f:76:45 Ver_G 16:10:45 5189.5102N 10035.2629W 1"
 ```
@@ -184,48 +184,48 @@ DataReceived data = ancybDataManager.createDataObj(strReceived);
 ```
 Viene restituita un'istanza di tipo `ANcybFishData`. Da questa superclasse ereditano gli attributi le strutture che descrivono i dati ricevuti dai dispositivi di diverse versioni. Questo metodo elabora quindi la stringa, identifica la versione e richiama il rispettivo costruttore.
 
-Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di tipo MqttStringMismatch (LIINK!!!)
+Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di tipo [MqttStringMismatch](#WrongCoordFormatException).
 
 | ANcybFishData | descrizione | 
 | ---- | ---- |
-| String **time** | Orario di invio del messaggio. |
-| String **date** | Data di ricezione del messaggio. |
-| String **ver** | Stringa contenente la versione del dispositivo/software. |
-| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+| `String` **time** | Orario di invio del messaggio. |
+| `String` **date** | Data di ricezione del messaggio. |
+| `String` **ver** | Stringa contenente la versione del dispositivo/software. |
+| `String` **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
 
-| ANcybFishData_VerG | descrizione | 
+| `ANcybFishData_VerG` | descrizione | 
 | ---- | ---- |
-| String **time** | Orario di invio del messaggio. |
-| String **date** | Data di ricezione del messaggio. |
-| String **ver** | Stringa contenente la versione del dispositivo/software. |
-| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
-| float **latitute** | Latitudine in formato DD (Decimal Degrees). |
-| float **longitude** | Longitudine in formato DD (Decimal Degrees). |
-| String **qualPos** | Qualità del segnale GPS |
+| `String` **time** | Orario di invio del messaggio. |
+| `String` **date** | Data di ricezione del messaggio. |
+| `String` **ver** | Stringa contenente la versione del dispositivo/software. |
+| `String` **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+| `float` **latitute** | Latitudine in formato DD (Decimal Degrees). |
+| `float` **longitude** | Longitudine in formato DD (Decimal Degrees). |
+| `String` **qualPos** | Qualità del segnale GPS |
 
-**Esempio** di messaggio ricevuto da un ANcybFish Ver_G.
+**Esempio** *di messaggio ricevuto da un ANcybFish Ver_G.*
 ```java
 "a4:cf:12:76:76:95 Ver_G 16:05:45 4334.5102N 01335.2629E 1"
 ```
 
-| ANcybFishData_VerG | descrizione | 
+| `ANcybFishData_VerG` | descrizione | 
 | ---- | ---- |
-| String **time** | Orario di invio del messaggio. |
-| String **date** | Data di ricezione del messaggio. |
-| String **ver** | Stringa contenente la versione del dispositivo/software. |
-| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
-| float **latitute** | Latitudine in formato DD (Decimal Degrees). |
-| float **longitude** | Longitudine in formato DD (Decimal Degrees). |
-| String **qualPos** | Qualità del segnale GPS |
-| float **temp** | Temperatura (in gradi Celsius) misurata dal sensore integrato nel rispettivo dispositivo. |
+| `String` **time** | Orario di invio del messaggio. |
+| `String` **date** | Data di ricezione del messaggio. |
+| `String` **ver** | Stringa contenente la versione del dispositivo/software. |
+| `String` **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+| `float` **latitute** | Latitudine in formato DD (Decimal Degrees). |
+| `float` **longitude** | Longitudine in formato DD (Decimal Degrees). |
+| `String` **qualPos** | Qualità del segnale GPS |
+| `float` **temp** | Temperatura (in gradi Celsius) misurata dal sensore integrato nel rispettivo dispositivo. |
 
-**Esempio** di messaggio ricevuto da un ANcybFish Ver_GT.
+**Esempio** *di messaggio ricevuto da un ANcybFish Ver_GT.*
 ```java
 "b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.3926N 07401.3875W 1 10.5"
 ```
 
 *(non implementata)*
-| ANcybFishData_VerP | descrizione |
+| `ANcybFishData_VerP` | descrizione |
 | ---- | ---- |
 | String **time** | Orario di invio del messaggio. |
 | String **date** | Data di ricezione del messaggio. |
@@ -233,12 +233,12 @@ Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di 
 | String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
 | Double **pressure** | Pressione (in Pascal) misurata dal sensore integrato nel rispettivo dispositivo. |
 
-**Esempio** di messaggio ricevuto da un ANcybFish Ver_P.
+**Esempio** *di messaggio ricevuto da un ANcybFish Ver_P.*
 ```java
 "b4:cf:12:76:76:95 Ver_GT 16:05:50 101325"
 ```
 
-**NOTA:** *Le coordinate ricevute via stringa sono in formato DDM (gradi e minuti decimali), le conversioni in formato DD vegnono effettuate tramite opportuni metodi implementati dalla classe `Coord`. La conversione in DD è necessario per l'utilizzo dell'API esterna. (!!LIIINKKK!!)*
+**NOTA:** *Le coordinate ricevute via stringa sono in formato DDM (gradi e minuti decimali), le conversioni in formato DD vegnono effettuate tramite opportuni metodi implementati dalla classe `Coord`. La conversione in DD è necessario per l'utilizzo dell'[API](#rest-api) esterna.*
 **NOTA:** *La gestione delle conversioni di tipo o di formato dei dati ricevuti è gestito interamente dai costruttori.*
 
 Di seguito è riportata la gerarchia delle classi.
@@ -543,15 +543,17 @@ ___
 ## ECCEZIONI (JACK)
 
 Sono state create una serie di **eccezioni personalizzate** consultabili [qui]!!!LIIINKK!!!.
-
+<a name = "WrongCoordFormatException"></a>
 * **WrongCoordFormat**: lanciata se è impossibile convertire una coordinata dal formato DDM al formato DD, viene visualizzato un messaggio diverso
 ```
 WrongCoordFormat(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
+<a name = "MqttStringMismatchException"></a>
 * **MqttStringMismatch**: lanciata se la stringa ricevuta via MQTT non è elaborabile e trasformabile in un'istanza `ANcybFishData`.
 ```
 MqttStringMismatch(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
+<a name = "MqttStringMismatchException"></a>
 * **FilterFailure**: lanciata se avvengono errori nell'elaborazioni con i filtri. (!!!LINKK!!)
 ```
 FilterFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
