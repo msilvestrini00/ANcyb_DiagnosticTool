@@ -113,7 +113,7 @@ A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti 
 ```
 [FARE IL CODE BLOCK SCROLLABILE?]
 
-*ATTENZIONE: i metadati riportati sopra dichiarano che le previsioni disponibili si estendono per dieci giorni, ma per motivi di attendibilità dei dati il servizio è stato ristretto a sette.*
+*ATTENZIONE: i metadati riportati sopra dichiarano che le previsioni disponibili si estendono per dieci giorni, ma per motivi di attendibilità nell'applicativo il servizio è stato ristretto a sette.*
 
 ___
 ### MQTT (JACK)
@@ -268,12 +268,170 @@ Alcune note comuni:
 
 | | Tipo | Rotta | Descrizione
 ----- | ------------ | -------------------- | ----------------------
-1 | ` GET ` | `/tweet/metadata` | restituisce un JSONObject contenente le informazioni relative ai tipi di dato visualizzabili
-2 | ` POST ` | `/tweet/get/{method}` | consente di fare la ricerca e salvare i dati e restituisce un messaggio di avvenuto salvataggio
-3 | ` POST ` | `/tweet/data` | restituisce un JSONObject contenente i dati relativi ai tweet precedentemente salvati
-4 | ` POST ` | `/tweet/filter/day` | restituisce un JSONObject contenente i tweet postati nel giorno inserito
-5 | ` POST ` | `/tweet/filter/geo` | restituisce un JSONObject contenente i tweet postati dal luogo inserito
-6 | ` POST ` | `/tweet/stats/day` | restituisce una HashMap con il numero di tweet postati nel giorno inserito e nei due precedenti
+1 | ` GET ` | [`/{macAddr}/forecast`](#rotta1) | restituisce la situazione meteo sulla posizione del dispositivo
+2 | ` POST ` | `/{macAddr}/forecast/filter` | restituisce la previsione meteo oraria selezionata sulla posizione del dispositivo.
+3 | ` POST ` | `/{macAddr}/forecast/stats` | restituisce le statistiche meteorologiche sulla posizione del dispositivo.
+4 | ` POST ` | `/{macAddr}/device/last` | restituisce l'ultima istanza di dati di bordo inviati dal dispositivo.
+5 | ` POST ` | `/{macAddr}/device/all` | restituisce lo storico delle istanze di dati di bordo inviati dal dispositivo.
+6 | ` POST ` | `/{macAddr}/device/stats` | restituisce tutte le statistiche disponibili sui dati di bordo del dispositivo.
+
+<a name="rotta1"></a>
+### */{macAddr}/forecast*
+
+#### Esempio di input
+![rotta1](/media/images/screen%20rotte/rotta1.png)
+
+### Dati ricevuti
+
+```json
+{
+    "WaveHeight": 0.19,
+    "macAddress": "a4:cf:12:76:76:95",
+    "CurrentDirection": 191.31,
+    "Latitude": 43.575226,
+    "Time": "2022-01-19T16:00:00+00:00",
+    "Longitude": 13.587703
+}
+```
+
+
+___
+### */{macAddr}/forecast/filter*
+
+#### Esempio di input
+![rotta2](/media/images/screen%20rotte/rotta2.png)
+
+### Dati ricevuti
+
+```json
+{
+    "WaveHeight": 0.13,
+    "macAddress": "a4:cf:12:76:76:95",
+    "CurrentDirection": 0.0,
+    "Latitude": 43.575226,
+    "Time": "2022-01-26T00:00:00+00:00",
+    "Longitude": 13.587703
+}
+```
+___
+### */{macAddr}/forecast/stats*
+
+#### Esempio di input
+![rotta3](/media/images/screen%20rotte/rotta3.png)
+
+### Dati ricevuti
+
+```json
+{
+    "Stats": [
+        {
+            "Stats data": {
+                "macAddress": "a4:cf:12:76:76:95",
+                "Latitude": 43.575226,
+                "Time": "2022-01-19T16:00:00+00:00",
+                "End": "2022-01-26T16:00:00+00:00",
+                "Longitude": 13.587703
+            }
+        },
+        {
+            "Stats values": {
+                "Current Direction": "39,49",
+                "Wave Height": "0,43"
+            }
+        }
+    ]
+}
+```
+___
+### */{macAddr}/device/last*
+
+#### Esempio di input
+![rotta4](/media/images/screen%20rotte/rotta4.png)
+
+### Dati ricevuti
+
+```json
+{
+    "Mac address": "a4:cf:12:76:76:95",
+    "Version": "Ver_G",
+    "Quality position": "1",
+    "Time": "16:07:00",
+    "Latitude": 43.575226,
+    "Longitude": 13.587703,
+    "Date": "2022.01.19"
+}
+```
+
+___
+### */{macAddr}/device/all*
+
+#### Esempio di input
+![rotta5](/media/images/screen%20rotte/rotta5.png)
+
+### Dati ricevuti
+
+```json
+[
+    {
+        "time": "16:05:45",
+        "date": "2022.01.19",
+        "ver": "Ver_G",
+        "macAddr": "a4:cf:12:76:76:95",
+        "latitude": 43.57517,
+        "longitude": 13.587715,
+        "qualPos": "1",
+        "coord": [
+            43.57517,
+            13.587715
+        ]
+    },
+
+    [...]
+
+    {
+        "time": "16:07:00",
+        "date": "2022.01.19",
+        "ver": "Ver_G",
+        "macAddr": "a4:cf:12:76:76:95",
+        "latitude": 43.575226,
+        "longitude": 13.587703,
+        "qualPos": "1",
+        "coord": [
+            43.575226,
+            13.587703
+        ]
+    }
+]
+```
+
+___
+### */{macAddr}/device/stats*
+
+#### Esempio di input
+![rotta6](/media/images/screen%20rotte/rotta6.png)
+
+### Dati ricevuti
+
+```json
+{
+    "Mac address": "a4:cf:12:76:76:95",
+    "Stats results": {
+        "Geodetic distance": "6,44 m"
+    }
+}
+```
+___
+
+___
+
+
+## FILTRI (SILVER)
+
+
+___
+
+## STATS (SILVER)
+
 
 ___
 
