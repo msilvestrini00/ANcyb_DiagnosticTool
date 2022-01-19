@@ -18,9 +18,9 @@ Esatta>> "a4:cf:12:76:76:95 Ver_GT 16:10:45 4331.5283N 01323.7442E 1 10.5"
 Errata>> "a4:cf:12:76:76:95 Ver_GTP 16:05:45 4331.5283N 01323.7442E 1"		-->	La Stringa della versione non corrisponde alle versioni implementate
 Errata>> "a4:cf812:76:76:95 Ver_G 16:05:45 4331.5283N 01323.7442E 1"  		-->	Il Mac Address non rispetta le regole di sintassi
 Errata>> "a4:cf:12:76:76:95 Ver_G 16:05:45 4331.5283N 01323.7442E 1 10.5"	-->	La Stringa ricevuta presenta degli elementi in più (per la versione G)
-Errata>> "a4:cf:12:76:76:95 Ver_G 16:05:45 9731.5283N 01323.7442E 1 10.5"	-->	La latitudine è sbagliata (maggiore di 90°) 
+Errata>> "a4:cf:12:76:76:95 Ver_GT 16:05:45 9731.5283N 01323.7442E 1 10.5"	-->	La latitudine è sbagliata (maggiore di 90°) 
 
-> Un esempio di dati inviati al broker e ricevuti corretamente dal subscriber (SpringBoot app):
+> Un esempio di dati inviati al broker e ricevuti corretamente dal subscriber (sono gli stessi dati istanziati dal metodo "Admin.simulate.simulateDataReceived(boolean)"):
 "a4:cf:12:76:76:95 Ver_G 16:05:45 4334.5102N 01335.2629E 1"
 "b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.3926N 07401.3875W 1 10.5"
 "c4:cf:12:76:76:95 Ver_GT 16:05:55 3400.9756S 15150.7438E 1 5.3"
@@ -40,17 +40,17 @@ Errata>> "a4:cf:12:76:76:95 Ver_G 16:05:45 9731.5283N 01323.7442E 1 10.5"	-->	La
 "b4:cf:12:76:76:95 Ver_GT 16:07:05 4031.3910N 07401.3884W 1 10.5"
 "c4:cf:12:76:76:95 Ver_GT 16:07:10 3400.9756S 15150.7438E 1 5.1"
 
-> Considerando 3 coordinate di esempio
+> Cordinate verificate
 
 Qui sotto il primo istante:
-DAVANTI ANCONA 			43.57517	 13.587715	-->		4334.5102N		01335.2629E
-DAVANTI NEW YORK 		40.52321	-74.023125	-->		4031.3926N		07401.3875W
-DAVANTI SIDNEY		   -34.01626	151.845730	-->		3400.9756S		15150.7438E
+a4:cf:12:76:76:95 - DAVANTI ANCONA 			43.57517	 13.587715	-->		4334.5102N		01335.2629E
+b4:cf:12:76:76:95 - DAVANTI NEW YORK 		40.52321	-74.023125	-->		4031.3926N		07401.3875W
+c4:cf:12:76:76:95 - DAVANTI SIDNEY		   -34.01626	151.845730	-->		3400.9756S		15150.7438E
 
 Qui sotto l'ultimo istante:
-DAVANTI ANCONA 		4334.5136N 01335.2622E	-->		43,575227		13,587703
-DAVANTI NEW YORK 	4031.3910N 07401.3884W	-->		40,523183		-74,02314
-DAVANTI SIDNEY		3400.9756S 15150.7438E	-->		-34,01626		151,84573
+a4:cf:12:76:76:95 - DAVANTI ANCONA 		43,575227		13,587703	-->		4334.5136N 01335.2622E		
+b4:cf:12:76:76:95 - DAVANTI NEW YORK 	40,523183		-74,02314	-->		4031.3910N 07401.3884W		
+c4:cf:12:76:76:95 - DAVANTI SIDNEY		-34,01626		151,845730	-->		3400.9756S 15150.7438E		
 
 > Risultati (stats sul gps) attesi
 a4:cf:12:76:76:95	-->		6.407 m
@@ -58,5 +58,6 @@ b4:cf:12:76:76:95   -->		3.257 m
 c4:cf:12:76:76:95 	-->		0 m
 
 > Risultati (stats sulla temp) attesi
+a4:cf:12:76:76:95   -->		statistiche non presenti
 b4:cf:12:76:76:95   -->		10.63
 c4:cf:12:76:76:95 	-->		5.175
