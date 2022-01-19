@@ -232,42 +232,43 @@ DataReceived data = ancybDataManager.createDataObj(strReceived);
 ```
 Viene restituita un'istanza di tipo `ANcybFishData`. Da questa superclasse ereditano gli attributi le strutture che descrivono i dati ricevuti dai dispositivi di diverse versioni. Questo metodo elabora quindi la stringa, identifica la versione e richiama il rispettivo costruttore.
 
-Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di tipo [MqttStringMismatch](#mqttstringmismatch)
+Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di tipo [MqttStringMismatch](#MqttStringMismatch)
 
 | ANcybFishData | descrizione | 
 | ---- | ---- |
-| String **time** | Orario di invio del messaggio. |
-| String **date** | Data di ricezione del messaggio. |
-| String **ver** | Stringa contenente la versione del dispositivo/software. |
-| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+| `String` **time** | Orario di invio del messaggio. |
+| `String` **date** | Data di ricezione del messaggio. |
+| `String` **ver** | Stringa contenente la versione del dispositivo/software. |
+| `String` **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+<br/>
 
 | ANcybFishData_VerG | descrizione | 
 | ---- | ---- |
-| String **time** | Orario di invio del messaggio. |
-| String **date** | Data di ricezione del messaggio. |
-| String **ver** | Stringa contenente la versione del dispositivo/software. |
-| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
-| float **latitute** | Latitudine in formato DD (Decimal Degrees). |
-| float **longitude** | Longitudine in formato DD (Decimal Degrees). |
-| String **qualPos** | Qualità del segnale GPS |
+| `String` **time** | Orario di invio del messaggio. |
+| `String` **date** | Data di ricezione del messaggio. |
+| `String` **ver** | Stringa contenente la versione del dispositivo/software. |
+| `String` **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+| `float` **latitute** | Latitudine in formato DD (Decimal Degrees). |
+| `float` **longitude** | Longitudine in formato DD (Decimal Degrees). |
+| `String` **qualPos** | Qualità del segnale GPS |
 
-**Esempio** di messaggio ricevuto da un ANcybFish Ver_G.
+**Esempio** *di messaggio ricevuto da un ANcybFish Ver_G.*
 ```java
 "a4:cf:12:76:76:95 Ver_G 16:05:45 4334.5102N 01335.2629E 1"
 ```
 
 | ANcybFishData_VerG | descrizione | 
 | ---- | ---- |
-| String **time** | Orario di invio del messaggio. |
-| String **date** | Data di ricezione del messaggio. |
-| String **ver** | Stringa contenente la versione del dispositivo/software. |
-| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
-| float **latitute** | Latitudine in formato DD (Decimal Degrees). |
-| float **longitude** | Longitudine in formato DD (Decimal Degrees). |
-| String **qualPos** | Qualità del segnale GPS |
-| float **temp** | Temperatura (in gradi Celsius) misurata dal sensore integrato nel rispettivo dispositivo. |
+| `String` **time** | Orario di invio del messaggio. |
+| `String` **date** | Data di ricezione del messaggio. |
+| `String` **ver** | Stringa contenente la versione del dispositivo/software. |
+| `String` **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+| `float` **latitute** | Latitudine in formato DD (Decimal Degrees). |
+| `float` **longitude** | Longitudine in formato DD (Decimal Degrees). |
+| `String` **qualPos** | Qualità del segnale GPS |
+| `float` **temp** | Temperatura (in gradi Celsius) misurata dal sensore integrato nel rispettivo dispositivo. |
 
-**Esempio** di messaggio ricevuto da un ANcybFish Ver_GT.
+**Esempio** *di messaggio ricevuto da un ANcybFish Ver_GT.*
 ```java
 "b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.3926N 07401.3875W 1 10.5"
 ```
@@ -275,13 +276,13 @@ Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di 
 *(non implementata)*
 | ANcybFishData_VerP | descrizione |
 | ---- | ---- |
-| String **time** | Orario di invio del messaggio. |
-| String **date** | Data di ricezione del messaggio. |
-| String **ver** | Stringa contenente la versione del dispositivo/software. |
-| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
-| Double **pressure** | Pressione (in Pascal) misurata dal sensore integrato nel rispettivo dispositivo. |
+| `String` **time** | Orario di invio del messaggio. |
+| `String` **date** | Data di ricezione del messaggio. |
+| `String` **ver** | Stringa contenente la versione del dispositivo/software. |
+| `String` **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+| `Double` **pressure** | Pressione (in Pascal) misurata dal sensore integrato nel rispettivo dispositivo. |
 
-**Esempio** di messaggio ricevuto da un ANcybFish Ver_P.
+**Esempio** *di messaggio ricevuto da un ANcybFish Ver_P.*
 ```java
 "b4:cf:12:76:76:95 Ver_GT 16:05:50 101325"
 ```
@@ -291,7 +292,7 @@ Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di 
 
 Di seguito è riportata la gerarchia delle classi.
 
-![eredita](ANcyb_DiagnosticTool/media/images/Eredità_ANcybFishData.png)
+![eredita](/media/images/Eredità_ANcybFishData.png)
 
 ___
 
@@ -301,7 +302,7 @@ ___
 I dati ricevuti da MQTT e istanziati correttamente vengono stampati su un file di testo che viene creato ed è associato esclusivamente alla sessione corrente.
 La gestione di ciò è destinata alla classe `DataLogger`.
 
-Vedi un esempio di DataLogger qui. (!!!LLLIIIINNNKKK!!!)
+Vedi un esempio di DataLogger [qui](/TestDataLogger/2022.01.19_21.21.01_DataLogger.txt).
 
 ___
 
@@ -627,7 +628,7 @@ Nel package `DataReceived` è stata implementata la classe `Admin` il cui metodo
 
 Il metodo è presente nel `main` e verrà azionato a seconda del `boolean` che viene passato come parametro.
 
-Per questo, dopo aver avviato l'applicativo è possibile testare le varie rotte del programma e confrontare i risultati ottenuti da filti e stats, con quelli riportati nel file tutorial consultabile qui !!LLLLLLLIIIIIIIIINKKKKK!!, il tutto senza ricevere altri dati via MQTT. 
+Per questo, dopo aver avviato l'applicativo è possibile testare le varie rotte del programma e confrontare i risultati ottenuti da filti e stats, con quelli riportati nel file tutorial consultabile [qui](/TutorialANcybDiagnosticToolTest.txt), il tutto senza ricevere altri dati via MQTT. 
 
 <a name="testrealtime"></a>
 ### Test real-time
@@ -636,17 +637,18 @@ E' possibile testare l'applicativo in tutte le sue componenti (sia rotte, che la
 
 In questo modo sarà possibile far ricevere all'applicazione qualsiasi messaggio desiderato, così da testare anche eccezioni e funzionalità in tempo reale.
 
-Tutte le informazioni e le istruzioni possono essere consultate qui !LLIINNKK!.
+Tutte le informazioni e le istruzioni possono essere consultate [qui](/TutorialANcybDiagnosticToolTest.txt).
 
 <a name="eccezioni"></a>
 ## ECCEZIONI
 
-Sono state create una serie di **eccezioni personalizzate** consultabili [qui]!!!LIIINKK!!!.
+Sono state create una serie di **eccezioni personalizzate** consultabili [qui](/ancyb_diagnosticTool/src/main/java/it/univpm/ancyb_diagnosticTool/Exception/).
 
 * **WrongCoordFormat**: lanciata se è impossibile convertire una coordinata dal formato DDM al formato DD, viene visualizzato un messaggio diverso
 ```
 WrongCoordFormat(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
+<a name="MqttStringMismatch"></a>
 * **MqttStringMismatch**: lanciata se la stringa ricevuta via MQTT non è elaborabile e trasformabile in un'istanza `ANcybFishData`.
 ```
 MqttStringMismatch(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
@@ -714,8 +716,3 @@ Nome | LinkedIn | Contributo | Parti sviluppate
 ---- | ---- | ---- | ------
 [Giacomo Fiara](https://github.com/gfiara) | [Link](https://www.linkedin.com/in/giacomo-fiara-7733b0222/) | 50% | Configurazione dispositivo esterno, MQTT, model, filtri, stats, eccezioni, test, controller, javadoc
 [Manuele Silvestrini](https://github.com/msilvestrini00) | [Link](https://www.linkedin.com/in/manuele-silvestrini-a195bb222/) | 50% | API esterna, model, filtri, stats, eccezioni, test, controller, javadoc
-
-
-
-
-
