@@ -3,7 +3,7 @@
 # ANCYBERNETICS DIAGNOSTIC TOOL 
 ### *Strumento di diagnostica per dispositivi marini per ricezione dei dati di bordo e valutazione della situazione meteorologica marina*
 
-### INDICE
+## INDICE
 
 ## INTRODUZIONE 
 
@@ -28,7 +28,7 @@ Il progetto è un'applicazione Springboot scritta in linguaggio **Java**,  che c
 
 Per un'approccio concettuale più concreto, di seguito si descrivono i macroblocchi hardware e software utilizzati durante lo sviluppo del progetto, partendo dalla sorgenti di dati per arrivare all'utente.
 
-[SCHEMA A BLOCCHI SUL PROGETTO?]
+___
 
 ### Robot marino
 
@@ -49,14 +49,13 @@ Invece, per quanto riguarda i sensori sfruttati:
 
 L'intero hardware è costituito da schede modulabili: questo lo rende estremamente facile da montare e/o intercambiare all'interno dello scomparto del dispositivo.
 
-[FOTO VARIE?]
 
 ___
 
 
-### REST API (SILVER)
+### REST API 
 
-##### Descrizione
+#### Descrizione
 
 Il servizio di previsione meteorologica marina è fornito dalla REST API [Storm Glass](https://rapidapi.com/ManniskaMaskin/api/storm-glass/). 
 
@@ -66,19 +65,21 @@ Essa si distingue dalle altre simili per la praticità d'uso e l'attendibilità:
 - E' possibile ottenere 23 tipi di dato differenti sulla situazione meteorologica
 - I dati ricevuti derivano da molteplici sorgenti
 
-##### Utilizzo
+#### Utilizzo
 
 Dopo essersi iscritti al sito si riceve l'API key, tramite la quale è possibile utilizzare la rotta scritta in questo modo:
 
 ` https://stormglass.p.rapidapi.com/forecast?rapidapi-key={ APIkey }&lat={ latitudine }&lng={ longitudine } `
 
-[SCREEN POSTMAN CON ROTTA E PARAMETRI?]
+Su Postman la configurazione risulta la seguente:
 
-Latitudine e longitudine vanno scritte in formato **Gradi decimali (DDD)**: un esempio è ` 41.890218, 12.492434 `
+![API](/media/images/screen%20rotte/rottaAPI.png)
+
+Latitudine e longitudine vanno scritte in formato **Gradi decimali (DDD)**: un esempio è *41.890218, 12.492434*
 
 Una volta richiamata la rotta, si riceve una struttura di oggetti JSON che contengono i dati meteorologici.
 
-##### Metadati
+#### Metadati
 
 A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti metadati:
 
@@ -115,14 +116,13 @@ A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti 
         "start": "2022-01-19 00:00"
     }
 ```
-[FARE IL CODE BLOCK SCROLLABILE?]
 
 *ATTENZIONE: i metadati riportati sopra dichiarano che le previsioni disponibili si estendono per dieci giorni, ma per motivi di attendibilità nell'applicativo il servizio è stato ristretto a sette.*
 
 ___
-### MQTT (JACK)
+### MQTT 
 
-##### Broker
+#### Broker
 Lo scambio dei dati tra applicativo e dispositivi avviene tramite protocollo di comunicazione **MQTT**.
 
 Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfruttato come broker un server chiamato [MQTTHQ](https://mqtthq.com/): un webserver online pubblico destinato proprio a test di sistemi IoT. Il broker offre inoltre un utile [client](https://mqtthq.com/client) integrato che permette di gestire e simulare subscribe e publish (le funzionalità sono meglio descritte [tutorial](#)).
@@ -134,13 +134,14 @@ Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfr
 | WebSocket Port | 8083 |
 | WebSocket Path | /mqtt |
 
-## Publish (dispositivi ancyb)
+#### Publish (dispositivi ancyb)
 I vari dispositivi sottomarini effettuano regolarmente dei publish al topic "ANcybDiagnosticTool" tramite i quali inviano messaggi che rispettano una certa sintassi compresa poi dell'applicativo che poi effettua l'opportuna modellazione (vedi dataManager).
 
-## Subscribe (applicativo)
+#### Subscribe (applicativo)
 L'applicativo è in costante ascolto grazie al subscribe allo stesso topic "ANcybDiagnosticTool" e così riceve i messaggi pubblicati sul topic da ciascun dispositivo.
 
 Il subscribe viene configurato nel `main` del programma tramite il costruttore del MQTT client.
+
 ```java
 ANcybMqttClient mqttClient = new ANcybMqttClient();
 ```
@@ -154,7 +155,9 @@ public ANcybMqttClient() throws MqttException {
         this.subscribe("ANcybDiagnosticTool");
     }
 ```
+
 Di seguito le configurazioni dei client:
+
 | Proprietà | ancybDiagnostiTool | dipositivi |
 | ------ | ------ | ------ |
 | ClientID | spring-server-ancyb-(*data e ora all'avvio*) | ancybFish-(*MAC address*) |
@@ -164,11 +167,12 @@ Di seguito le configurazioni dei client:
 <a name="notaSubscribe"></a>
 **NOTA:** *il publish dell'applicativo non è stato implementato per motivi di sintesi del progetto.
 Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.
+
 ```
 ANcybDiagnosticTool/a4:cf:12:76:76:95
 ```
 
-### Gestione messaggi MQTT
+#### Gestione messaggi MQTT
 
 I messaggi inviati dai dispositivi sottomarini e ricevuti tramite il subscribe dell'applicativo sono stringhe che rispettano una precisa struttura.
 
@@ -185,7 +189,7 @@ DataReceived data = ancybDataManager.createDataObj(strReceived);
 ```
 Viene restituita un'istanza di tipo `ANcybFishData`. Da questa superclasse ereditano gli attributi le strutture che descrivono i dati ricevuti dai dispositivi di diverse versioni. Questo metodo elabora quindi la stringa, identifica la versione e richiama il rispettivo costruttore.
 
-Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di tipo MqttStringMismatch (LIINK!!!)
+Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di tipo [MqttStringMismatch](#mqttstringmismatch)
 
 | ANcybFishData | descrizione | 
 | ---- | ---- |
@@ -246,6 +250,8 @@ Di seguito è riportata la gerarchia delle classi.
 
 ![eredita](ANcyb_DiagnosticTool/media/images/Eredità_ANcybFishData.png)
 
+___
+
 ### DataLogger
 
 I dati ricevuti da MQTT e istanziati correttamente vengono stampati su un file di testo che viene creato ed è associato esclusivamente alla sessione corrente.
@@ -255,13 +261,13 @@ Vedi un esempio di DataLogger qui. (!!!LLLIIIINNNKKK!!!)
 
 ___
 
-### Interfaccia utente (SILVER)
+### Interfaccia utente 
 
 Il progetto può essere sfruttato tramite un qualsiasi browser, ma in fase di testing e di sviluppo è risultato ottimo l'utilizzo di [Postman](https://www.postman.com/).
 Quest'ultimo è uno strumento di testing di API che possiede numerose features, tra cui la possibilità di salvare le rotte chiamate e di tabulare i dati in ricezione.
 Pertanto, almeno in una fase primaria è consigliato l'utilizzo di questo software.
 
-___
+
 ## ROTTE 
 
 Di seguito sono elencate le rotte disponibili corredate delle relative descrizioni.
@@ -278,13 +284,15 @@ Alcune note comuni:
 5 | ` POST ` | [`/{macAddr}/device/all`](#rotta5) | restituisce lo storico delle istanze di dati di bordo inviati dal dispositivo.
 6 | ` POST ` | [`/{macAddr}/device/stats`](#rotta6) | restituisce tutte le statistiche disponibili sui dati di bordo del dispositivo.
 
+____
+
 <a name="rotta1"></a>
 ### 1. */{macAddr}/forecast*
 
 #### Esempio di input
 ![rotta1](/media/images/screen%20rotte/rotta1.png)
 
-### Dati ricevuti
+#### Dati ricevuti
 
 ```json
 {
@@ -303,13 +311,14 @@ Alcune note comuni:
 - [FilterObjByMac](#filtro3)
 
 ___
+
 <a name="rotta2"></a>
 ### 2. */{macAddr}/forecast/filter*
 
 #### Esempio di input
 ![rotta2](/media/images/screen%20rotte/rotta2.png)
 
-### Dati ricevuti
+#### Dati ricevuti
 
 ```json
 {
@@ -328,13 +337,14 @@ ___
 - [FilterObjByMac](#filtro3)
 
 ___
+
 <a name="rotta3"></a>
 ### 3. */{macAddr}/forecast/stats*
 
 #### Esempio di input
 ![rotta3](/media/images/screen%20rotte/rotta3.png)
 
-### Dati ricevuti
+#### Dati ricevuti
 
 ```json
 {
@@ -365,13 +375,14 @@ ___
 - [FilterObjByMac](#filtro3)
 
 ___
+
 <a name="rotta4"></a>
 ### 4. */{macAddr}/device/last*
 
 #### Esempio di input
 ![rotta4](/media/images/screen%20rotte/rotta4.png)
 
-### Dati ricevuti
+#### Dati ricevuti
 
 ```json
 {
@@ -390,13 +401,14 @@ ___
 - [FilterObjByMac](#filtro3)
 
 ___
+
 <a name="rotta5"></a>
 ### 5. */{macAddr}/device/all*
 
 #### Esempio di input
 ![rotta5](/media/images/screen%20rotte/rotta5.png)
 
-### Dati ricevuti
+#### Dati ricevuti
 
 ```json
 [
@@ -437,13 +449,14 @@ ___
 - [FilterListByMac](#filtro2)
 
 ___
+
 <a name="rotta6"></a>
 ### 6. */{macAddr}/device/stats*
 
 #### Esempio di input
 ![rotta6](/media/images/screen%20rotte/rotta6.png)
 
-### Dati ricevuti
+#### Dati ricevuti
 
 ```json
 {
@@ -460,7 +473,6 @@ ___
 - [AverageTemperatureFish](#stats3)
 - [GeodeticDistance](#stats4)
 
-___
 
 ## FILTRI
 
@@ -468,7 +480,7 @@ Nel progetto sono stati implementati dei **filtri**, ovvero delle classi che si 
 Queste classi sono risultate estremamente utili dal punto di vista pratico, in quanto utilizzati in molteplici contesti (a parte nella stesura delle rotte apposite).
 
 
-Come mostrato nell'UML `LINK ALL'UMLllllllll`, i filtri implementano un'interfaccia chiamata `FilterInterface` suddivisa in tre metodi, che compongono la loro struttura generica:
+Come mostrato nella sezione [filtri](#filtriuml) dell'[UML](#uml), i filtri implementano un'interfaccia chiamata `FilterInterface` suddivisa in tre metodi, che compongono la loro struttura generica:
 
 | Tipo |  Metodo |  Descrizione |
 | ---   |   ---  | ---- |
@@ -485,9 +497,8 @@ I filtri implementati sono descritti in tabella:
 | <a name="filtro2"></a>`FilterListByMac` | Restituisce una collezione di istanze di dati di bordo in base all'indirizzo MAC  |
 | <a name="filtro3"></a>`FilterObjByMac` | Restituisce l'ultima istanza di dati di bordo in base all'indirizzo MAC |
 
-___
 
-## STATS 
+## STATS
 
 In modo simile ai filtri, l'applicativo sfrutta delle classi per eseguire delle **statistiche** sui dati. 
 Esse consistono nel prelevare determinate istanze per crearne altre, le quali contengono dei valori medi: grazie a questo meccanismo, il cliente ha la capacità di monitorare l'andamento di determinate grandezze, che siano relative al passato (dati di bordo) o al futuro (previsione meteo).
@@ -510,8 +521,8 @@ Le stats implementate sono descritte in tabella:
 | <a name="stats3"></a>`AverageTemperatureFish` | Restituisce la temperatura media del dispositivo, effettuata sulle istanze di dati di bordo selezionate |
 | <a name="stats4"></a>`GeodeticDistance` | Restituisce la distanza geodetica percorsa del dispositivo, effettuata sulle istanze di dati di bordo selezionate |
 
-___
 
+<a name="uml"></a>
 ## UML
 
 ![uml](/media/images/screen%20UML/UML.png)
@@ -540,6 +551,7 @@ ___
 
 ![datalogger](/media/images/screen%20UML/datalogger.png)
 
+<a name="filtriuml"></a>
 ### Filtri
 
 ![filters](/media/images/screen%20UML/filters.png)
@@ -556,15 +568,14 @@ ___
 
 ![utilities](/media/images/screen%20UML/utilities.png)
 
-___
 
-## DIMOSTRAZIONE DI FUNZIONAMENTO (JACK)
+## DIMOSTRAZIONE DI FUNZIONAMENTO 
 
 Basandosi sulla ricezione di dati in real-time, l'applicativo dovrebbe essere testato esclusivamente se si è dotati di un dispositivo ANcybFish.
 
 Per ovviare all'assenza di questo, sono possibli due vie per testare l'applicativo e le sue principali funzionalità.
 
-##### Test amministratore
+### Test amministratore
 
 Nel package `DataReceived` è stata implementata la classe `Admin` il cui metodo `simulateDataReceived()` crea 18 istanze tra `ANcybFishData_VerG` e `ANcybFishData_VerGT` provenienti da 3 zone geografiche note (Ancona, Sidney e NewYork) e dispositivi diversi (3 MAC address diversi).
 
@@ -572,7 +583,7 @@ Il metodo è presente nel `main` e verrà azionato a seconda del `boolean` che v
 
 Per questo, dopo aver avviato l'applicativo è possibile testare le varie rotte del programma e confrontare i risultati ottenuti da filti e stats, con quelli riportati nel file tutorial consultabile qui !!LLLLLLLIIIIIIIIINKKKKK!!, il tutto senza ricevere altri dati via MQTT. 
 
-##### Test real-time
+### Test real-time
 
 E' possibile testare l'applicativo in tutte le sue componenti (sia rotte, che lato ricezione MQTT) utilizzando il [client](https://mqtthq.com/client) reso disponibile direttamente dal broker via browser.
 
@@ -580,9 +591,8 @@ In questo modo sarà possibile far ricevere all'applicazione qualsiasi messaggio
 
 Tutte le informazioni e le istruzioni possono essere consultate qui !LLIINNKK!.
 
-___
 
-## ECCEZIONI (JACK)
+## ECCEZIONI
 
 Sono state create una serie di **eccezioni personalizzate** consultabili [qui]!!!LIIINKK!!!.
 
@@ -619,14 +629,14 @@ InvalidParameter(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ForecastBuildingFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
 
-Nel caso di classi che avrebbero lanciato molte eccezioni diverse si è optato per creare delle macro eccezioni (come **MqttStringMismatch**) che le potessero racchiudere in un un'unica. In tali casi verrà mostrato un messaggio del tipo
+Nel caso di classi che avrebbero lanciato molte eccezioni diverse si è optato per creare delle macro eccezioni (come <a name="mqttstringmismatch"></a>**MqttStringMismatch**) che le potessero racchiudere in un un'unica. In tali casi verrà mostrato un messaggio del tipo
 ```
 Exception: it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch: MqttStringMismatch(Ver_GT constructor)
 Deep Exception: it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat: WrongCoordFormat(Latitude) -> angle not included between -90° and 90°
 ```
-___
 
-## Test (JACK)
+
+## Test 
 
 Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [qui]!!!LLLLIIIIINNNKK!!. Nel dettaglio:
 
@@ -634,9 +644,9 @@ Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [q
 * **Test 2:** `TestMqttDataReceived` testa i vari metodi presenti nel package DataReceived, ovvero chi gestisce le stringhe inviate dai dispositivi e le conseguenti istanze `ANcybFishData`.
 * **Test 3:** `FishDataManagerTest` testa i metodi di `AncybDiagnosticToolServiceImpl` tra cui i filtri !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!!  e le stats !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! sui `ANcybFishData`.
 * **Test 4:** `ForecastDataManagerTest` testa il metodo `BuildForecast` che si occupa di elabora i dati ricevuti dalla chiamata API.
-___
 
-## EVENTUALI SVILUPPI FUTURI (JACK)
+
+## EVENTUALI SVILUPPI FUTURI 
 
 A causa degli scopi prettamente didattici e le tempistiche relativamente ridotte per un progetto reale di tali dimensioni, 
 il lavoro ha subito varie semplificazioni funzionali che ne giustificano la reale implementazione.
@@ -649,7 +659,7 @@ Di seguito vengono elencate alcune features che avrebbero conferito al lavoro un
     - visualizzando i dati descritti sopra in un'unica schermata
     - trasformando l'imput da testuale (inserimento di rotte) a grafico (pulsanti)
 - Implementazione del publish da parte dell'applicativo che potrebbe quindi inviare dei messaggi a specifici topic corrispondenti ai vari dispositivi (vedi [Nota](#subscribe)). Questi messaggi inviati potrebbero, sulla base dei dati meteorologici marini, condizionare il comportamento dei dispositivi in acqua (un esempio potrebbe essere: nel caso venga previsto un forte moto ondoso far emergere il dispositivo).
-__
+
 
 ## AUTORI
 
