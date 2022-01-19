@@ -1,0 +1,14 @@
+it.univpm.ancyb_diagnosticTool
+it.univpm.ancyb_diagnosticTool.controller
+it.univpm.ancyb_diagnosticTool.dataLogger
+it.univpm.ancyb_diagnosticTool.Exception
+it.univpm.ancyb_diagnosticTool.filters
+it.univpm.ancyb_diagnosticTool.filters.test
+it.univpm.ancyb_diagnosticTool.model
+it.univpm.ancyb_diagnosticTool.mqtt.dataReceived
+it.univpm.ancyb_diagnosticTool.mqtt.dataReceived.test
+it.univpm.ancyb_diagnosticTool.mqtt.mqttClient
+it.univpm.ancyb_diagnosticTool.service
+it.univpm.ancyb_diagnosticTool.service.test
+it.univpm.ancyb_diagnosticTool.stats
+it.univpm.ancyb_diagnosticTool.utilities
