@@ -118,6 +118,7 @@ A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti 
 ___
 ### SERVIZIO MQTT (JACK)
 
+##### Broker
 Lo scambio dei dati tra applicativo e dispositivi avviene tramite protocollo di comunicazione **MQTT**.
 
 Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfruttato come broker un server chiamato [MQTTHQ](https://mqtthq.com/): un webserver online pubblico destinato proprio a test di sistemi IoT. Il broker offre inoltre un utile [client](https://mqtthq.com/client) integrato che permette di gestire e simulare subscribe e publish (le funzionalità sono meglio descritte [tutorial](#)).
@@ -129,8 +130,10 @@ Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfr
 | WebSocket Port | 8083 |
 | WebSocket Path | /mqtt |
 
+##### Publish (dispositivi ancyb)
 I vari dispositivi sottomarini effettuano regolarmente dei publish al topic "ANcybDiagnosticTool" tramite i quali inviano messaggi che rispettano una certa sintassi compresa poi dell'applicativo che poi effettua l'opportuna modellazione (vedi dataManager).
 
+##### Subscribe (applicativo)
 L'applicativo è in costante ascolto grazie al subscribe allo stesso topic "ANcybDiagnosticTool" e così riceve i messaggi pubblicati sul topic da ciascun dispositivo.
 
 Il subscribe viene configurato nel `main` del programma tramite il costruttore del MQTT client.
@@ -218,6 +221,7 @@ Di seguito vengono elencate alcune features che avrebbero conferito al lavoro un
     - integrando Google Maps per visualizzare graficamente la posizione dei dispositivi
     - visualizzando i dati descritti sopra in un'unica schermata
     - trasformando l'imput da testuale (inserimento di rotte) a grafico (pulsanti)
+- Implementazione del publish da parte dell'applicativo che potrebbe quindi inviare dei messaggi a specifici topic corrispondenti ai vari dispositivi (vedi [Nota]()). Questi messaggi inviati potrebbero, sulla base dei dati meteorologici marini, condizionare il comportamento dei dispositivi in acqua (un esempio potrebbe essere: nel caso venga previsto un forte moto ondoso far emergere il dispositivo).
 __
 
 ##AUTORI
