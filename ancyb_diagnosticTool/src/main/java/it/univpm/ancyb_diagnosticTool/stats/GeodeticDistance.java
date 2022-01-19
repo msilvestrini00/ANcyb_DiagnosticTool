@@ -75,13 +75,11 @@ public class GeodeticDistance implements StatsInterface {
 		} catch (VersionMismatch e) {
 			throw new StatsFailure("StatsFailure(GeodeticDistance) --> the data for stats do not contain position Infos.\n" + "Deep Exception: " + e);
 		}
-		//TODO da fare la cosa punto a punto dopo aver testato
-		distanceTraveled = Coord.disgeod( ((ANcybFishData_VerG) dataForStats.get(0)).getCoord(), ((ANcybFishData_VerG) dataForStats.get(dataForStats.size()-1)).getCoord());
-		/*
+		distanceTraveled = 0;
 		for(int i=0; i<dataForStats.size()-1; i++) {
 			distanceTraveled = distanceTraveled + Coord.disgeod( ((ANcybFishData_VerG) dataForStats.get(i)).getCoord(), ((ANcybFishData_VerG) dataForStats.get(i+1)).getCoord());
 		}
-		*/
+		
 		this.stats = String.format("%.2f", distanceTraveled) + " m";
 	}
 

@@ -18,7 +18,9 @@ Esatta>> "a4:cf:12:76:76:95 Ver_GT 16:10:45 4331.5283N 01323.7442E 1 10.5"
 Errata>> "a4:cf:12:76:76:95 Ver_GTP 16:05:45 4331.5283N 01323.7442E 1"		-->	La Stringa della versione non corrisponde alle versioni implementate
 Errata>> "a4:cf812:76:76:95 Ver_G 16:05:45 4331.5283N 01323.7442E 1"  		-->	Il Mac Address non rispetta le regole di sintassi
 Errata>> "a4:cf:12:76:76:95 Ver_G 16:05:45 4331.5283N 01323.7442E 1 10.5"	-->	La Stringa ricevuta presenta degli elementi in più (per la versione G)
-Errata>> "a4:cf:12:76:76:95 Ver_GT 16:05:45 9731.5283N 01323.7442E 1 10.5"	-->	La latitudine è sbagliata (maggiore di 90°) 
+Errata>> "a4:cf:12:76:76:95 Ver_GT 16:05:45 9731.5283N 01323.7442E 1 10.5"	-->	La latitudine è sbagliata (maggiore di 90°)
+Errata>> "a4:cf:12:76:76:95 Ver_GT 16:05:45 8531.5283N 19023.7442E 1 10.5"	-->	La latitudine è sbagliata (maggiore di 180°) 
+Errata>> "a4:cf:12:76:76:95_Ver_GT_16:05:45_8531.5283N_06023.7442E_1_10.5"	-->	Eccezione ArrayIndexOutOfBound
 
 > Un esempio di dati inviati al broker e ricevuti corretamente dal subscriber (sono gli stessi dati istanziati dal metodo "Admin.simulate.simulateDataReceived(boolean)"):
 "a4:cf:12:76:76:95 Ver_G 16:05:45 4334.5102N 01335.2629E 1"
@@ -52,10 +54,12 @@ a4:cf:12:76:76:95 - DAVANTI ANCONA 		43,575227		13,587703	-->		4334.5136N 01335.
 b4:cf:12:76:76:95 - DAVANTI NEW YORK 	40,523183		-74,02314	-->		4031.3910N 07401.3884W		
 c4:cf:12:76:76:95 - DAVANTI SIDNEY		-34,01626		151,845730	-->		3400.9756S 15150.7438E		
 
-> Risultati (stats sul gps) attesi
-a4:cf:12:76:76:95	-->		6.407 m
-b4:cf:12:76:76:95   -->		3.257 m
-c4:cf:12:76:76:95 	-->		0 m
+> Risultati (stats sul gps) attesi (utilizzare un qualsiasi calcolatore online di distanza geodetica ed eseguire la somma punto per punto per ogni dispositivo)
+(I risultati potrebbero differi di qualche metro a causa delle varie approssimazioni e modelli usati).
+(Si ricorda che la distanza geodetica effettuata dall'applicativo utilizza un modello della Terra sferico).
+a4:cf:12:76:76:95	-->		10,02 m
+b4:cf:12:76:76:95   -->		3.27 m
+c4:cf:12:76:76:95 	-->		0 m 
 
 > Risultati (stats sulla temp) attesi
 a4:cf:12:76:76:95   -->		statistiche non presenti
