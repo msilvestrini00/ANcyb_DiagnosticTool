@@ -505,7 +505,7 @@ E' possibile testare l'applicativo in tutte le sue componenti (sia rotte, che la
 
 In questo modo sarà possibile far ricevere all'applicazione qualsiasi messaggio desiderato, così da testare anche eccezioni e funzionalità in tempo reale.
 
-Tutte le informazioni e le istruzioni possono essere consultate qui !LLIINNKK!
+Tutte le informazioni e le istruzioni possono essere consultate qui !LLIINNKK!.
 
 ___
 ## ECCEZIONI (JACK)
