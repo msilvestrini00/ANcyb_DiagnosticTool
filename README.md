@@ -4,7 +4,7 @@
 
 ### INDICE
 
-## INTRODUZIONE (SILVER)
+## INTRODUZIONE 
 
 ### Contesto
 
@@ -24,31 +24,31 @@ Il progetto è un'applicazione Springboot scritta in linguaggio **Java**,  che c
 - rendere disponibile all'utente la visualizzazione di questi dati attraverso varie modalità, permettendo di filtrarli o di eseguire statistiche su di essi.
 
 ## COMPONENTI E STRUMENTI UTILIZZATI
+
 Per un'approccio concettuale più concreto, di seguito si descrivono i macroblocchi hardware e software utilizzati durante lo sviluppo del progetto, partendo dalla sorgenti di dati per arrivare all'utente.
 
 [SCHEMA A BLOCCHI SUL PROGETTO?]
 
-### Robot marino (SILVER)
+### Robot marino
 
-Per aggiungere un grado di difficoltà al progetto, si è supposto che l'applicativo comunichi con dispositivi appartenenti a tre ipotetiche versioni, che si differenziano per la sensoristica di bordo.
-| Versione | Sensoristica al suo interno |
-| ------ | ------ |
-| ANcyb Ver_G| [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
+Per aggiungere un grado di difficoltà al progetto, si è supposto che l'applicativo comunichi con dispositivi appartenenti a tre ipotetiche versioni, che si differenziano leggermente per l'hardware al loro interno.
 
-
-
-
-Esso è composto principalmente da:
+Tutti i robot sono composti principalmente da:
 - un sistema di propulsione motorizzata
-- uno scomparto hardware
+- uno scomparto hardware, caratterizzato da un microcontrollore e la sensoristica
 
-In particolare, quest'ultimo è stato ideato per ospitare il microcontrollore e della sensoristica, ad esempio un GPS e un termometro.
-Abbiamo intenzione di scrivere una routine in micropython nel microcontrollore di bordo che (via WiFi) esso manda i dati ad un servizio remoto: 
-successivamente, un client Java prende la posizione del robot e la inserisce in una mappa, indicandone la temperatura.
+Il dispositivo è dotato di un microcontrollore ESP32, il quale viene programmato tramite [MicroPython](https://micropython.org/).
 
+Invece, per quanto riguarda i sensori sfruttati:
+| Versione | Sensoristica  |
+| ------ | ------ |
+| ANcybFish Ver_G  | GPS         |
+| ANcybFish Ver_P  | Pressione   |
+| ANcybFish Ver_GT | GPS + Temperatura |
+
+L'intero hardware è costituito da schede modulabili: questo lo rende estremamente facile da montare e/o intercambiare all'interno dello scomparto del dispositivo.
+
+[FOTO VARIE?]
 
 ### REST API (SILVER)
 
@@ -82,7 +82,10 @@ il lavoro ha subito varie semplificazioni funzionali che ne giustificano la real
 Di seguito vengono elencate alcune features che avrebbero conferito al lavoro una effettiva utilità in campo:
 
 - Sostituzione del sistema di posizionamento subacqueo con tecnologia USBL al posto di quello GPS (per permettere l'invio dei dati in immersione)
-- ....
+- Implementazione di un'interfaccia web che rende l'applicativo più user-friendly:
+    - integrando Google Maps per visualizzare graficamente la posizione dei dispositivi
+    - visualizzando i dati descritti sopra in un'unica schermata
+    - trasformando l'imput da testuale (inserimento di rotte) a grafico (pulsanti)
 
 ##AUTORI
 
