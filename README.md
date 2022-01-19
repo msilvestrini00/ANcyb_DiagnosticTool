@@ -512,9 +512,9 @@ Le stats implementate sono descritte in tabella:
 ___
 
 
-
-
 ## UML (SILVER)
+
+
 
 ___
 ## DIMOSTRAZIONE DI FUNZIONAMENTO (JACK)
