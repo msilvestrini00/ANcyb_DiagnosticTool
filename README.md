@@ -233,7 +233,7 @@ Viene restituita un'istanza di tipo `ANcybFishData`. Da questa superclasse eredi
 "b4:cf:12:76:76:95 Ver_GT 16:05:50 101325"
 ```
 
-**NOTA:** *Le coordinate ricevute via stringa sono in formato DDM (gradi e minuti decimali), le conversioni vegnono effettuate tramite opportuni metodi implementati dalla classe `Coord`*
+**NOTA:** *Le coordinate ricevute via stringa sono in formato DDM (gradi e minuti decimali), le conversioni in formato DD vegnono effettuate tramite opportuni metodi implementati dalla classe `Coord`. La conversione in DD è necessario per l'utilizzo dell'API esterna. (metti il link)*
 **NOTA:** *La gestione delle conversioni di tipo o di formato dei dati ricevuti è gestito interamente dai costruttori.*
 
 Di seguito è riportata la gerarchia delle classi.
@@ -279,7 +279,11 @@ ___
 
 Oltre alle eccezioni standard di Java sono state gestite le seguenti *eccezioni personalizzate* spiegate di seguito e consultabili [qui](https://github.com/ingtommi/ObjectOrientedProgramming/tree/main/TweetAnalyzer/src/main/java/it/univpm/TweetAnalyzer/exception).
 
-* **WrongCoordFormat:** lanciata se *{method}* diverso da **and** oppure **or**, viene visualizzato il messaggio
+* **WrongCoordFormat:** lanciata se è impossibile convertire una coordinata dal formato DDM al formato DD, viene visualizzato il messaggio
+```
+"ERROR: wrong method!"
+```
+* **MqttStringMismatch:** lanciata se *{method}* diverso da **and** oppure **or**, viene visualizzato il messaggio
 ```
 "ERROR: wrong method!"
 ```
