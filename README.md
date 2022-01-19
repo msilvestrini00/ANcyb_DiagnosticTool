@@ -1,4 +1,5 @@
 ### PROGETTO DI PROGRAMMAZIONE AD OGGETTI A.A. 2021-2022
+[logo](/media/images/LogoANcybDiagnosticToolRounded.png)
 # ANCYBERNETICS DIAGNOSTIC TOOL 
 ### *Strumento di diagnostica per dispositivi marini per ricezione dei dati di bordo e valutazione della situazione meteorologica marina*
 
@@ -243,7 +244,7 @@ Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di 
 
 Di seguito è riportata la gerarchia delle classi.
 
-!!qui metti il link all'immagine!!
+[logo](ANcyb_DiagnosticTool/media/images/Eredità_ANcybFishData.png)
 
 ### DataLogger
 
