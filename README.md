@@ -511,12 +511,52 @@ Le stats implementate sono descritte in tabella:
 
 ___
 
-
 ## UML (SILVER)
 
+![uml](/media/images/screen%20UML/UML.png)
 
+### Applicazione
+
+![application](/media/images/screen%20UML/application.png)
+
+### Controller
+
+![controller](/media/images/screen%20UML/controller.png)
+
+### Servizi
+
+![service](/media/images/screen%20UML/service.png)
+
+### Modello
+
+![model](/media/images/screen%20UML/model.png)
+
+### MQTT
+
+![mqtt](/media/images/screen%20UML/mqtt.png)
+
+### Datalogger
+
+![datalogger](/media/images/screen%20UML/datalogger.png)
+
+### Filtri
+
+![filters](/media/images/screen%20UML/filters.png)
+
+### Statistiche
+
+![stats](/media/images/screen%20UML/stats.png)
+
+### Eccezioni
+
+![exception](/media/images/screen%20UML/exception.png)
+
+### Utilities
+
+![utilities](/media/images/screen%20UML/utilities.png)
 
 ___
+
 ## DIMOSTRAZIONE DI FUNZIONAMENTO (JACK)
 
 Basandosi sulla ricezione di dati in real-time, l'applicativo dovrebbe essere testato esclusivamente se si è dotati di un dispositivo ANcybFish.
@@ -540,6 +580,7 @@ In questo modo sarà possibile far ricevere all'applicazione qualsiasi messaggio
 Tutte le informazioni e le istruzioni possono essere consultate qui !LLIINNKK!.
 
 ___
+
 ## ECCEZIONI (JACK)
 
 Sono state create una serie di **eccezioni personalizzate** consultabili [qui]!!!LIIINKK!!!.
@@ -583,6 +624,7 @@ Exception: it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch: MqttStri
 Deep Exception: it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat: WrongCoordFormat(Latitude) -> angle not included between -90° and 90°
 ```
 ___
+
 ## Test (JACK)
 
 Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [qui]!!!LLLLIIIIINNNKK!!. Nel dettaglio:
@@ -592,6 +634,7 @@ Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [q
 * **Test 3:** `FishDataManagerTest` testa i metodi di `AncybDiagnosticToolServiceImpl` tra cui i filtri !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!!  e le stats !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! sui `ANcybFishData`.
 * **Test 4:** `ForecastDataManagerTest` testa il metodo `BuildForecast` che si occupa di elabora i dati ricevuti dalla chiamata API.
 ___
+
 ## EVENTUALI SVILUPPI FUTURI (JACK)
 
 A causa degli scopi prettamente didattici e le tempistiche relativamente ridotte per un progetto reale di tali dimensioni, 
@@ -607,7 +650,14 @@ Di seguito vengono elencate alcune features che avrebbero conferito al lavoro un
 - Implementazione del publish da parte dell'applicativo che potrebbe quindi inviare dei messaggi a specifici topic corrispondenti ai vari dispositivi (vedi [Nota](#subscribe)). Questi messaggi inviati potrebbero, sulla base dei dati meteorologici marini, condizionare il comportamento dei dispositivi in acqua (un esempio potrebbe essere: nel caso venga previsto un forte moto ondoso far emergere il dispositivo).
 __
 
-##AUTORI
+## AUTORI
+
+Nome | LinkedIn | Contributo
+---- | ---- | ----
+[Giacomo Fiara](https://github.com/gfiara) | [Link](https://www.linkedin.com/in/giacomo-fiara-7733b0222/) | 50%
+[Manuele Silvestrini](https://github.com/msilvestrini00) | [Link](https://www.linkedin.com/in/manuele-silvestrini-a195bb222/) | 50%
+
+
 
 
 
