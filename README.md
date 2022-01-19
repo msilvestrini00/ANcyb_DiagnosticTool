@@ -657,32 +657,39 @@ WrongCoordFormat(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
 MqttStringMismatch(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **FilterFailure**: lanciata se avvengono errori nell'elaborazioni con i filtri. (!!!LINKK!!)
+<br/>
+* **FilterFailure**: lanciata se avvengono errori nell'elaborazioni con i [filtri]. (#filtri)
 ```
 FilterFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **StatsFailure**: lanciata se avvengono errori nell'elaborazioni con le statistiche. (!!!LINKK!!)
+<br/>
+* **StatsFailure**: lanciata se avvengono errori nell'elaborazioni con le [statistiche](#stats).
 ```
 StatsFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **VersionMismatch**: lanciata per segnalare situazioni in cui la versione di un'istanza non coincide con quella attesa. (!!!LINKK!!)
+<br/>
+* **VersionMismatch**: lanciata per segnalare situazioni in cui la versione di un'istanza non coincide con quella attesa.
 ```
 VersionMismatch(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **URLIsNull**: lanciata per segnalare che l'URL non è stato generato, quindi è nullo. (!!!LINKK!!)
+<br/>
+* **URLIsNull**: lanciata per segnalare che l'URL non è stato generato, quindi è nullo.
 ```
 URLIsNull(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **InvalidParameter**: lanciata se eventuali parametri in ingresso risultano invalidi. (!!!LINKK!!)
+<br/>
+* **InvalidParameter**: lanciata se eventuali parametri in ingresso risultano invalidi.
 ```
 InvalidParameter(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **ForecastBuildingFailure**: lanciata se avviene un errore durante la costruzione di un oggetto `Forecast`. (!!!LINKK!!)
+<br/>
+* **ForecastBuildingFailure**: lanciata se avviene un errore durante la costruzione di un oggetto `Forecast`.
 ```
 ForecastBuildingFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
+<br/>
 
-Nel caso di classi che avrebbero lanciato molte eccezioni diverse si è optato per creare delle macro eccezioni (come <a name="mqttstringmismatch"></a>**MqttStringMismatch**) che le potessero racchiudere in un un'unica. In tali casi verrà mostrato un messaggio del tipo
+Nel caso di classi che avrebbero lanciato molte eccezioni diverse si è optato per creare delle macro eccezioni (come in [MqttStringMismatch](#MqttStringMismatch)) che le potessero racchiudere in un un'unica. In tali casi verrà mostrato un messaggio del tipo
 ```
 Exception: it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch: MqttStringMismatch(Ver_GT constructor)
 Deep Exception: it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat: WrongCoordFormat(Latitude) -> angle not included between -90° and 90°
@@ -691,11 +698,11 @@ Deep Exception: it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat: Wrong
 <a name="test"></a>
 ## TEST 
 
-Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [qui]!!!LLLLIIIIINNNKK!!. Nel dettaglio:
+Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [qui](/ancyb_diagnosticTool/src/test/java/it/univpm/ancyb_diagnosticTool/). Nel dettaglio:
 
-* **Test 1:** `FilterForecastByTimeTest` testa la relativa classe `FilterForecastByTime` !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! 
+* **Test 1:** `FilterForecastByTimeTest` testa la relativa classe [`FilterForecastByTime`](#filtro1) 
 * **Test 2:** `TestMqttDataReceived` testa i vari metodi presenti nel package DataReceived, ovvero chi gestisce le stringhe inviate dai dispositivi e le conseguenti istanze `ANcybFishData`.
-* **Test 3:** `FishDataManagerTest` testa i metodi di `AncybDiagnosticToolServiceImpl` tra cui i filtri !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!!  e le stats !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! sui `ANcybFishData`.
+* **Test 3:** `FishDataManagerTest` testa i metodi di `AncybDiagnosticToolServiceImpl` tra cui i [filtri](#filtri)  e le [stats](#stats) sui `ANcybFishData`.
 * **Test 4:** `ForecastDataManagerTest` testa il metodo `BuildForecast` che si occupa di elabora i dati ricevuti dalla chiamata API.
 
 <a name="sviluppifuturi"></a>
