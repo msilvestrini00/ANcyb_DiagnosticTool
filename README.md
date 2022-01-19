@@ -118,16 +118,33 @@ A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti 
 ___
 ### SERVIZIO MQTT (JACK)
 
-Lo scambio dei dati tra applicativo e dispositivi avviene tramite protocollo di comunicazione MQTT.
-Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfruttato come broker un server chiamato MQTTHQ  "https://mqtthq.com/": un webserver online pubblico destinato proprio a test di sistemi IoT. Il broker offre inoltre un utile client "https://mqtthq.com/client" integrato che permette di gestire e simulare subscribe e publish (le funzionalità sono meglio descritte tutorial).
+Lo scambio dei dati tra applicativo e dispositivi avviene tramite protocollo di comunicazione **MQTT**.
+
+Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfruttato come broker un server chiamato [MQTTHQ](https://mqtthq.com/): un webserver online pubblico destinato proprio a test di sistemi IoT. Il broker offre inoltre un utile [client](https://mqtthq.com/client) integrato che permette di gestire e simulare subscribe e publish (le funzionalità sono meglio descritte tutorial).
+
 I vari dispositivi sottomarini effettuano regolarmente dei publish al topic "ANcybDiagnosticTool" tramite i quali inviano messaggi che rispettano una certa sintassi compresa poi dell'applicativo che poi effettua l'opportuna modellazione (vedi dataManager).
+
 L'applicativo è in costante ascolto grazie al subscribe allo stesso topic "ANcybDiagnosticTool" e così riceve i messaggi pubblicati sul topic da ciascun dispositivo.
 
-Di seguito le configurazioni dei client:
-|Proprietà|ancybDiagnostiTool|dipositivi|
-|ClientID|spring-server-ancyb-(data e ora all'avvio)|ancybFish-(MAC address)|
-|keepalive|||
+Il subscribe viene configurato nel `main` del programma tramite il costruttore del MQTT client.
+```java
+ANcybMqttClient mqttClient = new ANcybMqttClient();
+```
+```java
+package it.univpm.ancyb_diagnosticTool.mqtt.mqttClient;
 
+public ANcybMqttClient() throws MqttException {
+        ANcybMqttClient.getInstance();
+        ancybDataManager = new ANcybDataManager();
+        dataLog = new DataLogger();
+        this.subscribe("ANcybDiagnosticTool");
+    }
+```
+Di seguito le configurazioni dei client:
+| Proprietà | ancybDiagnostiTool | dipositivi |
+| ------ | ------ | ------ |
+| ClientID | spring-server-ancyb-(data e ora all'avvio) | ancybFish-(MAC address) |
+| keepalive |  | 300 |
 
 **NOTA:** *il publish dell'applicativo non è stato implementato per motivi di sintesi del progetto.
 Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.
@@ -192,6 +209,7 @@ Di seguito vengono elencate alcune features che avrebbero conferito al lavoro un
     - integrando Google Maps per visualizzare graficamente la posizione dei dispositivi
     - visualizzando i dati descritti sopra in un'unica schermata
     - trasformando l'imput da testuale (inserimento di rotte) a grafico (pulsanti)
+__
 
 ##AUTORI
 
