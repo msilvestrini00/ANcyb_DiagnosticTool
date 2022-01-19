@@ -644,6 +644,9 @@ In questo modo sarà possibile far ricevere all'applicazione qualsiasi messaggio
 Tutte le informazioni e le istruzioni possono essere consultate [qui](/TutorialANcybDiagnosticToolTest.txt).
 
 <a name="eccezioni"></a>
+
+[***LINK AL VIDEO DELL'APPLICATIVO IN FUNZIONE***](/media/videos/VideoDimostrazioneFunzionamento.mkv)
+
 ## ECCEZIONI
 
 Sono state create una serie di **eccezioni personalizzate** consultabili [qui](/ancyb_diagnosticTool/src/main/java/it/univpm/ancyb_diagnosticTool/Exception/).
