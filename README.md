@@ -205,7 +205,7 @@ public ANcybMqttClient() throws MqttException {
 
 Di seguito le configurazioni dei client:
 
-| Proprietà | ancybDiagnostiTool | dipositivi |
+| Proprietà | ancybDiagnosticTool | dispositivi |
 | ------ | ------ | ------ |
 | ClientID | spring-server-ancyb-(*data e ora all'avvio*) | ancybFish-(*MAC address*) |
 | keepalive | 60 (*non implementato il publisher*) | 300 |
@@ -659,7 +659,7 @@ WrongCoordFormat(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 MqttStringMismatch(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
 
-* **FilterFailure**: lanciata se avvengono errori nell'elaborazioni con i [filtri]. (#filtri)
+* **FilterFailure**: lanciata se avvengono errori nell'elaborazioni con i [filtri](#filtri).
 ```
 FilterFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
