@@ -116,7 +116,7 @@ A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti 
 *ATTENZIONE: i metadati riportati sopra dichiarano che le previsioni disponibili si estendono per dieci giorni, ma per motivi di attendibilità dei dati il servizio è stato ristretto a sette.*
 
 ___
-### SERVIZIO MQTT (JACK)
+### MQTT (JACK)
 
 ##### Broker
 Lo scambio dei dati tra applicativo e dispositivi avviene tramite protocollo di comunicazione **MQTT**.
@@ -157,12 +157,92 @@ Di seguito le configurazioni dei client:
 | keepalive | 60 (*non implementato il publisher*) | 300 |
 | user | *nessun username* | *nessun username* |
 | pass | *nessuna password* | *nessuna password* |
-
+<a name="notaSubscribe"></a>
 **NOTA:** *il publish dell'applicativo non è stato implementato per motivi di sintesi del progetto.
 Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.
 ```
 ANcybDiagnosticTool/a4:cf:12:76:76:95
 ```
+
+##### Gestione messaggi MQTT
+
+I messaggi inviati dai dispositivi sottomarini e ricevuti tramite il subscribe dell'applicativo sono stringhe che rispettano una precisa struttura.
+
+Ciascuna stringa è composta da sottostringhe intervallate da spazi, ogni componente determina le caratteristiche del dispositivo che invia il messaggio o i dati provenienti dalla sensoristica.
+
+**Esempio** di messaggio ricevuto da un ANcybFish Ver_G.
+```java
+"a4:cf:c2:7f:76:45 Ver_G 16:10:45 5189.5102N 10035.2629W 1"
+```
+La gestione di questa stringa è affidata al metodo `createDataObj` della classe `ANcybDataManager`.
+```java
+ANcybDataManager ancybDataManager = new ANcybDataManager();
+DataReceived data = ancybDataManager.createDataObj(strReceived);
+```
+Viene restituita un'istanza di tipo `ANcybFishData`. Da questa superclasse ereditano gli attributi le strutture che descrivono i dati ricevuti dai dispositivi di diverse versioni. Questo metodo elabora quindi la stringa, identifica la versione e richiama il rispettivo costruttore.
+
+| ANcybFishData | descrizione | 
+| ---- | ---- |
+| String **time** | Orario di invio del messaggio. |
+| String **date** | Data di ricezione del messaggio. |
+| String **ver** | Stringa contenente la versione del dispositivo/software. |
+| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+
+| ANcybFishData_VerG | descrizione | 
+| ---- | ---- |
+| String **time** | Orario di invio del messaggio. |
+| String **date** | Data di ricezione del messaggio. |
+| String **ver** | Stringa contenente la versione del dispositivo/software. |
+| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+| float **latitute** | Latitudine in formato DD (Decimal Degrees). |
+| float **longitude** | Longitudine in formato DD (Decimal Degrees). |
+| String **qualPos** | Qualità del segnale GPS |
+
+**Esempio** di messaggio ricevuto da un ANcybFish Ver_G.
+```java
+"a4:cf:12:76:76:95 Ver_G 16:05:45 4334.5102N 01335.2629E 1"
+```
+
+| ANcybFishData_VerG | descrizione | 
+| ---- | ---- |
+| String **time** | Orario di invio del messaggio. |
+| String **date** | Data di ricezione del messaggio. |
+| String **ver** | Stringa contenente la versione del dispositivo/software. |
+| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+| float **latitute** | Latitudine in formato DD (Decimal Degrees). |
+| float **longitude** | Longitudine in formato DD (Decimal Degrees). |
+| String **qualPos** | Qualità del segnale GPS |
+| float **temp** | Temperatura (in gradi Celsius) misurata dal sensore integrato nel rispettivo dispositivo. |
+
+**Esempio** di messaggio ricevuto da un ANcybFish Ver_GT.
+```java
+"b4:cf:12:76:76:95 Ver_GT 16:05:50 4031.3926N 07401.3875W 1 10.5"
+```
+
+*(non implementata)*
+| ANcybFishData_VerP | descrizione |
+| ---- | ---- |
+| String **time** | Orario di invio del messaggio. |
+| String **date** | Data di ricezione del messaggio. |
+| String **ver** | Stringa contenente la versione del dispositivo/software. |
+| String **macAddr** | MAC address del dispositivo da cui arriva il messaggio. |
+| Double **pressure** | Pressione (in Pascal) misurata dal sensore integrato nel rispettivo dispositivo. |
+
+**Esempio** di messaggio ricevuto da un ANcybFish Ver_P.
+```java
+"b4:cf:12:76:76:95 Ver_GT 16:05:50 101325"
+```
+
+**NOTA:** *Le coordinate ricevute via stringa sono in formato DDM (gradi e minuti decimali), le conversioni vegnono effettuate tramite opportuni metodi implementati dalla classe `Coord`*
+**NOTA:** *La gestione delle conversioni di tipo o di formato dei dati ricevuti è gestito interamente dai costruttori.*
+
+
+Questa struttura dati è modellata in Java 
+
+
+
+
+
 ___
 
 ### Interfaccia utente (SILVER)
@@ -201,7 +281,12 @@ ___
 ___
 ## ECCEZIONI (JACK)
 
+Oltre alle eccezioni standard di Java sono state gestite le seguenti *eccezioni personalizzate* spiegate di seguito e consultabili [qui](https://github.com/ingtommi/ObjectOrientedProgramming/tree/main/TweetAnalyzer/src/main/java/it/univpm/TweetAnalyzer/exception).
 
+* **WrongCoordFormat:** lanciata se *{method}* diverso da **and** oppure **or**, viene visualizzato il messaggio
+```
+"ERROR: wrong method!"
+```
 
 ___
 ## TEST (JACK)
@@ -221,7 +306,7 @@ Di seguito vengono elencate alcune features che avrebbero conferito al lavoro un
     - integrando Google Maps per visualizzare graficamente la posizione dei dispositivi
     - visualizzando i dati descritti sopra in un'unica schermata
     - trasformando l'imput da testuale (inserimento di rotte) a grafico (pulsanti)
-- Implementazione del publish da parte dell'applicativo che potrebbe quindi inviare dei messaggi a specifici topic corrispondenti ai vari dispositivi (vedi [Nota]()). Questi messaggi inviati potrebbero, sulla base dei dati meteorologici marini, condizionare il comportamento dei dispositivi in acqua (un esempio potrebbe essere: nel caso venga previsto un forte moto ondoso far emergere il dispositivo).
+- Implementazione del publish da parte dell'applicativo che potrebbe quindi inviare dei messaggi a specifici topic corrispondenti ai vari dispositivi (vedi [Nota](#subscribe)). Questi messaggi inviati potrebbero, sulla base dei dati meteorologici marini, condizionare il comportamento dei dispositivi in acqua (un esempio potrebbe essere: nel caso venga previsto un forte moto ondoso far emergere il dispositivo).
 __
 
 ##AUTORI
