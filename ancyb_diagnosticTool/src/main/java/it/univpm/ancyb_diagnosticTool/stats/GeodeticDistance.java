@@ -73,8 +73,7 @@ public class GeodeticDistance implements StatsInterface {
 		try {
 			CheckVersion.verG(dataForStats);
 		} catch (VersionMismatch e) {
-			System.err.println("Deep Exception: " + e);
-			throw new StatsFailure("StatsFailure(GeodeticDistance) --> the data for stats do not contain position Infos.");
+			throw new StatsFailure("StatsFailure(GeodeticDistance) --> the data for stats do not contain position Infos.\n" + "Deep Exception: " + e);
 		}
 		//TODO da fare la cosa punto a punto dopo aver testato
 		distanceTraveled = Coord.disgeod( ((ANcybFishData_VerG) dataForStats.get(0)).getCoord(), ((ANcybFishData_VerG) dataForStats.get(dataForStats.size()-1)).getCoord());

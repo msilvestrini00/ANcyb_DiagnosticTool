@@ -72,8 +72,7 @@ public class AverageTemperatureFish implements StatsInterface {
 		try {
 			CheckVersion.verGT(dataForStats);
 		} catch (VersionMismatch e) {
-			System.err.println("Deep Exception: " + e);
-			throw new StatsFailure("StatsFailure(AverageTemperatureFish) --> the data for stats do not contain temperature Infos.");
+			throw new StatsFailure("StatsFailure(AverageTemperatureFish) --> the data for stats do not contain temperature Infos.\n" + "Deep Exception: " + e);
 		}
 		
 		float sum = 0;
