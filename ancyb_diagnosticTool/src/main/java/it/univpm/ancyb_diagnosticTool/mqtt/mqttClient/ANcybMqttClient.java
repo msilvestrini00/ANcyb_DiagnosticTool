@@ -144,7 +144,7 @@ public class ANcybMqttClient {
 					DataReceived data = ancybDataManager.createDataObj(str);
 					dataLog.write(data);
 				} catch(MqttStringMismatch e) {
-					System.err.println("Exception:" + e);
+					System.err.println("Exception: " + e);
 					System.err.println("MQTT data received from broker isn't valid!");
 					System.err.println("The data was not stored.");
 				}

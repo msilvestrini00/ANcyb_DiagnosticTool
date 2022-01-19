@@ -43,8 +43,7 @@ public class ANcybDataManager {
 		try {
 			strArr = strReceived.split("\\s+");
 		} catch (PatternSyntaxException e) {
-			System.err.println("Deep Exception: " + e);
-			throw new MqttStringMismatch("MqttStringMismatch(split String received) --> String received can't be splitted");
+			throw new MqttStringMismatch("MqttStringMismatch(split String received)\n" + "Deep Exception: " + e);
 		}
 		
 		try {
@@ -57,8 +56,7 @@ public class ANcybDataManager {
 				try {
 					ancybData = new ANcybFishData_VerG(strArr);
 				} catch (InvalidParameter|WrongCoordFormat|NullPointerException|NumberFormatException|ArrayIndexOutOfBoundsException e) {
-					System.err.println("Deep Exception: " + e);
-					throw new MqttStringMismatch("MqttStringMismatch(Ver_G constructor) --> " + e.getMessage());
+					throw new MqttStringMismatch("MqttStringMismatch(Ver_G constructor)\n" + "Deep Exception: " + e);
 				}
 				DataSaved.getList().add(ancybData);
 				break;
@@ -71,8 +69,7 @@ public class ANcybDataManager {
 				try {
 					ancybData = new ANcybFishData_VerGT(strArr);
 				} catch (InvalidParameter|WrongCoordFormat|NullPointerException|NumberFormatException|ArrayIndexOutOfBoundsException e) {
-					System.err.println("Deep Exception: " + e);
-					throw new MqttStringMismatch("MqttStringMismatch(Ver_GT constructor) --> " + e.getMessage());
+					throw new MqttStringMismatch("MqttStringMismatch(Ver_GT constructor)\n" + "Deep Exception: " + e);
 				}
 				DataSaved.getList().add(ancybData);
 				break;
@@ -87,8 +84,7 @@ public class ANcybDataManager {
 				throw new MqttStringMismatch("MqttStringMismatch() --> Data received does not correspond to any 'ANcybFishData' software release.");
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
-			System.err.println("Deep Exception: " + e);
-			throw new MqttStringMismatch("MqttStringMismatch(String generated an Array too small.) --> " + e.getMessage());
+			throw new MqttStringMismatch("MqttStringMismatch(String generated an Array too small.)\n" + "Deep Exception: " + e);
 		}
 		
 		return ancybData;
