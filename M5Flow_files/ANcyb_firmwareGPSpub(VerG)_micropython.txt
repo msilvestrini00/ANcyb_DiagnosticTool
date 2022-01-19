@@ -1,0 +1,54 @@
+from m5stack import *
+from m5ui import *
+from uiflow import *
+from m5mqtt import M5mqtt
+import espnow
+import wifiCfg
+import time
+import unit
+
+setScreenColor(0x222222)
+gps_0 = unit.get(unit.GPS, unit.PORTC)
+
+
+macAddr = None
+time = None
+lat = None
+long2 = None
+posQual = None
+str2 = None
+
+wifiCfg.wlan_ap.active(True)
+wifiCfg.wlan_sta.active(True)
+espnow.init()
+wifiCfg.autoConnect(lcdShow=False)
+label0 = M5TextBox(24, 26, "Text", lcd.FONT_Default, 0xFFFFFF, rotate=0)
+label1 = M5TextBox(24, 55, "Text", lcd.FONT_Default, 0xFFFFFF, rotate=0)
+label2 = M5TextBox(24, 81, "Text", lcd.FONT_Default, 0xFFFFFF, rotate=0)
+label3 = M5TextBox(24, 107, "Text", lcd.FONT_Default, 0xFFFFFF, rotate=0)
+rectangle0 = M5Rect(266, 26, 30, 30, 0xFFFFFF, 0xFFFFFF)
+
+
+
+
+m5mqtt = M5mqtt('gpsId', 'public.mqtthq.com', 1883, '', '', 300)
+m5mqtt.start()
+macAddr = espnow.get_mac_addr()
+rectangle0.setBgColor(0x33cc00)
+gps_0.set_time_zone(1)
+while True:
+  time = gps_0.gps_time
+  lat = gps_0.latitude
+  long2 = gps_0.longitude
+  posQual = (gps_0.pos_quality).replace(' ', '_')
+  label0.setText(str(time))
+  label1.setText(str(lat))
+  label2.setText(str(long2))
+  label3.setText(str(posQual))
+  str2 = (str(macAddr) + str(((str(' ') + str(((str('Ver_G') + str(((str(' ') + str(((str(time) + str(((str(' ') + str(((str(lat) + str(((str(' ') + str(((str(long2) + str(((str(' ') + str(posQual)))))))))))))))))))))))))))))
+  m5mqtt.publish(str('ANcybDiagnosticTool'),str(str2))
+  wait_ms(500)
+  rectangle0.setBgColor(0xffff33)
+  wait_ms(500)
+  rectangle0.setBgColor(0x33cc00)
+  wait_ms(2)
