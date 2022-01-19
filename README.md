@@ -1,7 +1,11 @@
+<div align="center">
+
 ### PROGETTO DI PROGRAMMAZIONE AD OGGETTI A.A. 2021-2022
 ![logo](/media/images/LogoANcybDiagnosticToolRounded.png)
 # ANCYBERNETICS DIAGNOSTIC TOOL 
 ### *Strumento di diagnostica per dispositivi marini per ricezione dei dati di bordo e valutazione della situazione meteorologica marina*
+
+</div>
 
 ## INDICE
 
