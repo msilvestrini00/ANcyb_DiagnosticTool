@@ -50,6 +50,9 @@ L'intero hardware è costituito da schede modulabili: questo lo rende estremamen
 
 [FOTO VARIE?]
 
+___
+
+
 ### REST API (SILVER)
 
 ##### Descrizione
@@ -258,8 +261,7 @@ Quest'ultimo è uno strumento di testing di API che possiede numerose features, 
 Pertanto, almeno in una fase primaria è consigliato l'utilizzo di questo software.
 
 ___
-
-## ROTTE (SILVER)
+## ROTTE 
 
 Di seguito sono elencate le rotte disponibili corredate delle relative descrizioni.
 Alcune note comuni:
@@ -294,7 +296,11 @@ Alcune note comuni:
 }
 ```
 
-*NOTA:* La rotta utilizza il filtro [FilterForecastByTime](#filtro1)
+#### Filtri e stats
+
+- [FilterForecastByTime](#filtro1)
+- [FilterObjByMac](#filtro3)
+
 ___
 <a name="rotta2"></a>
 ### 2. */{macAddr}/forecast/filter*
@@ -314,6 +320,12 @@ ___
     "Longitude": 13.587703
 }
 ```
+
+#### Filtri e stats
+
+- [FilterForecastByTime](#filtro1)
+- [FilterObjByMac](#filtro3)
+
 ___
 <a name="rotta3"></a>
 ### 3. */{macAddr}/forecast/stats*
@@ -344,6 +356,13 @@ ___
     ]
 }
 ```
+
+#### Filtri e stats
+
+- [AverageCurrentDirection](#stats1) 
+- [AverageWaveHeight](#stats2) 
+- [FilterObjByMac](#filtro3)
+
 ___
 <a name="rotta4"></a>
 ### 4. */{macAddr}/device/last*
@@ -364,6 +383,10 @@ ___
     "Date": "2022.01.19"
 }
 ```
+
+#### Filtri e stats
+
+- [FilterObjByMac](#filtro3)
 
 ___
 <a name="rotta5"></a>
@@ -408,6 +431,10 @@ ___
 ]
 ```
 
+#### Filtri e stats
+
+- [FilterListByMac](#filtro2)
+
 ___
 <a name="rotta6"></a>
 ### 6. */{macAddr}/device/stats*
@@ -425,9 +452,16 @@ ___
     }
 }
 ```
+
+#### Filtri e stats
+
+- [FilterListByMac](#filtro2)
+- [AverageTemperatureFish](#stats3)
+- [GeodeticDistance](#stats4)
+
 ___
 
-## FILTRI (SILVER)
+## FILTRI
 
 Nel progetto sono stati implementati dei **filtri**, ovvero delle classi che si occupano di selezionare determinate istanze o variabili all'interno di un insieme noto, a seconda di un determinato parametro di selezione.
 Queste classi sono risultate estremamente utili dal punto di vista pratico, in quanto utilizzati in molteplici contesti (a parte nella stesura delle rotte apposite).
@@ -447,14 +481,12 @@ I filtri implementati sono descritti in tabella:
 | Filtro |  Descrizione |
 | ---  | ---- |
 | <a name="filtro1"></a> `FilterForecastByTime` | Restituisce l'istanza di previsione meteo a seconda del tempo inserito |
-| `FilterListByMac` | Restituisce una collezione di istanze di dati di bordo in base all'indirizzo MAC  |
-| `FilterObjByMac` | Restituisce l'ultima istanza di dati di bordo in base all'indirizzo MAC |
-
-METTI LINK DA ROTTE A QUI
+| <a name="filtro2"></a>`FilterListByMac` | Restituisce una collezione di istanze di dati di bordo in base all'indirizzo MAC  |
+| <a name="filtro3"></a>`FilterObjByMac` | Restituisce l'ultima istanza di dati di bordo in base all'indirizzo MAC |
 
 ___
 
-## STATS (SILVER)
+## STATS 
 
 In modo simile ai filtri, l'applicativo sfrutta delle classi per eseguire delle **statistiche** sui dati. 
 Esse consistono nel prelevare determinate istanze per crearne altre, le quali contengono dei valori medi: grazie a questo meccanismo, il cliente ha la capacità di monitorare l'andamento di determinate grandezze, che siano relative al passato (dati di bordo) o al futuro (previsione meteo).
@@ -470,17 +502,17 @@ Anche le statistiche implementano un'interfaccia (`StatsInterface`), che si divi
 
 Le stats implementate sono descritte in tabella:
 
-| Filtro |  Descrizione |
-| ---  | ---- |
-| `AverageCurrentDirection` | Restituisce la direzione della corrente marina media, effettuata sulle istanze di previsione selezionate |
-| `AverageWaveHeight` | Restituisce l'altezza delle onde media, effettuata sulle istanze di previsione selezionate |
-| `AverageTemperatureFish` | Restituisce la temperatura media del dispositivo, effettuata sulle istanze di dati di bordo selezionate |
-| `GeodeticDistance` | Restituisce la distanza geodetica percorsa del dispositivo, effettuata sulle istanze di dati di bordo selezionate |
-
-
-METTI I LINK DELLE STATS A QUI
+| Stats |  Descrizione |
+ | ---  | ---- |
+ | <a name="stats1"></a>`AverageCurrentDirection` | Restituisce la direzione della corrente marina media, effettuata sulle istanze di previsione selezionate |
+| <a name="stats2"></a>`AverageWaveHeight` | Restituisce l'altezza delle onde media, effettuata sulle istanze di previsione selezionate |
+| <a name="stats3"></a>`AverageTemperatureFish` | Restituisce la temperatura media del dispositivo, effettuata sulle istanze di dati di bordo selezionate |
+| <a name="stats4"></a>`GeodeticDistance` | Restituisce la distanza geodetica percorsa del dispositivo, effettuata sulle istanze di dati di bordo selezionate |
 
 ___
+
+
+
 
 ## UML (SILVER)
 
