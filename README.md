@@ -205,15 +205,16 @@ public ANcybMqttClient() throws MqttException {
 
 Di seguito le configurazioni dei client:
 
-| Proprietà | ancybDiagnostiTool | dipositivi |
+| Proprietà | ancybDiagnosticTool | dispositivi |
 | ------ | ------ | ------ |
 | ClientID | spring-server-ancyb-(*data e ora all'avvio*) | ancybFish-(*MAC address*) |
 | keepalive | 60 (*non implementato il publisher*) | 300 |
 | user | *nessun username* | *nessun username* |
 | pass | *nessuna password* | *nessuna password* |
+
 <a name="notaSubscribe"></a>
 **NOTA:** *il publish dell'applicativo non è stato implementato per motivi di sintesi del progetto.
-Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.
+Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.*
 
 ```
 ANcybDiagnosticTool/a4:cf:12:76:76:95
@@ -291,7 +292,7 @@ Nel caso vengano ricevute stringhe incompatibili viene lanciata un'eccezione di 
 "b4:cf:12:76:76:95 Ver_GT 16:05:50 101325"
 ```
 
-**NOTA:** *Le coordinate ricevute via stringa sono in formato DDM (gradi e minuti decimali), le conversioni in formato DD vegnono effettuate tramite opportuni metodi implementati dalla classe `Coord`. La conversione in DD è necessario per l'utilizzo dell'API esterna. (!!LIIINKKK!!)*
+**NOTA:** *Le coordinate ricevute via stringa sono in formato DDM (gradi e minuti decimali), le conversioni in formato DD vegnono effettuate tramite opportuni metodi implementati dalla classe `Coord`. La conversione in DD è necessario per l'utilizzo dell'[API](#rest-api) esterna.*
 **NOTA:** *La gestione delle conversioni di tipo o di formato dei dati ricevuti è gestito interamente dai costruttori.*
 
 Di seguito è riportata la gerarchia delle classi.
@@ -660,32 +661,38 @@ WrongCoordFormat(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
 MqttStringMismatch(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **FilterFailure**: lanciata se avvengono errori nell'elaborazioni con i filtri. (!!!LINKK!!)
+
+* **FilterFailure**: lanciata se avvengono errori nell'elaborazioni con i [filtri](#filtri).
 ```
 FilterFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **StatsFailure**: lanciata se avvengono errori nell'elaborazioni con le statistiche. (!!!LINKK!!)
+
+* **StatsFailure**: lanciata se avvengono errori nell'elaborazioni con le [statistiche](#stats).
 ```
 StatsFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **VersionMismatch**: lanciata per segnalare situazioni in cui la versione di un'istanza non coincide con quella attesa. (!!!LINKK!!)
+
+* **VersionMismatch**: lanciata per segnalare situazioni in cui la versione di un'istanza non coincide con quella attesa.
 ```
 VersionMismatch(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **URLIsNull**: lanciata per segnalare che l'URL non è stato generato, quindi è nullo. (!!!LINKK!!)
+
+* **URLIsNull**: lanciata per segnalare che l'URL non è stato generato, quindi è nullo.
 ```
 URLIsNull(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **InvalidParameter**: lanciata se eventuali parametri in ingresso risultano invalidi. (!!!LINKK!!)
+
+* **InvalidParameter**: lanciata se eventuali parametri in ingresso risultano invalidi.
 ```
 InvalidParameter(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
-* **ForecastBuildingFailure**: lanciata se avviene un errore durante la costruzione di un oggetto `Forecast`. (!!!LINKK!!)
+
+* **ForecastBuildingFailure**: lanciata se avviene un errore durante la costruzione di un oggetto `Forecast`.
 ```
 ForecastBuildingFailure(*CAUSA PRINCIPALE*) -> *DESCRIZIONE ESPLICITA DELLA CAUSA*
 ```
 
-Nel caso di classi che avrebbero lanciato molte eccezioni diverse si è optato per creare delle macro eccezioni (come <a name="mqttstringmismatch"></a>**MqttStringMismatch**) che le potessero racchiudere in un un'unica. In tali casi verrà mostrato un messaggio del tipo
+Nel caso di classi che avrebbero lanciato molte eccezioni diverse si è optato per creare delle macro eccezioni (come in [MqttStringMismatch](#MqttStringMismatch)) che le potessero racchiudere in un un'unica. In tali casi verrà mostrato un messaggio del tipo
 ```
 Exception: it.univpm.ancyb_diagnosticTool.Exception.MqttStringMismatch: MqttStringMismatch(Ver_GT constructor)
 Deep Exception: it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat: WrongCoordFormat(Latitude) -> angle not included between -90° and 90°
@@ -694,11 +701,11 @@ Deep Exception: it.univpm.ancyb_diagnosticTool.Exception.WrongCoordFormat: Wrong
 <a name="test"></a>
 ## TEST 
 
-Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [qui]!!!LLLLIIIIINNNKK!!. Nel dettaglio:
+Al fine di testare l'applicativo sono stati sviluppati dei JUnit consultabili [qui](/ancyb_diagnosticTool/src/test/java/it/univpm/ancyb_diagnosticTool/). Nel dettaglio:
 
-* **Test 1:** `FilterForecastByTimeTest` testa la relativa classe `FilterForecastByTime` !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! 
+* **Test 1:** `FilterForecastByTimeTest` testa la relativa classe [`FilterForecastByTime`](#filtro1) 
 * **Test 2:** `TestMqttDataReceived` testa i vari metodi presenti nel package DataReceived, ovvero chi gestisce le stringhe inviate dai dispositivi e le conseguenti istanze `ANcybFishData`.
-* **Test 3:** `FishDataManagerTest` testa i metodi di `AncybDiagnosticToolServiceImpl` tra cui i filtri !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!!  e le stats !!LLLLLLLLLLINIIIIIIIIINNNNNNKKKKKKK!! sui `ANcybFishData`.
+* **Test 3:** `FishDataManagerTest` testa i metodi di `AncybDiagnosticToolServiceImpl` tra cui i [filtri](#filtri)  e le [stats](#stats) sui `ANcybFishData`.
 * **Test 4:** `ForecastDataManagerTest` testa il metodo `BuildForecast` che si occupa di elabora i dati ricevuti dalla chiamata API.
 
 <a name="sviluppifuturi"></a>
@@ -714,7 +721,7 @@ Di seguito vengono elencate alcune features che avrebbero conferito al lavoro un
     - integrando Google Maps per visualizzare graficamente la posizione dei dispositivi
     - visualizzando i dati descritti sopra in un'unica schermata
     - trasformando l'imput da testuale (inserimento di rotte) a grafico (pulsanti)
-- Implementazione del publish da parte dell'applicativo che potrebbe quindi inviare dei messaggi a specifici topic corrispondenti ai vari dispositivi (vedi [Nota](#subscribe)). Questi messaggi inviati potrebbero, sulla base dei dati meteorologici marini, condizionare il comportamento dei dispositivi in acqua (un esempio potrebbe essere: nel caso venga previsto un forte moto ondoso far emergere il dispositivo).
+- Implementazione del publish da parte dell'applicativo che potrebbe quindi inviare dei messaggi a specifici topic corrispondenti ai vari dispositivi (vedi [Nota](#notaSubscribe)). Questi messaggi inviati potrebbero, sulla base dei dati meteorologici marini, condizionare il comportamento dei dispositivi in acqua (un esempio potrebbe essere: nel caso venga previsto un forte moto ondoso far emergere il dispositivo).
 
 <a name="autori"></a>
 ## AUTORI
