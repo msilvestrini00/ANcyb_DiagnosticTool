@@ -112,9 +112,7 @@ A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti 
     }
 ```
 
-### Interfaccia utente (SILVER)
-
-L'interfaccia utente 
+[FARE IL CODE BLOCK SCROLLABILE?]
 
 ___
 ### SERVIZIO MQTT (JACK)
@@ -135,6 +133,14 @@ Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfrut
 ```
 ANcybDiagnosticTool/a4:cf:12:76:76:95
 ```
+___
+
+### Interfaccia utente (SILVER)
+
+Il progetto può essere sfruttato tramite un qualsiasi browser, ma in fase di testing e di sviluppo è risultato ottimo l'utilizzo di [Postman](https://www.postman.com/).
+Quest'ultimo è uno strumento di testing di API che possiede numerose features, tra cui la possibilità di salvare le rotte chiamate e di tabulare i dati in ricezione.
+Pertanto, almeno in una fase primaria è consigliato l'utilizzo di questo software.
+
 ___
 
 ## ROTTE (SILVER)
