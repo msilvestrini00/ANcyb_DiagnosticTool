@@ -52,13 +52,67 @@ L'intero hardware è costituito da schede modulabili: questo lo rende estremamen
 
 ### REST API (SILVER)
 
-Il servizio di previsione meteorologica marina è fornito dall'API Storm Glass. 
-Questo servizio si distingue dagli altri simili per la praticità d'uso e l'attendibilità:
-- Effettuando la chiamata con un'unica rotta e inserendo le coordinate come parametri, è possibile ricevere 23 tipi di dato differenti sulla situazione meteorologica.
+##### Descrizione
 
-### Interfaccia utente (SILVER)
+Il servizio di previsione meteorologica marina è fornito dalla REST API [Storm Glass](https://rapidapi.com/ManniskaMaskin/api/storm-glass/). 
 
-L'interfaccia utente 
+Essa si distingue dalle altre simili per la praticità d'uso e l'attendibilità:
+- I dati si estendono fino a sette giorni successivi da quello corrente, con risoluzione oraria
+- Il servizio è disponibile tramite un'unica rotta, che prende come parametri le coordinate di cui si cercano le previsioni 
+- E' possibile ottenere 23 tipi di dato differenti sulla situazione meteorologica
+- I dati ricevuti derivano da molteplici sorgenti
+
+##### Utilizzo
+
+Dopo essersi iscritti al sito si riceve l'API key, tramite la quale è possibile utilizzare la rotta scritta in questo modo:
+
+` https://stormglass.p.rapidapi.com/forecast?rapidapi-key={ APIkey }&lat={ latitudine }&lng={ longitudine } `
+
+[SCREEN POSTMAN CON ROTTA E PARAMETRI?]
+
+Latitudine e longitudine vanno scritte in formato **Gradi decimali (DDD)**: un esempio è ` 41.890218, 12.492434 `
+
+Una volta richiamata la rotta, si riceve una struttura di oggetti JSON che contengono i dati meteorologici.
+
+##### Metadati
+
+A seguito di una chiamata eseguita il giorno 19 Gennaio, si ricevono i seguenti metadati:
+
+```json
+"meta": {
+        "end": "2022-01-29 00:00",
+        "lat": 43.57517,
+        "lng": 13.587715,
+        "params": [
+            "waterTemperature",
+            "wavePeriod",
+            "waveDirection",
+            "waveDirection",
+            "waveHeight",
+            "windWaveDirection",
+            "windWaveHeight",
+            "windWavePeriod",
+            "swellPeriod",
+            "swellDirection",
+            "swellHeight",
+            "windSpeed",
+            "windDirection",
+            "airTemperature",
+            "precipitation",
+            "gust",
+            "cloudCover",
+            "humidity",
+            "pressure",
+            "visibility",
+            "seaLevel",
+            "currentSpeed",
+            "currentDirection"
+        ],
+        "start": "2022-01-19 00:00"
+    }
+```
+
+[FARE IL CODE BLOCK SCROLLABILE?]
 
 ___
 ### SERVIZIO MQTT (JACK)
@@ -79,6 +133,14 @@ Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfrut
 ```
 ANcybDiagnosticTool/a4:cf:12:76:76:95
 ```
+___
+
+### Interfaccia utente (SILVER)
+
+Il progetto può essere sfruttato tramite un qualsiasi browser, ma in fase di testing e di sviluppo è risultato ottimo l'utilizzo di [Postman](https://www.postman.com/).
+Quest'ultimo è uno strumento di testing di API che possiede numerose features, tra cui la possibilità di salvare le rotte chiamate e di tabulare i dati in ricezione.
+Pertanto, almeno in una fase primaria è consigliato l'utilizzo di questo software.
+
 ___
 
 ## ROTTE (SILVER)
