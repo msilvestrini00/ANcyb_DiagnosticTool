@@ -120,7 +120,14 @@ ___
 
 Lo scambio dei dati tra applicativo e dispositivi avviene tramite protocollo di comunicazione **MQTT**.
 
-Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfruttato come broker un server chiamato [MQTTHQ](https://mqtthq.com/): un webserver online pubblico destinato proprio a test di sistemi IoT. Il broker offre inoltre un utile [client](https://mqtthq.com/client) integrato che permette di gestire e simulare subscribe e publish (le funzionalità sono meglio descritte tutorial).
+Viste le condizioni di lavoro e la finalità didattica del progetto è stato sfruttato come broker un server chiamato [MQTTHQ](https://mqtthq.com/): un webserver online pubblico destinato proprio a test di sistemi IoT. Il broker offre inoltre un utile [client](https://mqtthq.com/client) integrato che permette di gestire e simulare subscribe e publish (le funzionalità sono meglio descritte [tutorial](#)).
+
+| MQTTHQ Broker Settings | *Valori* |
+|---|---|
+| Broker URL | public.mqtthq.com |
+| TCP Port | 1883 |
+| WebSocket Port | 8083 |
+| WebSocket Path | /mqtt |
 
 I vari dispositivi sottomarini effettuano regolarmente dei publish al topic "ANcybDiagnosticTool" tramite i quali inviano messaggi che rispettano una certa sintassi compresa poi dell'applicativo che poi effettua l'opportuna modellazione (vedi dataManager).
 
@@ -143,8 +150,10 @@ public ANcybMqttClient() throws MqttException {
 Di seguito le configurazioni dei client:
 | Proprietà | ancybDiagnostiTool | dipositivi |
 | ------ | ------ | ------ |
-| ClientID | spring-server-ancyb-(data e ora all'avvio) | ancybFish-(MAC address) |
-| keepalive |  | 300 |
+| ClientID | spring-server-ancyb-(*data e ora all'avvio*) | ancybFish-(*MAC address*) |
+| keepalive | 60 (*non implementato il publisher*) | 300 |
+| user | *nessun username* | *nessun username* |
+| pass | *nessuna password* | *nessuna password* |
 
 **NOTA:** *il publish dell'applicativo non è stato implementato per motivi di sintesi del progetto.
 Per una comunicazione da applicativo a dispositivo sarebbe stato possibile sfruttare un topic personalizzato in base all'indirizzo MAC (in quanto univoco) per ciascun robot.
