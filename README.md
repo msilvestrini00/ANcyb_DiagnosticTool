@@ -258,7 +258,7 @@ ___
 I dati ricevuti da MQTT e istanziati correttamente vengono stampati su un file di testo che viene creato ed è associato esclusivamente alla sessione corrente.
 La gestione di ciò è destinata alla classe `DataLogger`.
 
-Vedi un esempio di DataLogger qui. (!!!LLLIIIINNNKKK!!!)
+Vedi un esempio di DataLogger [qui](/TutorialANcybDiagnosticToolTest.txt).
 
 ___
 
