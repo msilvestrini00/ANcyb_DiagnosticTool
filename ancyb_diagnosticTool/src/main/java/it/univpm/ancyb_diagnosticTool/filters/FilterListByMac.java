@@ -67,7 +67,7 @@ public class FilterListByMac implements FilterInterface {
 	@Override
 	public void computeFilter() throws FilterFailure {
 
-		for(int i=0; i<DataSaved.getList().size()-1; i++) {
+		for(int i=0; i<DataSaved.getList().size(); i++) {
 			if(DataSaved.getList().get(i).getMacAddr().equals(macAddr)) {
 				filteredFishDataList.add(DataSaved.getList().get(i));
 			}
